@@ -12,4 +12,6 @@ public interface IGetData {
 
     ArrayList<Integer> getTicketsPerVertoning(Vertoning voorstelling);
     
+    ArrayList<Vertoning> createShows();
+    
 }

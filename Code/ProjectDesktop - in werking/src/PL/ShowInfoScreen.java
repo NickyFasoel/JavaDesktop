@@ -4,7 +4,9 @@ import BLL.ServiceLayer;
 import CONSTANTS.IntConstants;
 import CONSTANTS.StringConstants;
 import Dal.Film;
+import Dal.Helpers.FetchFilmData;
 import Dal.Vertoning;
+import Interfaces.IGetData;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
@@ -20,11 +22,14 @@ import javax.swing.JOptionPane;
 
 public class ShowInfoScreen extends javax.swing.JFrame {
 
+    // TODO: interface dependency inversion
+    
     private Film _film;
     private String _selectedTime;
     private JFrame _mainScreen;
     private ServiceLayer _sl;
     private ArrayList<Vertoning> _lstVertoningen;
+    private IGetData _iGD;
     
     public ShowInfoScreen() {
         initComponents();
@@ -37,7 +42,8 @@ public class ShowInfoScreen extends javax.swing.JFrame {
         this._sl = new ServiceLayer();
         // TODO: in helpermethode zsteken
         this.setIconImage(_sl.setFavicon().getImage());
-        this._lstVertoningen = _sl.createShows();
+        _iGD = new FetchFilmData();
+        this._lstVertoningen = _iGD.createShows();
         setupShowInfoScreen(film, _sl);
         _selectedTime = StringConstants.EMPTY.getValue();
     }

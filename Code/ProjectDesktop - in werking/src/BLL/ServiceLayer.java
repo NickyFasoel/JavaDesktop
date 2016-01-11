@@ -19,6 +19,8 @@ import javax.swing.ImageIcon;
 
 public class ServiceLayer {
     
+    // TODO: Interfaces gebruiken in de ui ipv servicelayer
+    
     private final IGetData _iGD;
     private ArrayList<Film> _lstFilms;
     
@@ -62,43 +64,6 @@ public class ServiceLayer {
     public ImageIcon setFavicon() {
         ISetFavicon iSF = new FetchImages();
         return iSF.setFavicon();
-    }
-    
-    
-    
-    
-    
-    
-    public ArrayList<Vertoning> createShows() {
-        ArrayList<Vertoning> lstVert = new ArrayList<>();
-        ResultSet rs = null;
-        try {
-            //rs = CreateConnection.INSTANCE.getConnection().createStatement().executeQuery("SELECT tbl_zaal.ID FROM `tbl_zaal` WHERE NOT EXISTS(Select 1 from tbl_vertoning WHERE (tbl_vertoning.Zaal_ID = tbl_zaal.ID) AND (tbl_vertoning.SpeelDag = '" + dagTrim + "') AND (tbl_vertoning.SpeelUur = '" + urenTrim + "'))");
-            rs = CreateConnection.INSTANCE.getConnection().createStatement().executeQuery("SELECT tbl_vertoning.ID, a.naam, tbl_vertoning.SpeelDag, tbl_vertoning.SpeelUur, a.prijs, tbl_zaal.Nummer, tbl_zaal.Plaatsen FROM tbl_film AS a INNER JOIN tbl_vertoning ON a.ID = tbl_vertoning.Film_ID INNER JOIN tbl_zaal ON tbl_zaal.ID = tbl_vertoning.Zaal_ID");
-        } catch (SQLException e) {
-            Logger.getLogger(ServiceLayer.class.getName()).log(Level.SEVERE, null, e);
-        }
-        try {
-            if (rs != null) {
-                while (rs.next()){
-                    long id = rs.getLong("ID");
-                    String naam = rs.getString("Naam");
-                    String speelDag = rs.getString("SpeelDag"); 
-                    String speelUur = rs.getString("SpeelUur");
-                    double prijs = rs.getDouble("Prijs");
-                    int zaalNummer = rs.getInt("Nummer");
-                    int plaatsen = rs.getInt("Plaatsen");
-
-                    lstVert.add(new Vertoning(id, naam, speelDag, speelUur, prijs, zaalNummer, plaatsen));
-                }
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ServiceLayer.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            // TODO: close connections when moved to dal
-        }
-        
-        return lstVert;
     }
     
 //    public String getFilmSpeelUren(String filmNaam) {

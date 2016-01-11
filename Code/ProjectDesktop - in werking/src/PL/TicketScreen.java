@@ -458,7 +458,9 @@ public class TicketScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_ui_btnCancelActionPerformed
 
     private void ui_btnProceedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ui_btnProceedActionPerformed
-        
+        if (Integer.parseInt(ui_txtRemainingTickets.getText()) > Integer.parseInt(ui_txtAantalTickets.getText())) {
+            
+        }
     }//GEN-LAST:event_ui_btnProceedActionPerformed
 
     // </editor-fold>
