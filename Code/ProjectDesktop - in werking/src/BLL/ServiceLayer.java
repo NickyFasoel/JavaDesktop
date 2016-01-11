@@ -79,16 +79,18 @@ public class ServiceLayer {
             Logger.getLogger(ServiceLayer.class.getName()).log(Level.SEVERE, null, e);
         }
         try {
-            while (rs.next()){
-                long id = rs.getLong("ID");
-                String naam = rs.getString("Naam");
-                String speelDag = rs.getString("SpeelDag"); 
-                String speelUur = rs.getString("SpeelUur");
-                double prijs = rs.getDouble("Prijs");
-                int zaalNummer = rs.getInt("Nummer");
-                int plaatsen = rs.getInt("Plaatsen");
+            if (rs != null) {
+                while (rs.next()){
+                    long id = rs.getLong("ID");
+                    String naam = rs.getString("Naam");
+                    String speelDag = rs.getString("SpeelDag"); 
+                    String speelUur = rs.getString("SpeelUur");
+                    double prijs = rs.getDouble("Prijs");
+                    int zaalNummer = rs.getInt("Nummer");
+                    int plaatsen = rs.getInt("Plaatsen");
 
-                lstVert.add(new Vertoning(id, naam, speelDag, speelUur, prijs, zaalNummer, plaatsen));
+                    lstVert.add(new Vertoning(id, naam, speelDag, speelUur, prijs, zaalNummer, plaatsen));
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(ServiceLayer.class.getName()).log(Level.SEVERE, null, ex);
