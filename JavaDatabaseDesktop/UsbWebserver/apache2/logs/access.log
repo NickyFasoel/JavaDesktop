@@ -1,0 +1,9 @@
+::1 - - [12/Jan/2016:00:11:06 +0100] "GET /phpmyadmin/ HTTP/1.1" 200 46711
+::1 - - [12/Jan/2016:00:11:06 +0100] "GET /phpmyadmin/themes/pmahomme/jquery/jquery-ui-1.9.2.custom.css HTTP/1.1" 304 -
+::1 - - [12/Jan/2016:00:11:06 +0100] "GET /phpmyadmin/themes/pmahomme/img/logo_left.png HTTP/1.1" 304 -
+::1 - - [12/Jan/2016:00:11:06 +0100] "GET /phpmyadmin/favicon.ico HTTP/1.1" 304 -
+::1 - - [12/Jan/2016:00:11:06 +0100] "GET /phpmyadmin/themes/dot.gif HTTP/1.1" 304 -
+::1 - - [12/Jan/2016:00:11:06 +0100] "GET /phpmyadmin/themes/pmahomme/img/ajax_clock_small.gif HTTP/1.1" 304 -
+::1 - - [12/Jan/2016:00:11:06 +0100] "GET /phpmyadmin/themes/pmahomme/img/sprites.png HTTP/1.1" 304 -
+::1 - - [12/Jan/2016:00:11:06 +0100] "GET /phpmyadmin/themes/pmahomme/img/left_nav_bg.png HTTP/1.1" 304 -
+::1 - - [12/Jan/2016:00:11:06 +0100] "GET /phpmyadmin/version_check.php?&_nocache=1452553866866930905 HTTP/1.1" 200 41
