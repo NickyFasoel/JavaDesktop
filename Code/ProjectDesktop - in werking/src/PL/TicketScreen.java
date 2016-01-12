@@ -27,7 +27,7 @@ public class TicketScreen extends javax.swing.JFrame {
     private final JFrame _jframeShowInfoScreen;
     private final Vertoning _vertoning;
     private final ImageIcon _icon;
-    private ISetFavicon _iF;
+    private final ISetFavicon _iF;
     private int _aantalTickets;
     
     // </editor-fold>
@@ -38,8 +38,8 @@ public class TicketScreen extends javax.swing.JFrame {
      *  Om de ctor wat kleiner te houden
      */
     private void prepareTicketScreen() {
-        //_iF.setFavicon();
-        _aantalTickets = IntConstants.ONE.getValue();
+        this.setIconImage(_icon.getImage());
+        this._aantalTickets = IntConstants.ONE.getValue();
         ui_lblDatum.setText(_vertoning.getSpeelDag());
         ui_lblFilmNaam.setText(_vertoning.getFilmNaam());
         DecimalFormat df = new DecimalFormat(StringConstants.DECIMAL_FORMAT.getValue());

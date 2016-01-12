@@ -29,8 +29,6 @@ import javax.swing.JOptionPane;
 
 public class ShowInfoScreen extends javax.swing.JFrame {
 
-    // TODO: interface dependency inversion
-    
     private Film _film;
     private String _selectedTime;
     private JFrame _mainScreen;
@@ -43,7 +41,7 @@ public class ShowInfoScreen extends javax.swing.JFrame {
     public ShowInfoScreen() {
         initComponents();
     }
-    // TODO: check dat alle ctors this. hebben
+
     public ShowInfoScreen(Film film, JFrame mainScreen) {
         initComponents();
         this._film = film;
@@ -51,12 +49,10 @@ public class ShowInfoScreen extends javax.swing.JFrame {
         this._iF = new FetchFavicon();
         this._icon = _iF.setFavicon();
         this._iSF = new FetchImages();
-        // TODO: in helpermethode zsteken
-        
-        _iGD = new FetchFilmData();
+        this._iGD = new FetchFilmData();
         this._lstVertoningen = _iGD.getAllShows();
         setupShowInfoScreen();
-        _selectedTime = StringConstants.EMPTY.getValue();
+        this._selectedTime = StringConstants.EMPTY.getValue();
     }
 
     /**
@@ -441,13 +437,6 @@ public class ShowInfoScreen extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(ShowInfoScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
-        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new ShowInfoScreen().setVisible(true);
-//            }
-//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

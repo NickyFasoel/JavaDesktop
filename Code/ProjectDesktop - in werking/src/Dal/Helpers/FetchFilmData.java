@@ -59,16 +59,15 @@ public class FetchFilmData implements IGetData {
             {
                 long id = _rs.getLong("ID");
                 String naam = _rs.getString(StringConstants.NAAM_COLUMN.getValue());
-                String speelUren = _rs.getString(StringConstants.SPEELUUR_COLUMN.getValue());
+                String speelUren = _rs.getString(StringConstants.SPEELUREN_COLUMN.getValue());
                 String speelDagen = _rs.getString(StringConstants.SPEELDAGEN_COLUMN.getValue());
                 double prijs = _rs.getDouble(StringConstants.PRIJS_COLUMN.getValue());
                 String genre = _rs.getString(StringConstants.GENRE_COLUMN.getValue());
                 boolean actief = _rs.getBoolean(StringConstants.ACTIEF_COLUMN.getValue());
                 String description = _rs.getString(StringConstants.DESCRIPTION_COLUMN.getValue());
                 String foto = _rs.getString(StringConstants.FOTO_COLUMN.getValue());
-                // TODO: constante invoere
-                String showBG = _rs.getString("ShowInfoBackgroundImage");
-                int imgCorr = _rs.getInt("bgImageCorrection");
+                String showBG = _rs.getString(StringConstants.SHOWINFOBACKGROUNDIMAGE_COLUMN.getValue());
+                int imgCorr = _rs.getInt(StringConstants.BGIMAGECORRECTION_COLUMN.getValue());
                 Film film = new Film(id, naam, speelUren, speelDagen, prijs,
                             genre, actief, description, foto, showBG, imgCorr);
                 lst.add(film);
@@ -137,20 +136,20 @@ public class FetchFilmData implements IGetData {
         ResultSet rs = null;
         try {
             //rs = CreateConnection.INSTANCE.getConnection().createStatement().executeQuery("SELECT tbl_zaal.ID FROM `tbl_zaal` WHERE NOT EXISTS(Select 1 from tbl_vertoning WHERE (tbl_vertoning.Zaal_ID = tbl_zaal.ID) AND (tbl_vertoning.SpeelDag = '" + dagTrim + "') AND (tbl_vertoning.SpeelUur = '" + urenTrim + "'))");
-            rs = CreateConnection.INSTANCE.getConnection().createStatement().executeQuery("SELECT tbl_vertoning.ID, a.naam, tbl_vertoning.SpeelDag, tbl_vertoning.SpeelUur, a.prijs, tbl_zaal.Nummer, tbl_zaal.Plaatsen FROM tbl_film AS a INNER JOIN tbl_vertoning ON a.ID = tbl_vertoning.Film_ID INNER JOIN tbl_zaal ON tbl_zaal.ID = tbl_vertoning.Zaal_ID");
+            rs = CreateConnection.INSTANCE.getConnection().createStatement().executeQuery(StringConstants.QRY_GET_ALL_SHOWS.getValue());
         } catch (SQLException e) {
             Logger.getLogger(FetchFilmData.class.getName()).log(Level.SEVERE, null, e);
         }
         try {
             if (rs != null) {
                 while (rs.next()){
-                    long id = rs.getLong("ID");
-                    String naam = rs.getString("Naam");
-                    String speelDag = rs.getString("SpeelDag"); 
-                    String speelUur = rs.getString("SpeelUur");
-                    double prijs = rs.getDouble("Prijs");
-                    int zaalNummer = rs.getInt("Nummer");
-                    int plaatsen = rs.getInt("Plaatsen");
+                    long id = rs.getLong(StringConstants.ID_COLUMN.getValue());
+                    String naam = rs.getString(StringConstants.NAAM_COLUMN.getValue());
+                    String speelDag = rs.getString(StringConstants.SPEELDAG_COLUMN.getValue()); 
+                    String speelUur = rs.getString(StringConstants.SPEELUUR_COLUMN.getValue());
+                    double prijs = rs.getDouble(StringConstants.PRIJS_COLUMN.getValue());
+                    int zaalNummer = rs.getInt(StringConstants.NUMMER_COLUMN.getValue());
+                    int plaatsen = rs.getInt(StringConstants.PLAATSEN_COLUMN.getValue());
 
                     lstVert.add(new Vertoning(id, naam, speelDag, speelUur, prijs, zaalNummer, plaatsen));
                 }
@@ -158,7 +157,15 @@ public class FetchFilmData implements IGetData {
         } catch (SQLException ex) {
             Logger.getLogger(FetchFilmData.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            // TODO: close connections when moved to dal
+            try {
+                Statement statement = rs.getStatement();
+                Connection connection = statement.getConnection();
+                rs.close();
+                statement.close();
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(FetchFilmData.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
         return lstVert;

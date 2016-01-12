@@ -97,7 +97,7 @@ public class MainScreen extends javax.swing.JFrame {
      */
     private void prepareMainScreen() {
         initializeObjects();
-        _icon = _iF.setFavicon();
+        this._icon = _iF.setFavicon();
         this.setIconImage(_icon.getImage());
         ui_lblFoto.setToolTipText(null);
         ui_lblFoto.setIcon(_iSF.setFoto(StringConstants.STARTFOTO_PATH.getValue()));
@@ -133,10 +133,10 @@ public class MainScreen extends javax.swing.JFrame {
      *  Om de lengte van prepairescreen een beetje in te korten
      */
     private void initializeObjects() {
-        _iGD = new FetchFilmData();
-        _iF = new FetchFavicon();
-        _iSF = new FetchImages();
-        _dlm = new DefaultListModel();
+        this._iGD = new FetchFilmData();
+        this._iF = new FetchFavicon();
+        this._iSF = new FetchImages();
+        this._dlm = new DefaultListModel();
     }
     
     /**
@@ -156,7 +156,7 @@ public class MainScreen extends javax.swing.JFrame {
      *  Vult de lijst met de mogelijke films
      */
     private void fillListFilms() {
-        _allFilms = _iGD.getAllFilms();
+        this._allFilms = _iGD.getAllFilms();
         for (Film allFilm : _allFilms) {
             _dlm.addElement(allFilm);
         }

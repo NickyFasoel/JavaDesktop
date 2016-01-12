@@ -10,17 +10,22 @@ package CONSTANTS;
 
 public enum StringConstants {
     /* Constanten in de enum die de private constructor 1 malig gebruiken dus van nature singleton zijn */
-    /* Kolomnamen database voor Film object */
-    // TODO: alle constante checke als ze gebruikt worde
+   // TODO: alle constante checke als ze gebruikt worde
     NAAM_COLUMN ("Naam"), 
-    SPEELUUR_COLUMN ("SpeelUren"), 
+    SPEELUREN_COLUMN ("SpeelUren"), 
     SPEELDAGEN_COLUMN ("SpeelDagen"), 
     PRIJS_COLUMN ("Prijs"), 
     GENRE_COLUMN ("Genre"), 
     ACTIEF_COLUMN ("Actief"), 
     DESCRIPTION_COLUMN ("Beschrijving"), 
-    FOTO_COLUMN ("Foto"), 
-    /* Tot hier */
+    FOTO_COLUMN ("Foto"),
+    SHOWINFOBACKGROUNDIMAGE_COLUMN ("ShowInfoBackgroundImage"),
+    BGIMAGECORRECTION_COLUMN ("BgImageCorrection"),
+    ID_COLUMN ("ID"),
+    SPEELDAG_COLUMN ("SpeelDag"),
+    SPEELUUR_COLUMN ("SpeelUur"),
+    NUMMER_COLUMN ("Nummer"),
+    PLAATSEN_COLUMN ("Plaatsen"),
     ALL ("All"),
     EMPTY (""),
     /* Format string weergave op ticket */
@@ -30,6 +35,7 @@ public enum StringConstants {
     DATE_FORMAT ("dd/MM/yyyy"),
     PREP_QRY_INSERT_KLANT ("INSERT INTO tbl_klanten (Film,AantalTickets,UurVanAankoop,Datum,Prijs) VALUES (?,?,?,?,?)"),
     QRY_GET_ALL_FILMS ("SELECT * from tbl_film WHERE Actief = 1"),
+    QRY_GET_ALL_SHOWS ("SELECT tbl_vertoning.ID, a.naam, tbl_vertoning.SpeelDag, tbl_vertoning.SpeelUur, a.prijs, tbl_zaal.Nummer, tbl_zaal.Plaatsen FROM tbl_film AS a INNER JOIN tbl_vertoning ON a.ID = tbl_vertoning.Film_ID INNER JOIN tbl_zaal ON tbl_zaal.ID = tbl_vertoning.Zaal_ID"),
     QRY_GET_ALL_GENRES ("SELECT DISTINCT `Genre` FROM `tbl_film`"),
     STARTFOTO_PATH ("Images/startFoto.png"),
     STARTDESCRIPTION ("Welcome to Kinepolis, select a movie from the list on your left to browse..."),
