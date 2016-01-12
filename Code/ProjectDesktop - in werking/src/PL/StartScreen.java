@@ -1,6 +1,7 @@
 package PL;
 
-import BLL.ServiceLayer;
+import BLL.FetchFavicon;
+import Interfaces.ISetFavicon;
 import java.awt.FontFormatException;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -14,7 +15,8 @@ public class StartScreen extends javax.swing.JFrame {
     }
 
     private void setFavicon() {
-        this.setIconImage(new ServiceLayer().setFavicon().getImage());
+        ISetFavicon iF = new FetchFavicon();
+        this.setIconImage(iF.setFavicon().getImage());
     }
 
     @SuppressWarnings("unchecked")

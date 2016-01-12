@@ -11,6 +11,7 @@ package CONSTANTS;
 public enum StringConstants {
     /* Constanten in de enum die de private constructor 1 malig gebruiken dus van nature singleton zijn */
     /* Kolomnamen database voor Film object */
+    // TODO: alle constante checke als ze gebruikt worde
     NAAM_COLUMN ("Naam"), 
     SPEELUUR_COLUMN ("SpeelUren"), 
     SPEELDAGEN_COLUMN ("SpeelDagen"), 
@@ -35,7 +36,7 @@ public enum StringConstants {
     DB_ERRORMSG ("The database must be offline..."),
     DB_ERRORMSG_TITLE ("Fetching data failed"),
     BUY_ERRORMSG ("You must select a movie first before buying tickets"),
-    BUY_ERRORMSG_TITLE ("Attention"),
+    ATTENTION ("Attention"),
     NO_MORE_TICKETSMSG ("Our apologies but there are no tickets left"),
     JOPTION_RETRY ("Retry"),
     JOPTION_EXIT ("Exit"),
@@ -46,7 +47,15 @@ public enum StringConstants {
     FONT_SANSSERIF ("SansSerif"),
     DESCR_TITLE_TEXT ("Description                                                            Starts at: "),
     FONT_TIMER_PATH ("/Fonts/DS-DIGIB.TTF"),
-    MAX_TICKET_AMOUNTMSG ("Can't buy more than 9 tickets at a time, if you need more.\nWe advise using one of our ticket windows.");
+    MAX_TICKET_AMOUNTMSG ("Can't buy more than 9 tickets at a time, if you need more.\nWe advise using one of our ticket windows."),
+    SHOW_INFO_ERRORMSG ("You must select a movie before we can show information."),
+    ONE_SPACE (" "),
+    SIXTEEN_HOURS ("16:00"),
+    NINETEEN_HOURS ("19:00"),
+    TWENTY_TWO_HOURS ("22:00"),
+    FULLNAME_DAY_OF_THE_WEEK_FORMAT ("EEEE"),
+    MOVIE_ALREADY_DONE ("This movie has already begun/finished."),
+    NO_TIME_SELECTED ("You have no time specified for the movie.");
     
     
     private final String _value;

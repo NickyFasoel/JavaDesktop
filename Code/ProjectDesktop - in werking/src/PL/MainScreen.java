@@ -2,12 +2,16 @@ package PL;
 
 // <editor-fold defaultstate="collapsed" desc="Imports">
 
+import BLL.FetchFavicon;
+import BLL.FetchImages;
 import CONSTANTS.IntConstants;
 import CONSTANTS.StringConstants;
-import BLL.ServiceLayer;
 import CONSTANTS.FloatConstants;
 import Dal.Film;
-import Dal.Vertoning;
+import Dal.Helpers.FetchFilmData;
+import Interfaces.IGetData;
+import Interfaces.ISetFavicon;
+import Interfaces.ISetFoto;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -19,18 +23,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.io.IOException;
 import java.io.InputStream;
-import static java.lang.String.valueOf;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -38,13 +36,6 @@ import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.border.TitledBorder;
-import static javax.swing.border.TitledBorder.BELOW_TOP;
-import static java.lang.String.valueOf;
-import static java.lang.String.valueOf;
-import static java.lang.String.valueOf;
-import static java.lang.String.valueOf;
-import static java.lang.String.valueOf;
 
 // </editor-fold>
 
@@ -52,38 +43,39 @@ public class MainScreen extends javax.swing.JFrame {
 
     // <editor-fold defaultstate="collapsed" desc="Private Member Variables">
 
+    // TODO: JFRAME startscreen nodig om na de verkoop van ticketten mss?
     private final JFrame _startScreen;
-    private final ServiceLayer _sl;
+    private ISetFoto _iSF;
+    private ISetFavicon _iF;
+    private IGetData _iGD;
     private ArrayList<Film> _allFilms;
-    private final DefaultListModel _dlm;
+    private DefaultListModel _dlm;
     private ImageIcon _icon;
             
     // </editor-fold>
     
-    // <editor-fold defaultstate="collapsed" desc="Private Properties">
-    
-//    private void setFavicon() {
-//        ISetFavicon iSF = new Utility();
-//        iSF.setFavicon(this);
-//    }
-    
-    // </editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="Private Methods">
     
+    /**
+     *  Event adden tot list en de data tonen van de film
+     */
     private void addListenerToList(){
         ui_lstFilms.addListSelectionListener((ListSelectionEvent e) -> {
             if (e.getValueIsAdjusting())
             {   
                 if (ui_lstFilms.getSelectedIndex() > IntConstants.MINUS_ONE.getValue()) {
                     Film film = (Film) ui_lstFilms.getSelectedValue();
-                    ui_lblFoto.setIcon(_sl.setFoto(film.getFoto()));
+                    
+                    ui_lblFoto.setIcon(_iSF.setFoto(film.getFoto()));
                     ui_txtDescription.setText(film.getDescription());
                 }
             }
         });
     }
 
+    /**
+     *  Event adden tot combobox en filmlijst vullen afhankelijk van keuzen
+     */
     private void addListenerToDDL() {
         ui_ddlGenres.addItemListener((ItemEvent e) -> {
             String selectedGenre = ui_ddlGenres.getSelectedItem().toString();
@@ -100,11 +92,18 @@ public class MainScreen extends javax.swing.JFrame {
         });
     }
     
+    /**
+     *  om de constructor een beetje kleiner te houden
+     */
     private void prepareMainScreen() {
-        this.setIconImage(_sl.setFavicon().getImage());
-        _icon = _sl.setFavicon();
+        initializeObjects();
+        _icon = _iF.setFavicon();
+        this.setIconImage(_icon.getImage());
         ui_lblFoto.setToolTipText(null);
-        ui_lblFoto.setIcon(_sl.setFoto(StringConstants.STARTFOTO_PATH.getValue()));
+        ui_lblFoto.setIcon(_iSF.setFoto(StringConstants.STARTFOTO_PATH.getValue()));
+        /**
+         *  Algemene catch om programma niet te laten crashen indien probleem hoogst waarschijnlijk DB niet online
+         */
         try {
             fillListGenres();
             fillListFilms();
@@ -129,10 +128,23 @@ public class MainScreen extends javax.swing.JFrame {
         /* De klok starten */
         startClock();
     }
+
+    /**
+     *  Om de lengte van prepairescreen een beetje in te korten
+     */
+    private void initializeObjects() {
+        _iGD = new FetchFilmData();
+        _iF = new FetchFavicon();
+        _iSF = new FetchImages();
+        _dlm = new DefaultListModel();
+    }
     
+    /**
+     *  Haalt alle genres uit de databank tabel film
+     */
     private void fillListGenres() {
         DefaultComboBoxModel dcbm = new DefaultComboBoxModel();
-        List<String> allGenres = _sl.getAllGenres();
+        List<String> allGenres = _iGD.getAllGenres();
         dcbm.addElement(StringConstants.ALL.getValue());
         for (String item : allGenres) {
             dcbm.addElement(item);
@@ -140,14 +152,20 @@ public class MainScreen extends javax.swing.JFrame {
         ui_ddlGenres.setModel(dcbm);
     }
     
+    /**
+     *  Vult de lijst met de mogelijke films
+     */
     private void fillListFilms() {
-        _allFilms = _sl.getAllFilms();
+        _allFilms = _iGD.getAllFilms();
         for (Film allFilm : _allFilms) {
             _dlm.addElement(allFilm);
         }
         ui_lstFilms.setModel(_dlm);
     }
     
+    /**
+     *  start de klok rechtsboven en refreshed elke 60seconden
+     */
     private void startClock() {
         ui_lblTime.setText(new SimpleDateFormat(StringConstants.TIME_FORMAT_HHMM.getValue()).format(new Date()));
         Timer timeClock = new Timer(IntConstants.SIXTY_THOUSAND.getValue(), new ActionListener() {
@@ -159,6 +177,9 @@ public class MainScreen extends javax.swing.JFrame {
         timeClock.start();
     }
     
+    /**
+     *  Haalt de specifieke timer font en indien niet lukt zet een algemene font
+     */
     private void setTimeFont() throws FontFormatException, IOException {
         try {
             InputStream is = MainScreen.class.getResourceAsStream(StringConstants.FONT_TIMER_PATH.getValue());
@@ -176,41 +197,19 @@ public class MainScreen extends javax.swing.JFrame {
     
     // <editor-fold defaultstate="collapsed" desc="Constructors">
     
+    /**
+     * JFrame om deze te kunnen hiden, tonen en blokkeren
+     * 
+     * @param startScreen
+     * @throws FontFormatException
+     * @throws IOException 
+     */
     public MainScreen(JFrame startScreen) throws FontFormatException, IOException {
         initComponents();
-        _sl = new ServiceLayer();
-        _dlm = new DefaultListModel();
         this._startScreen = startScreen;
         prepareMainScreen();
-        
-//        ArrayList<Vertoning> createShows = _sl.createShows();
-////        ArrayList<String> coll = new ArrayList<>();
-////        for (Vertoning createShow : createShows) {
-////            if (!coll.contains(createShow.toString())) {
-////                coll.add(createShow.toString());
-////            }
-////        }
-//        String filmSpeelUren = _sl.getFilmSpeelUren("Suicide Squad");
-//            
-        
     }
 
-    // </editor-fold>
-    
-    // <editor-fold defaultstate="collapsed" desc="Events">
-
-    /** 
-     * Auto refresh films in de "All" optie van de Combobox zonder acties van user
-     * Haalt alle films uit de database elke second
-     * Wordt uitgevoerd op de EDT (event thread) anders bugged de ui
-     */
-//    Timer _updateTimer = new Timer(IntConstants.ONE_THOUSAND.getValue(), new ActionListener() {
-//        @Override
-//        public void actionPerformed(ActionEvent e) {
-//            fillListFilms();
-//        }
-//    });
-    
     // </editor-fold>
     
     @SuppressWarnings("unchecked")
@@ -516,19 +515,24 @@ public class MainScreen extends javax.swing.JFrame {
         if (ui_lstFilms.getSelectedValue() != null) {
             Film selectedFilm = (Film) ui_lstFilms.getSelectedValue();
             ShowInfoScreen sis = new ShowInfoScreen(selectedFilm, this);
-            //TicketScreen ts = new TicketScreen(selectedFilm, this, _startScreen);
             
             /* Blocked het huidige JFrame tot het nieuwe JFrame gesloten wordt */
             this.setEnabled(false);
             setupShowInfoScreen(selectedFilm, sis);
-        } else {// TODO: constante string omzetten
-            JOptionPane.showMessageDialog(null, "You must select a movie before we can show information.", StringConstants.BUY_ERRORMSG_TITLE.getValue(), JOptionPane.INFORMATION_MESSAGE, _icon);
+        } else {
+            JOptionPane.showMessageDialog(null, StringConstants.SHOW_INFO_ERRORMSG.getValue(), StringConstants.ATTENTION.getValue(), JOptionPane.INFORMATION_MESSAGE, _icon);
         }
     }//GEN-LAST:event_ui_btnShowInfoActionPerformed
 
+    /**
+     * Kan ik de positie bepalen van de nieuwe frame
+     * @param selectedFilm
+     * @param sis
+     * @throws HeadlessException 
+     */
     private void setupShowInfoScreen(Film selectedFilm, ShowInfoScreen sis) throws HeadlessException {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        sis.setLocation(dim.width / IntConstants.TWO.getValue() - sis.getSize().width / IntConstants.TWO.getValue() - 1, dim.height / IntConstants.TWO.getValue() - sis.getSize().height / IntConstants.TWO.getValue() - selectedFilm.getImgCorr()); // 4 pix verschil laptopt thuis
+        sis.setLocation(dim.width / IntConstants.TWO.getValue() - sis.getSize().width / IntConstants.TWO.getValue() - IntConstants.ONE.getValue(), dim.height / IntConstants.TWO.getValue() - sis.getSize().height / IntConstants.TWO.getValue() - selectedFilm.getImgCorr()); // 4 pix verschil laptop thuis
         sis.setVisible(true);
     }
 

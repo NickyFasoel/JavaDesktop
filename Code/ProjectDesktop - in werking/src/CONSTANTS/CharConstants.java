@@ -2,7 +2,8 @@ package CONSTANTS;
 
 public enum CharConstants {
     COMMA (','),
-    DOT ('.');
+    DOT ('.'),
+    ONE_SPACE (' ');
     
     private final char _value;
     

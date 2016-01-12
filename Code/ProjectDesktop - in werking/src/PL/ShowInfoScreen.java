@@ -1,12 +1,18 @@
 package PL;
 
-import BLL.ServiceLayer;
+import BLL.CompareTime;
+import BLL.FetchFavicon;
+import BLL.FetchImages;
+import CONSTANTS.CharConstants;
 import CONSTANTS.IntConstants;
 import CONSTANTS.StringConstants;
 import Dal.Film;
 import Dal.Helpers.FetchFilmData;
 import Dal.Vertoning;
+import Interfaces.ICompareTime;
 import Interfaces.IGetData;
+import Interfaces.ISetFavicon;
+import Interfaces.ISetFoto;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
@@ -17,6 +23,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -27,61 +34,76 @@ public class ShowInfoScreen extends javax.swing.JFrame {
     private Film _film;
     private String _selectedTime;
     private JFrame _mainScreen;
-    private ServiceLayer _sl;
     private ArrayList<Vertoning> _lstVertoningen;
     private IGetData _iGD;
+    private ISetFavicon _iF;
+    private ISetFoto _iSF;
+    private ImageIcon _icon;
     
     public ShowInfoScreen() {
         initComponents();
     }
-    
+    // TODO: check dat alle ctors this. hebben
     public ShowInfoScreen(Film film, JFrame mainScreen) {
         initComponents();
         this._film = film;
         this._mainScreen = mainScreen;
-        this._sl = new ServiceLayer();
+        this._iF = new FetchFavicon();
+        this._icon = _iF.setFavicon();
+        this._iSF = new FetchImages();
         // TODO: in helpermethode zsteken
-        this.setIconImage(_sl.setFavicon().getImage());
+        
         _iGD = new FetchFilmData();
-        this._lstVertoningen = _iGD.createShows();
-        setupShowInfoScreen(film, _sl);
+        this._lstVertoningen = _iGD.getAllShows();
+        setupShowInfoScreen();
         _selectedTime = StringConstants.EMPTY.getValue();
     }
 
-    private void setupShowInfoScreen(Film film, ServiceLayer sl) {
+    /**
+     *  Inperken van Ctor lengte
+     */
+    private void setupShowInfoScreen() {
+        this.setIconImage(_icon.getImage());
+        
+        hideTimeControls();
+        
+        String[] speelUren = _film.getSpeelUren().split(StringConstants.ONE_SPACE.getValue());
+        for (String item : speelUren) {
+            String temp = item.replace(CharConstants.COMMA.getValue(), CharConstants.ONE_SPACE.getValue()).trim();
+            if (temp.equals(StringConstants.SIXTEEN_HOURS.getValue())) {
+                ui_btnStartTime1.setVisible(true);
+                ui_lblStartTime1.setVisible(true);
+            }
+            if (temp.equals(StringConstants.NINETEEN_HOURS.getValue())) {
+                ui_btnStartTime2.setVisible(true);
+                ui_lblStartTime2.setVisible(true);
+            }
+            if (temp.equals(StringConstants.TWENTY_TWO_HOURS.getValue())) {
+                ui_btnStartTime3.setVisible(true);
+                ui_lblStartTime3.setVisible(true);
+            }
+        }
+        ui_lblCurrentVertoning.setText(_film.getNaam());
+        ui_lblShowInfoBG.setIcon(_iSF.setFoto(_film.getInfoBG()));    
+    
+        String[] speelDagen = _film.getSpeelDagen().split(StringConstants.ONE_SPACE.getValue());
+        for (String item : speelDagen) {
+            String replace = item.replace(CharConstants.COMMA.getValue(), CharConstants.ONE_SPACE.getValue()).trim();
+            ui_ddlDays.addItem(replace);
+        }
+    }
+
+    /**
+     *  Verbergt de lbl en btn om ze achteraf afhankelijk 
+     *  vd vertoning te showen of niet
+     */
+    private void hideTimeControls() {
         ui_btnStartTime1.setVisible(false);
         ui_lblStartTime1.setVisible(false);
         ui_btnStartTime2.setVisible(false);
         ui_lblStartTime2.setVisible(false);
         ui_btnStartTime3.setVisible(false);
         ui_lblStartTime3.setVisible(false);
-        
-        String[] speelUren = film.getSpeelUren().split(" ");
-        for (String item : speelUren) {
-            String temp = item.replace(',', ' ').trim();
-            if (temp.equals("16:00")) {
-                ui_btnStartTime1.setVisible(true);
-                ui_lblStartTime1.setVisible(true);
-            }
-            if (temp.equals("19:00")) {
-                ui_btnStartTime2.setVisible(true);
-                ui_lblStartTime2.setVisible(true);
-            }
-            if (temp.equals("22:00")) {
-                ui_btnStartTime3.setVisible(true);
-                ui_lblStartTime3.setVisible(true);
-            }
-        }
-        
-        ui_lblCurrentVertoning.setText(_film.getNaam());
-
-        ui_lblShowInfoBG.setIcon(sl.setFoto(_film.getInfoBG()));    
-    
-        String[] speelDagen = film.getSpeelDagen().split(" ");
-        for (String item : speelDagen) {
-            String replace = item.replace(',', ' ').trim();
-            ui_ddlDays.addItem(replace);
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -322,7 +344,7 @@ public class ShowInfoScreen extends javax.swing.JFrame {
         if (ui_btnStartTime1.isSelected()) {
             ui_btnStartTime2.setSelected(false);
             ui_btnStartTime3.setSelected(false);
-            _selectedTime = "16:00";
+            _selectedTime = StringConstants.SIXTEEN_HOURS.getValue();
         }
     }//GEN-LAST:event_ui_btnStartTime1ActionPerformed
 
@@ -330,7 +352,7 @@ public class ShowInfoScreen extends javax.swing.JFrame {
         if (ui_btnStartTime2.isSelected()) {
             ui_btnStartTime1.setSelected(false);
             ui_btnStartTime3.setSelected(false);
-            _selectedTime = "19:00";
+            _selectedTime = StringConstants.NINETEEN_HOURS.getValue();
         }
     }//GEN-LAST:event_ui_btnStartTime2ActionPerformed
 
@@ -338,7 +360,7 @@ public class ShowInfoScreen extends javax.swing.JFrame {
         if (ui_btnStartTime3.isSelected()) {
             ui_btnStartTime1.setSelected(false);
             ui_btnStartTime2.setSelected(false);
-            _selectedTime = "22:00";
+            _selectedTime = StringConstants.TWENTY_TWO_HOURS.getValue();
         }
     }//GEN-LAST:event_ui_btnStartTime3ActionPerformed
 
@@ -351,17 +373,18 @@ public class ShowInfoScreen extends javax.swing.JFrame {
     private void ui_btnBuyTicketsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ui_btnBuyTicketsActionPerformed
         try {
             if (!_selectedTime.equals(StringConstants.EMPTY.getValue())) {
-                if (ui_ddlDays.getSelectedItem().equals(new SimpleDateFormat("EEEE", Locale.UK).format(new Date()))) {
-                    if (_sl.compareTime(_selectedTime) > -1) {
+                if (ui_ddlDays.getSelectedItem().equals(new SimpleDateFormat(StringConstants.FULLNAME_DAY_OF_THE_WEEK_FORMAT.getValue(), Locale.UK).format(new Date()))) {
+                    ICompareTime iCT = new CompareTime();
+                    if (iCT.compareTime(_selectedTime) > IntConstants.MINUS_ONE.getValue()) {
                         helperBuyTicket();
                     } else {
-                        JOptionPane.showMessageDialog(null, "This movie has already begun.", StringConstants.BUY_ERRORMSG_TITLE.getValue(), JOptionPane.INFORMATION_MESSAGE, _sl.setFavicon());
+                        JOptionPane.showMessageDialog(null, StringConstants.MOVIE_ALREADY_DONE.getValue(), StringConstants.ATTENTION.getValue(), JOptionPane.INFORMATION_MESSAGE, _icon);
                     }
-                } else if (!ui_ddlDays.getSelectedItem().equals(new SimpleDateFormat("EEEE", Locale.UK).format(new Date()))) {
+                } else if (!ui_ddlDays.getSelectedItem().equals(new SimpleDateFormat(StringConstants.FULLNAME_DAY_OF_THE_WEEK_FORMAT.getValue(), Locale.UK).format(new Date()))) {
                     helperBuyTicket();
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "You have no time specified for the movie.", StringConstants.BUY_ERRORMSG_TITLE.getValue(), JOptionPane.INFORMATION_MESSAGE, _sl.setFavicon());
+                JOptionPane.showMessageDialog(null, StringConstants.NO_TIME_SELECTED.getValue(), StringConstants.ATTENTION.getValue(), JOptionPane.INFORMATION_MESSAGE, _icon);
             }
         } catch (ParseException ex) {
             Logger.getLogger(ShowInfoScreen.class.getName()).log(Level.SEVERE, null, ex);
@@ -387,11 +410,11 @@ public class ShowInfoScreen extends javax.swing.JFrame {
                 this.setEnabled(false);
                 _mainScreen.setVisible(true);
                 Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-                ts.setLocation(dim.width / IntConstants.TWO.getValue() - ts.getSize().width / IntConstants.TWO.getValue(), dim.height / IntConstants.TWO.getValue() - ts.getSize().height / IntConstants.TWO.getValue() - 50);
+                ts.setLocation(dim.width / IntConstants.TWO.getValue() - ts.getSize().width / IntConstants.TWO.getValue(), dim.height / IntConstants.TWO.getValue() - ts.getSize().height / IntConstants.TWO.getValue() - IntConstants.FIFTY.getValue());
                 ts.setVisible(true);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "You must select the time of the movie.", "Forgot to select a time", JOptionPane.INFORMATION_MESSAGE, _sl.setFavicon());
+            JOptionPane.showMessageDialog(null, StringConstants.NO_TIME_SELECTED.getValue(), StringConstants.ATTENTION.getValue(), JOptionPane.INFORMATION_MESSAGE, _icon);
         }
     }
 
@@ -420,11 +443,11 @@ public class ShowInfoScreen extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ShowInfoScreen().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new ShowInfoScreen().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

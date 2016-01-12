@@ -3,12 +3,12 @@ package PL;
 // <editor-fold defaultstate="collapsed" desc="Imports">
 
 import BLL.CountTickets;
-import BLL.CreateAKlant;
-import BLL.ServiceLayer;
+import BLL.FetchFavicon;
 import CONSTANTS.IntConstants;
 import CONSTANTS.StringConstants;
-import Dal.Film;
 import Dal.Vertoning;
+import Interfaces.ICountTickets;
+import Interfaces.ISetFavicon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
@@ -26,17 +26,19 @@ public class TicketScreen extends javax.swing.JFrame {
     private final JFrame _jframeMainScreen;
     private final JFrame _jframeShowInfoScreen;
     private final Vertoning _vertoning;
-    private final ServiceLayer _sl;
     private final ImageIcon _icon;
+    private ISetFavicon _iF;
     private int _aantalTickets;
     
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Private Methods">
     
-    /* Haalt de data van de geselecteerde film */
+    /**
+     *  Om de ctor wat kleiner te houden
+     */
     private void prepareTicketScreen() {
-        _sl.setFavicon();
+        //_iF.setFavicon();
         _aantalTickets = IntConstants.ONE.getValue();
         ui_lblDatum.setText(_vertoning.getSpeelDag());
         ui_lblFilmNaam.setText(_vertoning.getFilmNaam());
@@ -47,6 +49,11 @@ public class TicketScreen extends javax.swing.JFrame {
         ui_lblZaal.setText(String.valueOf(_vertoning.getZaalNummer()));
     }
 
+    /**
+     * Berekent de prijs de prijs en format dit met een currency symbol ervoor
+     * @param aantalTickets
+     * @return 
+     */
     private String calculatePrijs(int aantalTickets) {
         DecimalFormat df = new DecimalFormat(StringConstants.DECIMAL_FORMAT.getValue());
         double totaal = aantalTickets * _vertoning.getPrijs();
@@ -54,12 +61,16 @@ public class TicketScreen extends javax.swing.JFrame {
         return euroPrijs;
     }
     
+    /**
+     *  Update +- elke second de remaining tickets en toont dit in een txtBox
+     */
     private void checkFreeTickets() {
         ui_txtRemainingTickets.setText(String.valueOf(_vertoning.getPlaatsen()));
-        Timer timeClock = new Timer(1000, new ActionListener() {
+        ICountTickets iCT = new CountTickets();
+        Timer timeClock = new Timer(IntConstants.ONE_THOUSAND.getValue(), new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ui_txtRemainingTickets.setText(String.valueOf(_vertoning.getPlaatsen() - _sl.countTickets(_vertoning)));
+                ui_txtRemainingTickets.setText(String.valueOf(_vertoning.getPlaatsen() - iCT.countTickets(_vertoning)));
             }
         });
         timeClock.start();
@@ -75,10 +86,10 @@ public class TicketScreen extends javax.swing.JFrame {
         this._jframeMainScreen = jframe;
         this._jframeShowInfoScreen = jframe2;
         this._vertoning = vertoning;
-        _sl = new ServiceLayer();
-        _icon = _sl.setFavicon();
+        this._iF = new FetchFavicon();
+        this._icon = _iF.setFavicon();
         prepareTicketScreen();
-        ui_txtRemainingTickets.setText(String.valueOf(vertoning.getPlaatsen()));
+        ui_txtRemainingTickets.setText(String.valueOf(_vertoning.getPlaatsen()));
         checkFreeTickets();
     }
 
@@ -427,18 +438,24 @@ public class TicketScreen extends javax.swing.JFrame {
 
     // <editor-fold defaultstate="collapsed" desc="Events">
 
-    /* Code achter de plus knop voor ticketaantal */
+    /**
+     *  Code achter de plus knop voor ticketaantal
+     *  miets beperking van aantal tickets
+     */
     private void ui_btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ui_btnAddActionPerformed
         if (_aantalTickets < IntConstants.NINE.getValue()) {
             _aantalTickets++;
             ui_txtAantalTickets.setText(String.valueOf(_aantalTickets));
             ui_lblPrijs.setText(calculatePrijs(_aantalTickets));
         } else {
-            JOptionPane.showMessageDialog(null, StringConstants.MAX_TICKET_AMOUNTMSG.getValue(), StringConstants.BUY_ERRORMSG_TITLE.getValue(), JOptionPane.INFORMATION_MESSAGE, _icon);
+            JOptionPane.showMessageDialog(null, StringConstants.MAX_TICKET_AMOUNTMSG.getValue(), StringConstants.ATTENTION.getValue(), JOptionPane.INFORMATION_MESSAGE, _icon);
         }
     }//GEN-LAST:event_ui_btnAddActionPerformed
 
-    /* Code achter de min knop voor ticketaantal */
+    /** 
+     *  Code achter de min knop voor ticketaantal
+     *  mits beperking kan niet minder dan 1 gaan
+     */
     private void ui_btnSubtractActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ui_btnSubtractActionPerformed
         if (_aantalTickets > IntConstants.ONE.getValue()) {
             _aantalTickets--;
@@ -447,18 +464,24 @@ public class TicketScreen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ui_btnSubtractActionPerformed
 
+    /**
+     *  Bepaalde jframes deblokkeren en tonen
+     */
     private void ui_btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ui_btnCancelActionPerformed
         /* Exit current TicketScreen instantie */
         this.dispose();
-        
         _jframeMainScreen.setVisible(true);
         _jframeShowInfoScreen.setEnabled(true);
         _jframeShowInfoScreen.setVisible(true);
     }//GEN-LAST:event_ui_btnCancelActionPerformed
 
+    /**
+     *  Als er nog tickets genoeg zijn kan je ze kopen anders 
+     *  message dat het niet gaat
+     */
     private void ui_btnProceedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ui_btnProceedActionPerformed
         if (Integer.parseInt(ui_txtRemainingTickets.getText()) > Integer.parseInt(ui_txtAantalTickets.getText())) {
-            
+            // TODO: code adden om klant te inserten, maken en als tickets niet meer zijn errormessage met jmessagepane
         }
     }//GEN-LAST:event_ui_btnProceedActionPerformed
 

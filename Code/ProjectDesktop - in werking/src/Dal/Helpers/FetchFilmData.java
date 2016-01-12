@@ -132,7 +132,7 @@ public class FetchFilmData implements IGetData {
     }
     
     @Override
-    public ArrayList<Vertoning> createShows() {
+    public ArrayList<Vertoning> getAllShows() {
         ArrayList<Vertoning> lstVert = new ArrayList<>();
         ResultSet rs = null;
         try {
