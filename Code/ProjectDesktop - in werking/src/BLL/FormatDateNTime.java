@@ -15,18 +15,18 @@ public class FormatDateNTime implements IFormatDate {
     }
     
     public String getFormattedTimeOfDay() {
-        _timeFormat = new SimpleDateFormat(StringConstants.TIME_FORMAT_HHMMSS.getValue());
+        this._timeFormat = new SimpleDateFormat(StringConstants.TIME_FORMAT_HHMMSS.getValue());
         return _timeFormat.format(_date);
     }
     
     public String getFormattedTimeOfDayNoSeconds() {
-        _timeFormat = new SimpleDateFormat(StringConstants.TIME_FORMAT_HHMM.getValue());
+        this._timeFormat = new SimpleDateFormat(StringConstants.TIME_FORMAT_HHMM.getValue());
         return _timeFormat.format(_date);
     }
     
     @Override
     public String getFormattedDate() {
-        _timeFormat = new SimpleDateFormat(StringConstants.DATE_FORMAT.getValue());
+        this._timeFormat = new SimpleDateFormat(StringConstants.DATE_FORMAT.getValue());
         return _timeFormat.format(_date);
     }
     

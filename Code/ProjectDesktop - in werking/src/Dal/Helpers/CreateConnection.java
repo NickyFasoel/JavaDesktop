@@ -6,11 +6,6 @@ import java.sql.SQLException;
 
 public enum CreateConnection {
     
-    /** 
-     * The singleton pattern restricts the instantiation of a class to one object
-     * In Java to enforce this, the best approach is to use an enum
-     * Thread safe, wordt maar 1 keer geïnitialiseerd (waarde aan toegekend)
-     */
     INSTANCE;
     
     private static final String _connString = "jdbc:mysql://localhost:3307/db_kinepolis";

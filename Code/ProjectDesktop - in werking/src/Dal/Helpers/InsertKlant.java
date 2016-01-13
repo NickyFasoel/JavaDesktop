@@ -23,7 +23,7 @@ public class InsertKlant implements IInsertKlant {
     /* Used for regular statements */
     public InsertKlant(Klant klant) {
         this._klant = klant;
-        this._queryInsertKlant = "INSERT INTO tbl_tickets (Vertoning_ID, Aantal, Zaal_Nummer, Datum, Prijs) VALUES ('" + _klant.getVertoning() + "','" + _klant.getAantalTickets() + "','" + _klant.getZaalNummer()+ "','" + _klant.getDatum() + "','" + _klant.getPrijs() + "')";
+        this._queryInsertKlant = "INSERT INTO tbl_klant (Vertoning_ID, Aantal, Zaal_Nummer, Datum, Prijs) VALUES ('" + _klant.getVertoning() + "','" + _klant.getAantalTickets() + "','" + _klant.getZaalNummer()+ "','" + _klant.getDatum() + "','" + _klant.getPrijs() + "')";
     }
     
     @Override

@@ -101,6 +101,7 @@ public class MainScreen extends javax.swing.JFrame {
         this.setIconImage(_icon.getImage());
         ui_lblFoto.setToolTipText(null);
         ui_lblFoto.setIcon(_iSF.setFoto(StringConstants.STARTFOTO_PATH.getValue()));
+        ui_txtDescription.setText(StringConstants.STARTDESCRIPTION.getValue());
         /**
          *  Algemene catch om programma niet te laten crashen indien probleem hoogst waarschijnlijk DB niet online
          */
@@ -167,11 +168,12 @@ public class MainScreen extends javax.swing.JFrame {
      *  start de klok rechtsboven en refreshed elke 60seconden
      */
     private void startClock() {
-        ui_lblTime.setText(new SimpleDateFormat(StringConstants.TIME_FORMAT_HHMM.getValue()).format(new Date()));
+        SimpleDateFormat sdf = new SimpleDateFormat(StringConstants.TIME_FORMAT_HHMM.getValue());
+        ui_lblTime.setText(sdf.format(new Date()));
         Timer timeClock = new Timer(IntConstants.SIXTY_THOUSAND.getValue(), new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ui_lblTime.setText(new SimpleDateFormat(StringConstants.TIME_FORMAT_HHMM.getValue()).format(new Date()));
+                ui_lblTime.setText(sdf.format(new Date()));
             }
         });
         timeClock.start();

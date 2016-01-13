@@ -10,7 +10,6 @@ public enum IntConstants {
     FIFTY (50),
     ONE_THOUSAND (1000),
     MINUS_ONE (-1),
-    EIGHTEEN (18),
     EIGHTY_TWO (82),
     SIXTY_THOUSAND (60000);
     

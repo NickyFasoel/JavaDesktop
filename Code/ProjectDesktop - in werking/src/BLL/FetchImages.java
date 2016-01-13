@@ -1,9 +1,9 @@
 package BLL;
 
-import Interfaces.ISetFavicon;
 import Interfaces.ISetFoto;
-import CONSTANTS.StringConstants;
 import javax.swing.ImageIcon;
+
+// TODO: Remove all unused imports
 
 public class FetchImages implements ISetFoto {
     

@@ -5,7 +5,7 @@ package PL;
 import BLL.CountTickets;
 import BLL.CreateAKlant;
 import BLL.FetchFavicon;
-import BLL.ICreateAKlant;
+import Interfaces.ICreateAKlant;
 import CONSTANTS.IntConstants;
 import CONSTANTS.StringConstants;
 import Dal.Helpers.InsertKlant;
@@ -35,6 +35,7 @@ public class TicketScreen extends javax.swing.JFrame {
     private final ISetFavicon _iF;
     private int _aantalTickets;
     private final JFrame _jframeStartScreen;
+    private DecimalFormat _df;
     
     // </editor-fold>
     
@@ -48,9 +49,8 @@ public class TicketScreen extends javax.swing.JFrame {
         this._aantalTickets = IntConstants.ONE.getValue();
         ui_lblDatum.setText(_vertoning.getSpeelDag());
         ui_lblFilmNaam.setText(_vertoning.getFilmNaam());
-        DecimalFormat df = new DecimalFormat(StringConstants.DECIMAL_FORMAT.getValue());
-        String euroPrijs = StringConstants.EURO_SYMBOL.getValue() + String.valueOf(df.format(_vertoning.getPrijs()));
-        ui_lblPrijs.setText(euroPrijs);
+        this._df = new DecimalFormat(StringConstants.DECIMAL_FORMAT.getValue());
+        ui_lblPrijs.setText(StringConstants.EURO_SYMBOL.getValue() + String.valueOf(_df.format(_vertoning.getPrijs())));
         ui_lblStartingTime.setText(_vertoning.getSpeelUur());
         ui_lblZaal.setText(String.valueOf(_vertoning.getZaalNummer()));
     }
@@ -61,9 +61,8 @@ public class TicketScreen extends javax.swing.JFrame {
      * @return 
      */
     private String calculatePrijs(int aantalTickets) {
-        DecimalFormat df = new DecimalFormat(StringConstants.DECIMAL_FORMAT.getValue());
         double totaal = aantalTickets * _vertoning.getPrijs();
-        String euroPrijs = StringConstants.EURO_SYMBOL.getValue() + String.valueOf(df.format(totaal));
+        String euroPrijs = StringConstants.EURO_SYMBOL.getValue() + String.valueOf(_df.format(totaal));
         return euroPrijs;
     }
     
@@ -506,7 +505,7 @@ public class TicketScreen extends javax.swing.JFrame {
 
                 JOptionPane.showMessageDialog(null, StringConstants.PAYMENTMSG.getValue(), StringConstants.PAYMENT_TITLE.getValue(), JOptionPane.INFORMATION_MESSAGE, _icon);
             }
-            /* Exit current TicketScreen en MainScreen instantie, reset app terug naar StartScreen instantie */
+            /* reset app terug naar StartScreen */
             this.dispose();
             _jframeMainScreen.dispose();
             _jframeShowInfoScreen.dispose();
