@@ -34,6 +34,7 @@ public class TicketScreen extends javax.swing.JFrame {
     private final ImageIcon _icon;
     private final ISetFavicon _iF;
     private int _aantalTickets;
+    private final JFrame _jframeStartScreen;
     
     // </editor-fold>
     
@@ -83,13 +84,16 @@ public class TicketScreen extends javax.swing.JFrame {
     
     // </editor-fold>
     
+    // TODO: alles checken op commentaar
+    
     // <editor-fold defaultstate="collapsed" desc="Constructors">
     
-    public TicketScreen(Vertoning vertoning, JFrame jframe, JFrame jframe2) {
+    public TicketScreen(Vertoning vertoning, JFrame ms, JFrame is, JFrame ss) {
         initComponents();
-        /* Gebruikt de instantie van mainscreen om deze te beheren (zoals te tonen) */
-        this._jframeMainScreen = jframe;
-        this._jframeShowInfoScreen = jframe2;
+        /* Gebruikt de instantie van jframes om deze te beheren (zoals te tonen, disposen wanneer ik wil etc) */
+        this._jframeMainScreen = ms;
+        this._jframeShowInfoScreen = is;
+        this._jframeStartScreen = ss;
         this._vertoning = vertoning;
         this._iF = new FetchFavicon();
         this._icon = _iF.setFavicon();
@@ -486,17 +490,28 @@ public class TicketScreen extends javax.swing.JFrame {
      */
     private void ui_btnProceedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ui_btnProceedActionPerformed
         int remTickets = Integer.parseInt(ui_txtRemainingTickets.getText());
+        boolean isPaid = true;
         if (remTickets >= _aantalTickets) {
-            ICreateAKlant iCAK = new CreateAKlant();
-            Klant klant = iCAK.createKlant(_vertoning.getId(), _aantalTickets, _vertoning.getZaalNummer(), (_vertoning.getPrijs() * _aantalTickets));
-            IInsertKlant iIK = new InsertKlant(klant);
-            iIK.insertKlantStatement();
-            
-            /**
-             *  Werken allebij
-             *  IInsertKlant iiK = new InsertKlant();
-             *  iiK.insertKlantPrepStatement(klant);
-             */
+            if (isPaid) {
+                ICreateAKlant iCAK = new CreateAKlant();
+                Klant klant = iCAK.createKlant(_vertoning.getId(), _aantalTickets, _vertoning.getZaalNummer(), (_vertoning.getPrijs() * _aantalTickets));
+                IInsertKlant iIK = new InsertKlant(klant);
+                iIK.insertKlantStatement();
+
+                /**
+                 *  Werken allebij
+                 *  IInsertKlant iiK = new InsertKlant();
+                 *  iiK.insertKlantPrepStatement(klant);
+                 */
+
+                JOptionPane.showMessageDialog(null, StringConstants.PAYMENTMSG.getValue(), StringConstants.PAYMENT_TITLE.getValue(), JOptionPane.INFORMATION_MESSAGE, _icon);
+            }
+            /* Exit current TicketScreen en MainScreen instantie, reset app terug naar StartScreen instantie */
+            this.dispose();
+            _jframeMainScreen.dispose();
+            _jframeShowInfoScreen.dispose();
+            _jframeStartScreen.setVisible(true);
+            _jframeStartScreen.setEnabled(true);
         } else if ((remTickets < _aantalTickets) 
             && remTickets != IntConstants.ZERO.getValue() ){
             JOptionPane.showMessageDialog(null, StringConstants.NOT_ENOUGH_TICKETS.getValue(), StringConstants.ATTENTION.getValue(), JOptionPane.INFORMATION_MESSAGE, _icon);

@@ -31,6 +31,7 @@ public class ShowInfoScreen extends javax.swing.JFrame {
 
     private Film _film;
     private String _selectedTime;
+    private JFrame _startScreen;
     private JFrame _mainScreen;
     private ArrayList<Vertoning> _lstVertoningen;
     private IGetData _iGD;
@@ -42,10 +43,11 @@ public class ShowInfoScreen extends javax.swing.JFrame {
         initComponents();
     }
 
-    public ShowInfoScreen(Film film, JFrame mainScreen) {
+    public ShowInfoScreen(Film film, JFrame mainScreen, JFrame startScreen) {
         initComponents();
         this._film = film;
         this._mainScreen = mainScreen;
+        this._startScreen = startScreen;
         this._iF = new FetchFavicon();
         this._icon = _iF.setFavicon();
         this._iSF = new FetchImages();
@@ -401,7 +403,7 @@ public class ShowInfoScreen extends javax.swing.JFrame {
                 }
             }
             if (selectedVertoning != null) {
-                TicketScreen ts = new TicketScreen(selectedVertoning, _mainScreen, this);
+                TicketScreen ts = new TicketScreen(selectedVertoning, _mainScreen, this, _startScreen);
                 this.setVisible(false);
                 this.setEnabled(false);
                 _mainScreen.setVisible(true);

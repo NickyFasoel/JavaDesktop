@@ -514,7 +514,7 @@ public class MainScreen extends javax.swing.JFrame {
     private void ui_btnShowInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ui_btnShowInfoActionPerformed
         if (ui_lstFilms.getSelectedValue() != null) {
             Film selectedFilm = (Film) ui_lstFilms.getSelectedValue();
-            ShowInfoScreen sis = new ShowInfoScreen(selectedFilm, this);
+            ShowInfoScreen sis = new ShowInfoScreen(selectedFilm, this, _startScreen);
             
             /* Blocked het huidige JFrame tot het nieuwe JFrame gesloten wordt */
             this.setEnabled(false);
@@ -525,7 +525,7 @@ public class MainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_ui_btnShowInfoActionPerformed
 
     /**
-     * Kan ik de positie bepalen van de nieuwe frame
+     * Hiermee kan ik de positie bepalen van de nieuwe frame
      * @param selectedFilm
      * @param sis
      * @throws HeadlessException 
