@@ -22,7 +22,7 @@ public class Film implements Serializable {
     private String genre;
     private boolean active;
     private String description;
-    private String foto;
+    private String image;
     private String infoBG;
     private int imgCorr;
     private static final long serialVersionUID = 1L;
@@ -45,7 +45,7 @@ public class Film implements Serializable {
         this.genre = genre;
         this.active = active;
         this.description = description;
-        this.foto = foto;
+        this.image = foto;
         this.infoBG = infoBG;
         this.imgCorr = imgCorr;
     }
@@ -112,12 +112,12 @@ public class Film implements Serializable {
         this.description = description;
     }
 
-    public String getFoto() {
-        return foto;
+    public String getImage() {
+        return image;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public boolean isActive() {
@@ -128,17 +128,6 @@ public class Film implements Serializable {
         this.active = active;
     }
     
-    // </editor-fold>
-
-    // <editor-fold defaultstate="collapsed" desc="Public Methods">
-    
-    @Override
-    public String toString() {
-        return naam;
-    }
-    
-    // </editor-fold> 
-
     public String getInfoBG() {
         return infoBG;
     }
@@ -154,5 +143,18 @@ public class Film implements Serializable {
     public void setImgCorr(int imgCorr) {
         this.imgCorr = imgCorr;
     }
+    
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Public Methods">
+    
+    @Override
+    public String toString() {
+        return naam;
+    }
+    
+    // </editor-fold> 
+
+    
       
 }

@@ -9,7 +9,7 @@ package CONSTANTS;
  */
 
 public enum StringConstants {
-    /* Constanten in de enum die de private constructor 1 malig gebruiken dus van nature singleton zijn */
+    /* Constanten in de enum die de private constructor 1 malig gebruiken dus van nature singleton zijn *//* Constanten in de enum die de private constructor 1 malig gebruiken dus van nature singleton zijn */
     NAAM_COLUMN ("Naam"), 
     SPEELUREN_COLUMN ("SpeelUren"), 
     SPEELDAGEN_COLUMN ("SpeelDagen"), 
@@ -17,7 +17,7 @@ public enum StringConstants {
     GENRE_COLUMN ("Genre"), 
     ACTIEF_COLUMN ("Actief"), 
     DESCRIPTION_COLUMN ("Beschrijving"), 
-    FOTO_COLUMN ("Foto"),
+    IMAGE_COLUMN ("Image"),
     SHOWINFOBACKGROUNDIMAGE_COLUMN ("ShowInfoBackgroundImage"),
     BGIMAGECORRECTION_COLUMN ("BgImageCorrection"),
     ID_COLUMN ("ID"),

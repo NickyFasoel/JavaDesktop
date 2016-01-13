@@ -65,11 +65,11 @@ public class FetchFilmData implements IGetData {
                 String genre = _rs.getString(StringConstants.GENRE_COLUMN.getValue());
                 boolean actief = _rs.getBoolean(StringConstants.ACTIEF_COLUMN.getValue());
                 String description = _rs.getString(StringConstants.DESCRIPTION_COLUMN.getValue());
-                String foto = _rs.getString(StringConstants.FOTO_COLUMN.getValue());
+                String image = _rs.getString(StringConstants.IMAGE_COLUMN.getValue());
                 String showBG = _rs.getString(StringConstants.SHOWINFOBACKGROUNDIMAGE_COLUMN.getValue());
                 int imgCorr = _rs.getInt(StringConstants.BGIMAGECORRECTION_COLUMN.getValue());
                 Film film = new Film(id, naam, speelUren, speelDagen, prijs,
-                            genre, actief, description, foto, showBG, imgCorr);
+                            genre, actief, description, image, showBG, imgCorr);
                 lst.add(film);
             }
         } catch (SQLException ex) {

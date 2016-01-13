@@ -66,7 +66,7 @@ public class MainScreen extends javax.swing.JFrame {
                 if (ui_lstFilms.getSelectedIndex() > IntConstants.MINUS_ONE.getValue()) {
                     Film film = (Film) ui_lstFilms.getSelectedValue();
                     
-                    ui_lblFoto.setIcon(_iSF.setFoto(film.getFoto()));
+                    ui_lblFoto.setIcon(_iSF.setFoto(film.getImage()));
                     ui_txtDescription.setText(film.getDescription());
                 }
             }
