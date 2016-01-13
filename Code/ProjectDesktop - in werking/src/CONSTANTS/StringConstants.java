@@ -10,7 +10,6 @@ package CONSTANTS;
 
 public enum StringConstants {
     /* Constanten in de enum die de private constructor 1 malig gebruiken dus van nature singleton zijn */
-   // TODO: alle constante checke als ze gebruikt worde
     NAAM_COLUMN ("Naam"), 
     SPEELUREN_COLUMN ("SpeelUren"), 
     SPEELDAGEN_COLUMN ("SpeelDagen"), 
