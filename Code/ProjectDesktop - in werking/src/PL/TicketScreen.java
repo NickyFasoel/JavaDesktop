@@ -3,11 +3,16 @@ package PL;
 // <editor-fold defaultstate="collapsed" desc="Imports">
 
 import BLL.CountTickets;
+import BLL.CreateAKlant;
 import BLL.FetchFavicon;
+import BLL.ICreateAKlant;
 import CONSTANTS.IntConstants;
 import CONSTANTS.StringConstants;
+import Dal.Helpers.InsertKlant;
+import Dal.Klant;
 import Dal.Vertoning;
 import Interfaces.ICountTickets;
+import Interfaces.IInsertKlant;
 import Interfaces.ISetFavicon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -480,8 +485,23 @@ public class TicketScreen extends javax.swing.JFrame {
      *  message dat het niet gaat
      */
     private void ui_btnProceedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ui_btnProceedActionPerformed
-        if (Integer.parseInt(ui_txtRemainingTickets.getText()) > Integer.parseInt(ui_txtAantalTickets.getText())) {
-            // TODO: code adden om klant te inserten, maken en als tickets niet meer zijn errormessage met jmessagepane
+        int remTickets = Integer.parseInt(ui_txtRemainingTickets.getText());
+        if (remTickets >= _aantalTickets) {
+            ICreateAKlant iCAK = new CreateAKlant();
+            Klant klant = iCAK.createKlant(_vertoning.getId(), _aantalTickets, _vertoning.getZaalNummer(), (_vertoning.getPrijs() * _aantalTickets));
+            IInsertKlant iIK = new InsertKlant(klant);
+            iIK.insertKlantStatement();
+            
+            /**
+             *  Werken allebij
+             *  IInsertKlant iiK = new InsertKlant();
+             *  iiK.insertKlantPrepStatement(klant);
+             */
+        } else if ((remTickets < _aantalTickets) 
+            && remTickets != IntConstants.ZERO.getValue() ){
+            JOptionPane.showMessageDialog(null, StringConstants.NOT_ENOUGH_TICKETS.getValue(), StringConstants.ATTENTION.getValue(), JOptionPane.INFORMATION_MESSAGE, _icon);
+        } else {
+            JOptionPane.showMessageDialog(null, StringConstants.NO_TICKETS_LEFT.getValue(), StringConstants.ATTENTION.getValue(), JOptionPane.INFORMATION_MESSAGE, _icon);
         }
     }//GEN-LAST:event_ui_btnProceedActionPerformed
 

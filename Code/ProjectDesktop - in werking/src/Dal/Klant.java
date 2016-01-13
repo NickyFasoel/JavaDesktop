@@ -17,9 +17,9 @@ public class Klant implements Serializable {
     
     // <editor-fold defaultstate="collapsed" desc="Private Member Variables">
 
-    private String film;
+    private long vertoningID;
+    private int zaalNummer;
     private int aantalTickets;
-    private String uurVanAankoop;
     private String datum;
     private double prijs;
     private static final long serialVersionUID = 1L;
@@ -31,10 +31,10 @@ public class Klant implements Serializable {
 
     // <editor-fold defaultstate="collapsed" desc="Constructors">
 
-    public Klant(String film, int aantalTickets, double prijs) {
-        this.film = film;
+    public Klant(long vertoningID, int aantalTickets, int zaalNummer, double prijs) {
+        this.vertoningID = vertoningID;
         this.aantalTickets = aantalTickets;
-        this.uurVanAankoop = new FormatDateNTime().getFormattedTimeOfDay();
+        this.zaalNummer = zaalNummer;
         IFormatDate iFD = new FormatDateNTime();
         this.datum = iFD.getFormattedDate();
         this.prijs = prijs;
@@ -54,12 +54,12 @@ public class Klant implements Serializable {
         this.id = id;
     }
 
-    public String getFilm() {
-        return film;
+    public long getVertoning() {
+        return vertoningID;
     }
 
-    public void setFilm(String film) {
-        this.film = film;
+    public void setVertoning(long vertoningID) {
+        this.vertoningID = vertoningID;
     }
 
     public int getAantalTickets() {
@@ -68,14 +68,6 @@ public class Klant implements Serializable {
 
     public void setAantalTickets(int aantalTickets) {
         this.aantalTickets = aantalTickets;
-    }
-
-    public String getUurVanAankoop() {
-        return uurVanAankoop;
-    }
-
-    public void setUurVanAankoop(String uurVanAankoop) {
-        this.uurVanAankoop = uurVanAankoop;
     }
 
     public String getDatum() {
@@ -95,5 +87,13 @@ public class Klant implements Serializable {
     }
     
     // </editor-fold>
+
+    public int getZaalNummer() {
+        return zaalNummer;
+    }
+
+    public void setZaalNummer(int zaalNummer) {
+        this.zaalNummer = zaalNummer;
+    }
     
 }

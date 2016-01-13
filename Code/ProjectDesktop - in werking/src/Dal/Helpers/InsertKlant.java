@@ -23,7 +23,7 @@ public class InsertKlant implements IInsertKlant {
     /* Used for regular statements */
     public InsertKlant(Klant klant) {
         this._klant = klant;
-        this._queryInsertKlant = "INSERT INTO tbl_klanten (Film, AantalTickets, UurVanAankoop, Datum, Prijs) VALUES ('" + _klant.getFilm() + "','" + _klant.getAantalTickets() + "','" + _klant.getUurVanAankoop() + "','" + _klant.getDatum() + "','" + _klant.getPrijs() + "')";
+        this._queryInsertKlant = "INSERT INTO tbl_tickets (Vertoning_ID, Aantal, Zaal_Nummer, Datum, Prijs) VALUES ('" + _klant.getVertoning() + "','" + _klant.getAantalTickets() + "','" + _klant.getZaalNummer()+ "','" + _klant.getDatum() + "','" + _klant.getPrijs() + "')";
     }
     
     @Override
@@ -53,9 +53,9 @@ public class InsertKlant implements IInsertKlant {
         PreparedStatement stmnt = null;
         try {
             stmnt = CreateConnection.INSTANCE.getConnection().prepareStatement(StringConstants.PREP_QRY_INSERT_KLANT.getValue());
-            stmnt.setString(1, klant.getFilm());
+            stmnt.setLong(1, klant.getVertoning());
             stmnt.setInt(2, klant.getAantalTickets());
-            stmnt.setString(3, klant.getUurVanAankoop());
+            stmnt.setInt(3, klant.getZaalNummer());
             stmnt.setString(4, klant.getDatum());
             stmnt.setDouble(5, klant.getPrijs());
             stmnt.executeUpdate();

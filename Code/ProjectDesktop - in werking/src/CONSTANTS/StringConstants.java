@@ -33,7 +33,7 @@ public enum StringConstants {
     TIME_FORMAT_HHMMSS ("HH:mm:ss"),
     TIME_FORMAT_HHMM ("HH:mm"),
     DATE_FORMAT ("dd/MM/yyyy"),
-    PREP_QRY_INSERT_KLANT ("INSERT INTO tbl_klanten (Film,AantalTickets,UurVanAankoop,Datum,Prijs) VALUES (?,?,?,?,?)"),
+    PREP_QRY_INSERT_KLANT ("INSERT INTO tbl_tickets (Vertoning_ID, Aantal, Zaal_Nummer, Datum, Prijs) VALUES (?, ?, ?, ?, ?)"),
     QRY_GET_ALL_FILMS ("SELECT * from tbl_film WHERE Actief = 1"),
     QRY_GET_ALL_SHOWS ("SELECT tbl_vertoning.ID, a.naam, tbl_vertoning.SpeelDag, tbl_vertoning.SpeelUur, a.prijs, tbl_zaal.Nummer, tbl_zaal.Plaatsen FROM tbl_film AS a INNER JOIN tbl_vertoning ON a.ID = tbl_vertoning.Film_ID INNER JOIN tbl_zaal ON tbl_zaal.ID = tbl_vertoning.Zaal_ID"),
     QRY_GET_ALL_GENRES ("SELECT DISTINCT `Genre` FROM `tbl_film`"),
@@ -51,7 +51,6 @@ public enum StringConstants {
     PAYMENT_TITLE ("Under construction..."),
     FAVICON_PATH ("Images/favicon.png"),
     FONT_SANSSERIF ("SansSerif"),
-    DESCR_TITLE_TEXT ("Description                                                            Starts at: "),
     FONT_TIMER_PATH ("/Fonts/DS-DIGIB.TTF"),
     MAX_TICKET_AMOUNTMSG ("Can't buy more than 9 tickets at a time, if you need more.\nWe advise using one of our ticket windows."),
     SHOW_INFO_ERRORMSG ("You must select a movie before we can show information."),
@@ -61,7 +60,9 @@ public enum StringConstants {
     TWENTY_TWO_HOURS ("22:00"),
     FULLNAME_DAY_OF_THE_WEEK_FORMAT ("EEEE"),
     MOVIE_ALREADY_DONE ("This movie has already begun/finished."),
-    NO_TIME_SELECTED ("You have no time specified for the movie.");
+    NO_TIME_SELECTED ("You have no time specified for the movie."),
+    NOT_ENOUGH_TICKETS ("Not enough tickets left."),
+    NO_TICKETS_LEFT ("Our apologies but this movie is sold out.");
     
     
     private final String _value;
