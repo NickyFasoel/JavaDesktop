@@ -3,7 +3,7 @@ package BLL;
 import Interfaces.ISetFoto;
 import javax.swing.ImageIcon;
 
-// TODO: Remove all unused imports
+// TODO: Tests
 
 public class FetchImages implements ISetFoto {
     

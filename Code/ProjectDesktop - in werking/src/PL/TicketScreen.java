@@ -83,8 +83,6 @@ public class TicketScreen extends javax.swing.JFrame {
     
     // </editor-fold>
     
-    // TODO: alles checken op commentaar
-    
     // <editor-fold defaultstate="collapsed" desc="Constructors">
     
     public TicketScreen(Vertoning vertoning, JFrame ms, JFrame is, JFrame ss) {
@@ -448,7 +446,7 @@ public class TicketScreen extends javax.swing.JFrame {
 
     /**
      *  Code achter de plus knop voor ticketaantal
-     *  miets beperking van aantal tickets
+     *  mits beperking van aantal tickets
      */
     private void ui_btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ui_btnAddActionPerformed
         if (_aantalTickets < IntConstants.NINE.getValue()) {

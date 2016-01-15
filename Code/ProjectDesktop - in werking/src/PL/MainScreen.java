@@ -43,7 +43,6 @@ public class MainScreen extends javax.swing.JFrame {
 
     // <editor-fold defaultstate="collapsed" desc="Private Member Variables">
 
-    // TODO: JFRAME startscreen nodig om na de verkoop van ticketten mss?
     private final JFrame _startScreen;
     private ISetFoto _iSF;
     private ISetFavicon _iF;
