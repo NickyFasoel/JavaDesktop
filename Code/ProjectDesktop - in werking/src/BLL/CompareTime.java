@@ -1,8 +1,6 @@
 package BLL;
 
 import CONSTANTS.StringConstants;
-import Dal.Film;
-import Dal.Vertoning;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
