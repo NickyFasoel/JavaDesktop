@@ -1,5 +1,5 @@
-[Tue Jan 19 12:14:32.934805 2016] [mpm_winnt:notice] [pid 56376:tid 644] AH00455: Apache/2.4.6 (Win32) PHP/5.4.17 configured -- resuming normal operations
-[Tue Jan 19 12:14:32.935808 2016] [mpm_winnt:notice] [pid 56376:tid 644] AH00456: Apache Lounge VC10 Server built: Jul 16 2013 11:15:41
-[Tue Jan 19 12:14:32.935808 2016] [core:notice] [pid 56376:tid 644] AH00094: Command line: 'C:\\Users\\Gebruiker\\Desktop\\Java GitHub desktop\\JavaDesktop\\JavaDatabaseDesktop\\UsbWebserver/apache2/bin/httpd_usbwv8.exe -d C:/Users/Gebruiker/Desktop/Java GitHub desktop/JavaDesktop/JavaDatabaseDesktop/UsbWebserver/apache2'
-[Tue Jan 19 12:14:32.937797 2016] [mpm_winnt:notice] [pid 56376:tid 644] AH00418: Parent: Created child process 65640
-[Tue Jan 19 12:14:33.289734 2016] [mpm_winnt:notice] [pid 65640:tid 660] AH00354: Child: Starting 64 worker threads.
+[Wed Jan 20 13:55:31.909130 2016] [mpm_winnt:notice] [pid 53320:tid 652] AH00455: Apache/2.4.6 (Win32) PHP/5.4.17 configured -- resuming normal operations
+[Wed Jan 20 13:55:31.909130 2016] [mpm_winnt:notice] [pid 53320:tid 652] AH00456: Apache Lounge VC10 Server built: Jul 16 2013 11:15:41
+[Wed Jan 20 13:55:31.909130 2016] [core:notice] [pid 53320:tid 652] AH00094: Command line: 'C:\\Users\\Gebruiker\\Desktop\\Java GitHub desktop\\JavaDesktop\\JavaDatabaseDesktop\\UsbWebserver/apache2/bin/httpd_usbwv8.exe -d C:/Users/Gebruiker/Desktop/Java GitHub desktop/JavaDesktop/JavaDatabaseDesktop/UsbWebserver/apache2'
+[Wed Jan 20 13:55:31.911132 2016] [mpm_winnt:notice] [pid 53320:tid 652] AH00418: Parent: Created child process 86516
+[Wed Jan 20 13:55:32.263364 2016] [mpm_winnt:notice] [pid 86516:tid 656] AH00354: Child: Starting 64 worker threads.
