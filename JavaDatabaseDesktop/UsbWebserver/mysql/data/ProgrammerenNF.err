@@ -366,3 +366,32 @@ InnoDB: for how to resolve the issue.
 2016-01-20 21:53:19 6992 [Note] IPv6 is available.
 2016-01-20 21:53:19 6992 [Note]   - '::' resolves to '::';
 2016-01-20 21:53:19 6992 [Note] Server socket created on IP: '::'.
+2016-01-21 13:01:36 10888 [Note] Plugin 'FEDERATED' is disabled.
+2016-01-21 13:01:36 10888 [Note] InnoDB: The InnoDB memory heap is disabled
+2016-01-21 13:01:36 10888 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2016-01-21 13:01:36 10888 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2016-01-21 13:01:36 10888 [Note] InnoDB: Not using CPU crc32 instructions
+2016-01-21 13:01:36 10888 [Note] InnoDB: Initializing buffer pool, size = 128.0M
+2016-01-21 13:01:36 10888 [Note] InnoDB: Completed initialization of buffer pool
+2016-01-21 13:01:36 10888 [Note] InnoDB: Highest supported file format is Barracuda.
+2016-01-21 13:01:36 10888 [Note] InnoDB: The log sequence numbers 1626134 and 1626134 in ibdata files do not match the log sequence number 3488288 in the ib_logfiles!
+2016-01-21 13:01:36 10888 [Note] InnoDB: Database was not shutdown normally!
+2016-01-21 13:01:36 10888 [Note] InnoDB: Starting crash recovery.
+2016-01-21 13:01:36 10888 [Note] InnoDB: Reading tablespace information from the .ibd files...
+2016-01-21 13:01:37 10888 [Note] InnoDB: Restoring possible half-written data pages 
+2016-01-21 13:01:37 10888 [Note] InnoDB: from the doublewrite buffer...
+2016-01-21 13:01:37 10888 [ERROR] InnoDB: Table kinepolisdb/tbl_films in the InnoDB data dictionary has tablespace id 30, but tablespace with that id or name does not exist. Have you deleted or moved .ibd files? This may also be a table created with CREATE TEMPORARY TABLE whose .ibd and .frm files MySQL automatically removed, but the table still exists in the InnoDB internal data dictionary.
+InnoDB: Please refer to
+InnoDB: http://dev.mysql.com/doc/refman/5.6/en/innodb-troubleshooting-datadict.html
+InnoDB: for how to resolve the issue.
+2016-01-21 13:01:37 10888 [ERROR] InnoDB: Table kinepolisdb/tbl_klanten in the InnoDB data dictionary has tablespace id 34, but tablespace with that id or name does not exist. Have you deleted or moved .ibd files? This may also be a table created with CREATE TEMPORARY TABLE whose .ibd and .frm files MySQL automatically removed, but the table still exists in the InnoDB internal data dictionary.
+InnoDB: Please refer to
+InnoDB: http://dev.mysql.com/doc/refman/5.6/en/innodb-troubleshooting-datadict.html
+InnoDB: for how to resolve the issue.
+2016-01-21 13:01:37 10888 [Note] InnoDB: 128 rollback segment(s) are active.
+2016-01-21 13:01:38 10888 [Note] InnoDB: Waiting for purge to start
+2016-01-21 13:01:38 10888 [Note] InnoDB: 5.6.13 started; log sequence number 3488288
+2016-01-21 13:01:38 10888 [Note] Server hostname (bind-address): '*'; port: 3307
+2016-01-21 13:01:38 10888 [Note] IPv6 is available.
+2016-01-21 13:01:38 10888 [Note]   - '::' resolves to '::';
+2016-01-21 13:01:38 10888 [Note] Server socket created on IP: '::'.
