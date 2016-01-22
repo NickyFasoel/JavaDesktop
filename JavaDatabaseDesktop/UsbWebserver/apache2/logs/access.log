@@ -58,3 +58,9 @@
 ::1 - - [22/Jan/2016:09:34:44 +0100] "GET /phpmyadmin/index.php?ajax_request=1&recent_table=1&token=2647be672f34d0063a853c94c878aade HTTP/1.1" 200 243
 ::1 - - [22/Jan/2016:09:34:53 +0100] "GET /phpmyadmin/sql.php?db=db_kinepolis&token=2647be672f34d0063a853c94c878aade&goto=db_structure.php&table=tbl_gekendeklant&sql_query=TRUNCATE+%60tbl_gekendeklant%60&message_to_show=Tabel+tbl_gekendeklant+is+leeg+gemaakt&is_js_confirmed=1&ajax_request=true&_nocache=1453451693504961546 HTTP/1.1" 200 1618
 ::1 - - [22/Jan/2016:09:35:02 +0100] "GET /phpmyadmin/sql.php?db=db_kinepolis&token=2647be672f34d0063a853c94c878aade&goto=db_structure.php&table=tbl_klant&sql_query=TRUNCATE+%60tbl_klant%60&message_to_show=Tabel+tbl_klant+is+leeg+gemaakt&is_js_confirmed=1&ajax_request=true&_nocache=1453451702766258935 HTTP/1.1" 200 1562
+::1 - - [22/Jan/2016:10:27:25 +0100] "GET /phpmyadmin/db_structure.php?db=test&table=&server=1&target=&token=2647be672f34d0063a853c94c878aade HTTP/1.1" 200 8226
+::1 - - [22/Jan/2016:10:27:25 +0100] "GET /phpmyadmin/db_structure.php?db=db_kinepolis&table=&server=1&target=&token=2647be672f34d0063a853c94c878aade HTTP/1.1" 200 8266
+::1 - - [22/Jan/2016:10:27:25 +0100] "GET /phpmyadmin/js/messages.php?lang=nl&db=db_kinepolis&token=2647be672f34d0063a853c94c878aade HTTP/1.1" 200 18199
+::1 - - [22/Jan/2016:10:27:30 +0100] "POST /phpmyadmin/index.php HTTP/1.1" 302 -
+::1 - - [22/Jan/2016:10:27:30 +0100] "GET /phpmyadmin/index.php?db=db_kinepolis&target=db_structure.php&token=2647be672f34d0063a853c94c878aade HTTP/1.1" 200 35898
+::1 - - [22/Jan/2016:10:27:30 +0100] "GET /phpmyadmin/js/messages.php?lang=nl&db=db_kinepolis&server=0&token=2647be672f34d0063a853c94c878aade HTTP/1.1" 200 18199
