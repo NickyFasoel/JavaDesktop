@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ShowInfoScreen.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;ProjectDesktop&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">PL</a> &gt; <span class="el_source">ShowInfoScreen.java</span></div><h1>ShowInfoScreen.java</h1><pre class="source lang-java linenums">package PL;
+
+import BLL.CompareTime;
+import BLL.FetchFavicon;
+import BLL.FetchImages;
+import CONSTANTS.CharConstants;
+import CONSTANTS.IntConstants;
+import CONSTANTS.StringConstants;
+import Dal.Film;
+import Dal.Helpers.FetchFilmData;
+import Dal.Vertoning;
+import Interfaces.ICompareTime;
+import Interfaces.IGetData;
+import Interfaces.ISetFavicon;
+import Interfaces.ISetFoto;
+import java.awt.Dimension;
+import java.awt.HeadlessException;
+import java.awt.Toolkit;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+public class ShowInfoScreen extends javax.swing.JFrame {
+
+    private Film _film;
+    private String _selectedTime;
+    private JFrame _startScreen;
+    private JFrame _mainScreen;
+    private ArrayList&lt;Vertoning&gt; _lstVertoningen;
+    private IGetData _iGD;
+    private ISetFavicon _iF;
+    private ISetFoto _iSF;
+    private ImageIcon _icon;
+    
+<span class="nc" id="L42">    public ShowInfoScreen() {</span>
+<span class="nc" id="L43">        initComponents();</span>
+<span class="nc" id="L44">    }</span>
+
+<span class="nc" id="L46">    public ShowInfoScreen(Film film, JFrame mainScreen, JFrame startScreen) {</span>
+<span class="nc" id="L47">        initComponents();</span>
+<span class="nc" id="L48">        this._film = film;</span>
+<span class="nc" id="L49">        this._mainScreen = mainScreen;</span>
+<span class="nc" id="L50">        this._startScreen = startScreen;</span>
+<span class="nc" id="L51">        this._iF = new FetchFavicon();</span>
+<span class="nc" id="L52">        this._icon = _iF.setFavicon();</span>
+<span class="nc" id="L53">        this._iSF = new FetchImages();</span>
+<span class="nc" id="L54">        this._iGD = new FetchFilmData();</span>
+<span class="nc" id="L55">        this._lstVertoningen = _iGD.getAllShows();</span>
+<span class="nc" id="L56">        setupShowInfoScreen();</span>
+<span class="nc" id="L57">        this._selectedTime = StringConstants.EMPTY.getValue();</span>
+<span class="nc" id="L58">    }</span>
+
+    /**
+     *  Inperken van Ctor lengte
+     */
+    private void setupShowInfoScreen() {
+<span class="nc" id="L64">        this.setIconImage(_icon.getImage());</span>
+        
+<span class="nc" id="L66">        hideTimeControls();</span>
+        
+<span class="nc" id="L68">        String[] speelUren = _film.getSpeelUren().split(StringConstants.ONE_SPACE.getValue());</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        for (String item : speelUren) {</span>
+<span class="nc" id="L70">            String temp = item.replace(CharConstants.COMMA.getValue(), CharConstants.ONE_SPACE.getValue()).trim();</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">            if (temp.equals(StringConstants.SIXTEEN_HOURS.getValue())) {</span>
+<span class="nc" id="L72">                ui_btnStartTime1.setVisible(true);</span>
+<span class="nc" id="L73">                ui_lblStartTime1.setVisible(true);</span>
+            }
+<span class="nc bnc" id="L75" title="All 2 branches missed.">            if (temp.equals(StringConstants.NINETEEN_HOURS.getValue())) {</span>
+<span class="nc" id="L76">                ui_btnStartTime2.setVisible(true);</span>
+<span class="nc" id="L77">                ui_lblStartTime2.setVisible(true);</span>
+            }
+<span class="nc bnc" id="L79" title="All 2 branches missed.">            if (temp.equals(StringConstants.TWENTY_TWO_HOURS.getValue())) {</span>
+<span class="nc" id="L80">                ui_btnStartTime3.setVisible(true);</span>
+<span class="nc" id="L81">                ui_lblStartTime3.setVisible(true);</span>
+            }
+        }
+<span class="nc" id="L84">        ui_lblCurrentVertoning.setText(_film.getNaam());</span>
+<span class="nc" id="L85">        ui_lblShowInfoBG.setIcon(_iSF.setFoto(_film.getInfoBG()));    </span>
+    
+<span class="nc" id="L87">        String[] speelDagen = _film.getSpeelDagen().split(StringConstants.ONE_SPACE.getValue());</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">        for (String item : speelDagen) {</span>
+<span class="nc" id="L89">            String replace = item.replace(CharConstants.COMMA.getValue(), CharConstants.ONE_SPACE.getValue()).trim();</span>
+<span class="nc" id="L90">            ui_ddlDays.addItem(replace);</span>
+        }
+<span class="nc" id="L92">    }</span>
+
+    /**
+     *  Verbergt de lbl en btn om ze achteraf afhankelijk 
+     *  vd vertoning te showen of niet
+     */
+    private void hideTimeControls() {
+<span class="nc" id="L99">        ui_btnStartTime1.setVisible(false);</span>
+<span class="nc" id="L100">        ui_lblStartTime1.setVisible(false);</span>
+<span class="nc" id="L101">        ui_btnStartTime2.setVisible(false);</span>
+<span class="nc" id="L102">        ui_lblStartTime2.setVisible(false);</span>
+<span class="nc" id="L103">        ui_btnStartTime3.setVisible(false);</span>
+<span class="nc" id="L104">        ui_lblStartTime3.setVisible(false);</span>
+<span class="nc" id="L105">    }</span>
+
+    @SuppressWarnings(&quot;unchecked&quot;)
+    // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+<span class="nc" id="L111">        jLayeredPane1 = new javax.swing.JLayeredPane();</span>
+<span class="nc" id="L112">        jPanel3 = new javax.swing.JPanel();</span>
+<span class="nc" id="L113">        ui_lblShowInfoBG = new javax.swing.JLabel();</span>
+<span class="nc" id="L114">        jPanel1 = new javax.swing.JPanel();</span>
+<span class="nc" id="L115">        jLabel3 = new javax.swing.JLabel();</span>
+<span class="nc" id="L116">        jPanel2 = new javax.swing.JPanel();</span>
+<span class="nc" id="L117">        ui_lblCurrentVertoning = new javax.swing.JLabel();</span>
+<span class="nc" id="L118">        jLabel1 = new javax.swing.JLabel();</span>
+<span class="nc" id="L119">        ui_ddlDays = new javax.swing.JComboBox&lt;&gt;();</span>
+<span class="nc" id="L120">        ui_btnBuyTickets = new javax.swing.JButton();</span>
+<span class="nc" id="L121">        ui_btnBackToMainScreen = new javax.swing.JButton();</span>
+<span class="nc" id="L122">        ui_btnStartTime1 = new javax.swing.JToggleButton();</span>
+<span class="nc" id="L123">        ui_btnStartTime2 = new javax.swing.JToggleButton();</span>
+<span class="nc" id="L124">        ui_btnStartTime3 = new javax.swing.JToggleButton();</span>
+<span class="nc" id="L125">        ui_lblStartTime1 = new javax.swing.JLabel();</span>
+<span class="nc" id="L126">        ui_lblStartTime2 = new javax.swing.JLabel();</span>
+<span class="nc" id="L127">        ui_lblStartTime3 = new javax.swing.JLabel();</span>
+<span class="nc" id="L128">        ui_lblFilmName = new javax.swing.JLabel();</span>
+
+<span class="nc" id="L130">        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L131">        setBackground(new java.awt.Color(0, 204, 204));</span>
+<span class="nc" id="L132">        setMaximumSize(new java.awt.Dimension(506, 324));</span>
+<span class="nc" id="L133">        setMinimumSize(new java.awt.Dimension(506, 324));</span>
+<span class="nc" id="L134">        setUndecorated(true);</span>
+<span class="nc" id="L135">        setPreferredSize(new java.awt.Dimension(506, 324));</span>
+<span class="nc" id="L136">        setResizable(false);</span>
+
+<span class="nc" id="L138">        jLayeredPane1.setMaximumSize(new java.awt.Dimension(506, 324));</span>
+<span class="nc" id="L139">        jLayeredPane1.setMinimumSize(new java.awt.Dimension(506, 324));</span>
+
+<span class="nc" id="L141">        jPanel3.setMaximumSize(new java.awt.Dimension(506, 324));</span>
+<span class="nc" id="L142">        jPanel3.setMinimumSize(new java.awt.Dimension(506, 324));</span>
+<span class="nc" id="L143">        jPanel3.setOpaque(false);</span>
+
+<span class="nc" id="L145">        ui_lblShowInfoBG.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);</span>
+<span class="nc" id="L146">        ui_lblShowInfoBG.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);</span>
+<span class="nc" id="L147">        ui_lblShowInfoBG.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);</span>
+
+<span class="nc" id="L149">        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);</span>
+<span class="nc" id="L150">        jPanel3.setLayout(jPanel3Layout);</span>
+<span class="nc" id="L151">        jPanel3Layout.setHorizontalGroup(</span>
+<span class="nc" id="L152">            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L153">            .addGap(0, 506, Short.MAX_VALUE)</span>
+<span class="nc" id="L154">            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L155">                .addGroup(jPanel3Layout.createSequentialGroup()</span>
+<span class="nc" id="L156">                    .addGap(0, 0, 0)</span>
+<span class="nc" id="L157">                    .addComponent(ui_lblShowInfoBG)</span>
+<span class="nc" id="L158">                    .addGap(0, 0, 0)))</span>
+        );
+<span class="nc" id="L160">        jPanel3Layout.setVerticalGroup(</span>
+<span class="nc" id="L161">            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L162">            .addGap(0, 324, Short.MAX_VALUE)</span>
+<span class="nc" id="L163">            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L164">                .addGroup(jPanel3Layout.createSequentialGroup()</span>
+<span class="nc" id="L165">                    .addGap(0, 0, 0)</span>
+<span class="nc" id="L166">                    .addComponent(ui_lblShowInfoBG)</span>
+<span class="nc" id="L167">                    .addGap(0, 0, 0)))</span>
+        );
+
+<span class="nc" id="L170">        jPanel1.setBackground(new java.awt.Color(0, 0, 85));</span>
+<span class="nc" id="L171">        jPanel1.setMaximumSize(new java.awt.Dimension(436, 311));</span>
+<span class="nc" id="L172">        jPanel1.setMinimumSize(new java.awt.Dimension(436, 311));</span>
+<span class="nc" id="L173">        jPanel1.setOpaque(false);</span>
+
+<span class="nc" id="L175">        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource(&quot;/Images/bgShowInfoScreen.png&quot;))); // NOI18N</span>
+
+<span class="nc" id="L177">        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);</span>
+<span class="nc" id="L178">        jPanel1.setLayout(jPanel1Layout);</span>
+<span class="nc" id="L179">        jPanel1Layout.setHorizontalGroup(</span>
+<span class="nc" id="L180">            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L181">            .addGap(0, 507, Short.MAX_VALUE)</span>
+<span class="nc" id="L182">            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L183">                .addGroup(jPanel1Layout.createSequentialGroup()</span>
+<span class="nc" id="L184">                    .addGap(0, 0, 0)</span>
+<span class="nc" id="L185">                    .addComponent(jLabel3)</span>
+<span class="nc" id="L186">                    .addContainerGap(7, Short.MAX_VALUE)))</span>
+        );
+<span class="nc" id="L188">        jPanel1Layout.setVerticalGroup(</span>
+<span class="nc" id="L189">            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L190">            .addGap(0, 331, Short.MAX_VALUE)</span>
+<span class="nc" id="L191">            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L192">                .addGroup(jPanel1Layout.createSequentialGroup()</span>
+<span class="nc" id="L193">                    .addGap(0, 0, 0)</span>
+<span class="nc" id="L194">                    .addComponent(jLabel3)</span>
+<span class="nc" id="L195">                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))</span>
+        );
+
+<span class="nc" id="L198">        jPanel2.setMaximumSize(new java.awt.Dimension(506, 324));</span>
+<span class="nc" id="L199">        jPanel2.setMinimumSize(new java.awt.Dimension(506, 324));</span>
+<span class="nc" id="L200">        jPanel2.setOpaque(false);</span>
+<span class="nc" id="L201">        jPanel2.setPreferredSize(new java.awt.Dimension(506, 324));</span>
+<span class="nc" id="L202">        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());</span>
+
+<span class="nc" id="L204">        ui_lblCurrentVertoning.setFont(new java.awt.Font(&quot;sansserif&quot;, 0, 28)); // NOI18N</span>
+<span class="nc" id="L205">        ui_lblCurrentVertoning.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);</span>
+<span class="nc" id="L206">        ui_lblCurrentVertoning.setText(&quot;Star Wars: Episode VII&quot;);</span>
+<span class="nc" id="L207">        ui_lblCurrentVertoning.setToolTipText(&quot;&quot;);</span>
+<span class="nc" id="L208">        ui_lblCurrentVertoning.setVerticalAlignment(javax.swing.SwingConstants.TOP);</span>
+<span class="nc" id="L209">        ui_lblCurrentVertoning.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);</span>
+<span class="nc" id="L210">        jPanel2.add(ui_lblCurrentVertoning, new org.netbeans.lib.awtextra.AbsoluteConstraints(88, 202, 330, 40));</span>
+
+<span class="nc" id="L212">        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource(&quot;/Images/banner.png&quot;))); // NOI18N</span>
+<span class="nc" id="L213">        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(84, 195, -1, -1));</span>
+
+<span class="nc" id="L215">        ui_ddlDays.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));</span>
+<span class="nc" id="L216">        jPanel2.add(ui_ddlDays, new org.netbeans.lib.awtextra.AbsoluteConstraints(87, 77, 130, -1));</span>
+
+<span class="nc" id="L218">        ui_btnBuyTickets.setText(&quot;Buy Tickets&quot;);</span>
+<span class="nc" id="L219">        ui_btnBuyTickets.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));</span>
+<span class="nc" id="L220">        ui_btnBuyTickets.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L222">                ui_btnBuyTicketsActionPerformed(evt);</span>
+<span class="nc" id="L223">            }</span>
+        });
+<span class="nc" id="L225">        jPanel2.add(ui_btnBuyTickets, new org.netbeans.lib.awtextra.AbsoluteConstraints(322, 157, -1, -1));</span>
+
+<span class="nc" id="L227">        ui_btnBackToMainScreen.setText(&quot;Cancel&quot;);</span>
+<span class="nc" id="L228">        ui_btnBackToMainScreen.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));</span>
+<span class="nc" id="L229">        ui_btnBackToMainScreen.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L231">                ui_btnBackToMainScreenActionPerformed(evt);</span>
+<span class="nc" id="L232">            }</span>
+        });
+<span class="nc" id="L234">        jPanel2.add(ui_btnBackToMainScreen, new org.netbeans.lib.awtextra.AbsoluteConstraints(345, 76, -1, -1));</span>
+
+<span class="nc" id="L236">        ui_btnStartTime1.setIcon(new javax.swing.ImageIcon(getClass().getResource(&quot;/Images/4uurNotSelected.png&quot;))); // NOI18N</span>
+<span class="nc" id="L237">        ui_btnStartTime1.setContentAreaFilled(false);</span>
+<span class="nc" id="L238">        ui_btnStartTime1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));</span>
+<span class="nc" id="L239">        ui_btnStartTime1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);</span>
+<span class="nc" id="L240">        ui_btnStartTime1.setRolloverEnabled(false);</span>
+<span class="nc" id="L241">        ui_btnStartTime1.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource(&quot;/Images/4uurSelected.png&quot;))); // NOI18N</span>
+<span class="nc" id="L242">        ui_btnStartTime1.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L244">                ui_btnStartTime1ActionPerformed(evt);</span>
+<span class="nc" id="L245">            }</span>
+        });
+<span class="nc" id="L247">        jPanel2.add(ui_btnStartTime1, new org.netbeans.lib.awtextra.AbsoluteConstraints(87, 132, 65, -1));</span>
+
+<span class="nc" id="L249">        ui_btnStartTime2.setIcon(new javax.swing.ImageIcon(getClass().getResource(&quot;/Images/7uurNotSelected.png&quot;))); // NOI18N</span>
+<span class="nc" id="L250">        ui_btnStartTime2.setContentAreaFilled(false);</span>
+<span class="nc" id="L251">        ui_btnStartTime2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));</span>
+<span class="nc" id="L252">        ui_btnStartTime2.setRolloverEnabled(false);</span>
+<span class="nc" id="L253">        ui_btnStartTime2.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource(&quot;/Images/7uurSelected.png&quot;))); // NOI18N</span>
+<span class="nc" id="L254">        ui_btnStartTime2.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L256">                ui_btnStartTime2ActionPerformed(evt);</span>
+<span class="nc" id="L257">            }</span>
+        });
+<span class="nc" id="L259">        jPanel2.add(ui_btnStartTime2, new org.netbeans.lib.awtextra.AbsoluteConstraints(158, 132, 65, -1));</span>
+
+<span class="nc" id="L261">        ui_btnStartTime3.setIcon(new javax.swing.ImageIcon(getClass().getResource(&quot;/Images/10uurNotSelected.png&quot;))); // NOI18N</span>
+<span class="nc" id="L262">        ui_btnStartTime3.setContentAreaFilled(false);</span>
+<span class="nc" id="L263">        ui_btnStartTime3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));</span>
+<span class="nc" id="L264">        ui_btnStartTime3.setRolloverEnabled(false);</span>
+<span class="nc" id="L265">        ui_btnStartTime3.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource(&quot;/Images/10uurSelected.png&quot;))); // NOI18N</span>
+<span class="nc" id="L266">        ui_btnStartTime3.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L268">                ui_btnStartTime3ActionPerformed(evt);</span>
+<span class="nc" id="L269">            }</span>
+        });
+<span class="nc" id="L271">        jPanel2.add(ui_btnStartTime3, new org.netbeans.lib.awtextra.AbsoluteConstraints(229, 132, 65, -1));</span>
+
+<span class="nc" id="L273">        ui_lblStartTime1.setForeground(new java.awt.Color(255, 255, 255));</span>
+<span class="nc" id="L274">        ui_lblStartTime1.setText(&quot;16:00&quot;);</span>
+<span class="nc" id="L275">        jPanel2.add(ui_lblStartTime1, new org.netbeans.lib.awtextra.AbsoluteConstraints(103, 110, -1, -1));</span>
+
+<span class="nc" id="L277">        ui_lblStartTime2.setForeground(new java.awt.Color(255, 255, 255));</span>
+<span class="nc" id="L278">        ui_lblStartTime2.setText(&quot;19:00&quot;);</span>
+<span class="nc" id="L279">        jPanel2.add(ui_lblStartTime2, new org.netbeans.lib.awtextra.AbsoluteConstraints(174, 110, -1, -1));</span>
+
+<span class="nc" id="L281">        ui_lblStartTime3.setForeground(new java.awt.Color(255, 255, 255));</span>
+<span class="nc" id="L282">        ui_lblStartTime3.setText(&quot;22:00&quot;);</span>
+<span class="nc" id="L283">        jPanel2.add(ui_lblStartTime3, new org.netbeans.lib.awtextra.AbsoluteConstraints(246, 110, -1, -1));</span>
+
+<span class="nc" id="L285">        ui_lblFilmName.setFont(new java.awt.Font(&quot;sansserif&quot;, 0, 27)); // NOI18N</span>
+<span class="nc" id="L286">        ui_lblFilmName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);</span>
+<span class="nc" id="L287">        ui_lblFilmName.setText(&quot;Star Wars: Episode VII&quot;);</span>
+<span class="nc" id="L288">        ui_lblFilmName.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);</span>
+<span class="nc" id="L289">        jPanel2.add(ui_lblFilmName, new org.netbeans.lib.awtextra.AbsoluteConstraints(87, 202, 325, 38));</span>
+
+<span class="nc" id="L291">        jLayeredPane1.setLayer(jPanel3, javax.swing.JLayeredPane.DEFAULT_LAYER);</span>
+<span class="nc" id="L292">        jLayeredPane1.setLayer(jPanel1, javax.swing.JLayeredPane.PALETTE_LAYER);</span>
+<span class="nc" id="L293">        jLayeredPane1.setLayer(jPanel2, javax.swing.JLayeredPane.MODAL_LAYER);</span>
+
+<span class="nc" id="L295">        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);</span>
+<span class="nc" id="L296">        jLayeredPane1.setLayout(jLayeredPane1Layout);</span>
+<span class="nc" id="L297">        jLayeredPane1Layout.setHorizontalGroup(</span>
+<span class="nc" id="L298">            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L299">            .addGap(0, 507, Short.MAX_VALUE)</span>
+<span class="nc" id="L300">            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L301">                .addGroup(jLayeredPane1Layout.createSequentialGroup()</span>
+<span class="nc" id="L302">                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="nc" id="L303">                    .addGap(0, 144, Short.MAX_VALUE)))</span>
+<span class="nc" id="L304">            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L305">                .addGroup(jLayeredPane1Layout.createSequentialGroup()</span>
+<span class="nc" id="L306">                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="nc" id="L307">                    .addGap(0, 324, Short.MAX_VALUE)))</span>
+<span class="nc" id="L308">            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L309">                .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))</span>
+        );
+<span class="nc" id="L311">        jLayeredPane1Layout.setVerticalGroup(</span>
+<span class="nc" id="L312">            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L313">            .addGap(0, 331, Short.MAX_VALUE)</span>
+<span class="nc" id="L314">            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L315">                .addGroup(jLayeredPane1Layout.createSequentialGroup()</span>
+<span class="nc" id="L316">                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="nc" id="L317">                    .addGap(0, 0, Short.MAX_VALUE)))</span>
+<span class="nc" id="L318">            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L319">                .addGroup(jLayeredPane1Layout.createSequentialGroup()</span>
+<span class="nc" id="L320">                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="nc" id="L321">                    .addGap(0, 165, Short.MAX_VALUE)))</span>
+<span class="nc" id="L322">            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L323">                .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))</span>
+        );
+
+<span class="nc" id="L326">        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());</span>
+<span class="nc" id="L327">        getContentPane().setLayout(layout);</span>
+<span class="nc" id="L328">        layout.setHorizontalGroup(</span>
+<span class="nc" id="L329">            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L330">            .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)</span>
+        );
+<span class="nc" id="L332">        layout.setVerticalGroup(</span>
+<span class="nc" id="L333">            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L334">            .addComponent(jLayeredPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)</span>
+        );
+
+<span class="nc" id="L337">        pack();</span>
+<span class="nc" id="L338">        setLocationRelativeTo(null);</span>
+<span class="nc" id="L339">    }// &lt;/editor-fold&gt;//GEN-END:initComponents</span>
+
+    private void ui_btnStartTime1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ui_btnStartTime1ActionPerformed
+<span class="nc bnc" id="L342" title="All 2 branches missed.">        if (ui_btnStartTime1.isSelected()) {</span>
+<span class="nc" id="L343">            ui_btnStartTime2.setSelected(false);</span>
+<span class="nc" id="L344">            ui_btnStartTime3.setSelected(false);</span>
+<span class="nc" id="L345">            _selectedTime = StringConstants.SIXTEEN_HOURS.getValue();</span>
+        }
+<span class="nc" id="L347">    }//GEN-LAST:event_ui_btnStartTime1ActionPerformed</span>
+
+    private void ui_btnStartTime2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ui_btnStartTime2ActionPerformed
+<span class="nc bnc" id="L350" title="All 2 branches missed.">        if (ui_btnStartTime2.isSelected()) {</span>
+<span class="nc" id="L351">            ui_btnStartTime1.setSelected(false);</span>
+<span class="nc" id="L352">            ui_btnStartTime3.setSelected(false);</span>
+<span class="nc" id="L353">            _selectedTime = StringConstants.NINETEEN_HOURS.getValue();</span>
+        }
+<span class="nc" id="L355">    }//GEN-LAST:event_ui_btnStartTime2ActionPerformed</span>
+
+    private void ui_btnStartTime3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ui_btnStartTime3ActionPerformed
+<span class="nc bnc" id="L358" title="All 2 branches missed.">        if (ui_btnStartTime3.isSelected()) {</span>
+<span class="nc" id="L359">            ui_btnStartTime1.setSelected(false);</span>
+<span class="nc" id="L360">            ui_btnStartTime2.setSelected(false);</span>
+<span class="nc" id="L361">            _selectedTime = StringConstants.TWENTY_TWO_HOURS.getValue();</span>
+        }
+<span class="nc" id="L363">    }//GEN-LAST:event_ui_btnStartTime3ActionPerformed</span>
+
+    private void ui_btnBackToMainScreenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ui_btnBackToMainScreenActionPerformed
+<span class="nc" id="L366">        this.dispose();</span>
+<span class="nc" id="L367">        _mainScreen.setEnabled(true);</span>
+<span class="nc" id="L368">        _mainScreen.setVisible(true);</span>
+<span class="nc" id="L369">    }//GEN-LAST:event_ui_btnBackToMainScreenActionPerformed</span>
+
+    private void ui_btnBuyTicketsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ui_btnBuyTicketsActionPerformed
+        try {
+<span class="nc bnc" id="L373" title="All 2 branches missed.">            if (!_selectedTime.equals(StringConstants.EMPTY.getValue())) {</span>
+<span class="nc bnc" id="L374" title="All 2 branches missed.">                if (ui_ddlDays.getSelectedItem().equals(new SimpleDateFormat(StringConstants.FULLNAME_DAY_OF_THE_WEEK_FORMAT.getValue(), Locale.UK).format(new Date()))) {</span>
+<span class="nc" id="L375">                    ICompareTime iCT = new CompareTime();</span>
+<span class="nc bnc" id="L376" title="All 2 branches missed.">                    if (iCT.compareTime(_selectedTime) &gt; IntConstants.MINUS_ONE.getValue()) {</span>
+<span class="nc" id="L377">                        helperBuyTicket();</span>
+                    } else {
+<span class="nc" id="L379">                        JOptionPane.showMessageDialog(null, StringConstants.MOVIE_ALREADY_DONE.getValue(), StringConstants.ATTENTION.getValue(), JOptionPane.INFORMATION_MESSAGE, _icon);</span>
+                    }
+<span class="nc bnc" id="L381" title="All 2 branches missed.">                } else if (!ui_ddlDays.getSelectedItem().equals(new SimpleDateFormat(StringConstants.FULLNAME_DAY_OF_THE_WEEK_FORMAT.getValue(), Locale.UK).format(new Date()))) {</span>
+<span class="nc" id="L382">                    helperBuyTicket();</span>
+                }
+            } else {
+<span class="nc" id="L385">                JOptionPane.showMessageDialog(null, StringConstants.NO_TIME_SELECTED.getValue(), StringConstants.ATTENTION.getValue(), JOptionPane.INFORMATION_MESSAGE, _icon);</span>
+            }
+<span class="nc" id="L387">        } catch (ParseException ex) {</span>
+<span class="nc" id="L388">            Logger.getLogger(ShowInfoScreen.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L389">        }</span>
+        
+<span class="nc" id="L391">    }//GEN-LAST:event_ui_btnBuyTicketsActionPerformed</span>
+
+    private void helperBuyTicket() throws HeadlessException {
+<span class="nc bnc" id="L394" title="All 2 branches missed.">        if (ui_btnStartTime2.isSelected()</span>
+<span class="nc bnc" id="L395" title="All 2 branches missed.">                || ui_btnStartTime1.isSelected()</span>
+<span class="nc bnc" id="L396" title="All 2 branches missed.">                || ui_btnStartTime3.isSelected()) {</span>
+<span class="nc" id="L397">            Vertoning selectedVertoning = null;</span>
+<span class="nc bnc" id="L398" title="All 2 branches missed.">            for (Vertoning vertoning : _lstVertoningen) {</span>
+<span class="nc bnc" id="L399" title="All 2 branches missed.">                if (vertoning.getSpeelDag().equals(ui_ddlDays.getSelectedItem().toString())</span>
+<span class="nc bnc" id="L400" title="All 2 branches missed.">                        &amp;&amp; vertoning.getFilmNaam().equals(ui_lblCurrentVertoning.getText())</span>
+<span class="nc bnc" id="L401" title="All 2 branches missed.">                        &amp;&amp; vertoning.getSpeelUur().equals(_selectedTime)) {</span>
+<span class="nc" id="L402">                    selectedVertoning = new Vertoning(vertoning.getId(), vertoning.getFilmNaam(), vertoning.getSpeelDag(), _selectedTime, vertoning.getPrijs(), vertoning.getZaalNummer(), vertoning.getPlaatsen());</span>
+                }
+<span class="nc" id="L404">            }</span>
+<span class="nc bnc" id="L405" title="All 2 branches missed.">            if (selectedVertoning != null) {</span>
+<span class="nc" id="L406">                TicketScreen ts = new TicketScreen(selectedVertoning, _mainScreen, this, _startScreen);</span>
+<span class="nc" id="L407">                this.setVisible(false);</span>
+<span class="nc" id="L408">                this.setEnabled(false);</span>
+<span class="nc" id="L409">                _mainScreen.setVisible(true);</span>
+<span class="nc" id="L410">                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();</span>
+<span class="nc" id="L411">                ts.setLocation(dim.width / IntConstants.TWO.getValue() - ts.getSize().width / IntConstants.TWO.getValue(), dim.height / IntConstants.TWO.getValue() - ts.getSize().height / IntConstants.TWO.getValue() - IntConstants.FIFTY.getValue());</span>
+<span class="nc" id="L412">                ts.setVisible(true);</span>
+            }
+<span class="nc" id="L414">        } else {</span>
+<span class="nc" id="L415">            JOptionPane.showMessageDialog(null, StringConstants.NO_TIME_SELECTED.getValue(), StringConstants.ATTENTION.getValue(), JOptionPane.INFORMATION_MESSAGE, _icon);</span>
+        }
+<span class="nc" id="L417">    }</span>
+
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //&lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot; Look and feel setting code (optional) &quot;&gt;
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+<span class="nc bnc" id="L426" title="All 2 branches missed.">            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {</span>
+<span class="nc bnc" id="L427" title="All 2 branches missed.">                if (&quot;Nimbus&quot;.equals(info.getName())) {</span>
+<span class="nc" id="L428">                    javax.swing.UIManager.setLookAndFeel(info.getClassName());</span>
+<span class="nc" id="L429">                    break;</span>
+                }
+            }
+<span class="nc" id="L432">        } catch (ClassNotFoundException ex) {</span>
+<span class="nc" id="L433">            java.util.logging.Logger.getLogger(ShowInfoScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L434">        } catch (InstantiationException ex) {</span>
+<span class="nc" id="L435">            java.util.logging.Logger.getLogger(ShowInfoScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L436">        } catch (IllegalAccessException ex) {</span>
+<span class="nc" id="L437">            java.util.logging.Logger.getLogger(ShowInfoScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L438">        } catch (javax.swing.UnsupportedLookAndFeelException ex) {</span>
+<span class="nc" id="L439">            java.util.logging.Logger.getLogger(ShowInfoScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L440">        }</span>
+        //&lt;/editor-fold&gt;
+<span class="nc" id="L442">    }</span>
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JButton ui_btnBackToMainScreen;
+    private javax.swing.JButton ui_btnBuyTickets;
+    private javax.swing.JToggleButton ui_btnStartTime1;
+    private javax.swing.JToggleButton ui_btnStartTime2;
+    private javax.swing.JToggleButton ui_btnStartTime3;
+    private javax.swing.JComboBox&lt;String&gt; ui_ddlDays;
+    private javax.swing.JLabel ui_lblCurrentVertoning;
+    private javax.swing.JLabel ui_lblFilmName;
+    private javax.swing.JLabel ui_lblShowInfoBG;
+    private javax.swing.JLabel ui_lblStartTime1;
+    private javax.swing.JLabel ui_lblStartTime2;
+    private javax.swing.JLabel ui_lblStartTime3;
+    // End of variables declaration//GEN-END:variables
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

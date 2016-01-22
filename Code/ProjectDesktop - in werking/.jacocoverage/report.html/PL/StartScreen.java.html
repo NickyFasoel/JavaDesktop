@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>StartScreen.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;ProjectDesktop&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">PL</a> &gt; <span class="el_source">StartScreen.java</span></div><h1>StartScreen.java</h1><pre class="source lang-java linenums">package PL;
+
+import BLL.FetchFavicon;
+import Interfaces.ISetFavicon;
+import java.awt.FontFormatException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class StartScreen extends javax.swing.JFrame {
+    
+<span class="nc" id="L12">    public StartScreen() {</span>
+<span class="nc" id="L13">        initComponents();</span>
+<span class="nc" id="L14">        setFavicon();</span>
+<span class="nc" id="L15">    }</span>
+
+    private void setFavicon() {
+<span class="nc" id="L18">        ISetFavicon iF = new FetchFavicon();</span>
+<span class="nc" id="L19">        this.setIconImage(iF.setFavicon().getImage());</span>
+<span class="nc" id="L20">    }</span>
+
+    @SuppressWarnings(&quot;unchecked&quot;)
+    // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+<span class="nc" id="L26">        jLayeredPane1 = new javax.swing.JLayeredPane();</span>
+<span class="nc" id="L27">        jPanel2 = new javax.swing.JPanel();</span>
+<span class="nc" id="L28">        jPanel1 = new javax.swing.JPanel();</span>
+<span class="nc" id="L29">        jLabel1 = new javax.swing.JLabel();</span>
+<span class="nc" id="L30">        jLabel2 = new javax.swing.JLabel();</span>
+<span class="nc" id="L31">        jPanel3 = new javax.swing.JPanel();</span>
+<span class="nc" id="L32">        jLabel3 = new javax.swing.JLabel();</span>
+<span class="nc" id="L33">        jPanel4 = new javax.swing.JPanel();</span>
+<span class="nc" id="L34">        jLabel5 = new javax.swing.JLabel();</span>
+
+<span class="nc" id="L36">        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L37">        setMaximumSize(new java.awt.Dimension(1024, 768));</span>
+<span class="nc" id="L38">        setMinimumSize(new java.awt.Dimension(1024, 768));</span>
+<span class="nc" id="L39">        setUndecorated(true);</span>
+<span class="nc" id="L40">        setPreferredSize(new java.awt.Dimension(1024, 768));</span>
+<span class="nc" id="L41">        setResizable(false);</span>
+<span class="nc" id="L42">        setSize(new java.awt.Dimension(1024, 768));</span>
+<span class="nc" id="L43">        addMouseListener(new java.awt.event.MouseAdapter() {</span>
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+<span class="nc" id="L45">                formMouseClicked(evt);</span>
+<span class="nc" id="L46">            }</span>
+        });
+
+<span class="nc" id="L49">        jLayeredPane1.setMaximumSize(new java.awt.Dimension(1024, 768));</span>
+<span class="nc" id="L50">        jLayeredPane1.setMinimumSize(new java.awt.Dimension(1024, 768));</span>
+
+<span class="nc" id="L52">        jPanel2.setBackground(new java.awt.Color(0, 0, 153));</span>
+<span class="nc" id="L53">        jPanel2.setMaximumSize(new java.awt.Dimension(1024, 768));</span>
+<span class="nc" id="L54">        jPanel2.setMinimumSize(new java.awt.Dimension(1024, 768));</span>
+<span class="nc" id="L55">        jPanel2.setPreferredSize(new java.awt.Dimension(1024, 768));</span>
+
+<span class="nc" id="L57">        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);</span>
+<span class="nc" id="L58">        jPanel2.setLayout(jPanel2Layout);</span>
+<span class="nc" id="L59">        jPanel2Layout.setHorizontalGroup(</span>
+<span class="nc" id="L60">            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L61">            .addGap(0, 1024, Short.MAX_VALUE)</span>
+        );
+<span class="nc" id="L63">        jPanel2Layout.setVerticalGroup(</span>
+<span class="nc" id="L64">            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L65">            .addGap(0, 768, Short.MAX_VALUE)</span>
+        );
+
+<span class="nc" id="L68">        jPanel1.setBackground(new java.awt.Color(255, 255, 255));</span>
+<span class="nc" id="L69">        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));</span>
+<span class="nc" id="L70">        jPanel1.setMaximumSize(new java.awt.Dimension(1024, 114));</span>
+<span class="nc" id="L71">        jPanel1.setMinimumSize(new java.awt.Dimension(1024, 114));</span>
+<span class="nc" id="L72">        jPanel1.setPreferredSize(new java.awt.Dimension(1024, 114));</span>
+
+<span class="nc" id="L74">        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource(&quot;/Images/logoKlein.png&quot;))); // NOI18N</span>
+
+<span class="nc" id="L76">        jLabel2.setFont(new java.awt.Font(&quot;sansserif&quot;, 0, 48)); // NOI18N</span>
+<span class="nc" id="L77">        jLabel2.setText(&quot;Welcome To Kinepolis...&quot;);</span>
+
+<span class="nc" id="L79">        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);</span>
+<span class="nc" id="L80">        jPanel1.setLayout(jPanel1Layout);</span>
+<span class="nc" id="L81">        jPanel1Layout.setHorizontalGroup(</span>
+<span class="nc" id="L82">            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L83">            .addGroup(jPanel1Layout.createSequentialGroup()</span>
+<span class="nc" id="L84">                .addGap(152, 152, 152)</span>
+<span class="nc" id="L85">                .addComponent(jLabel1)</span>
+<span class="nc" id="L86">                .addGap(18, 18, 18)</span>
+<span class="nc" id="L87">                .addComponent(jLabel2)</span>
+<span class="nc" id="L88">                .addContainerGap(235, Short.MAX_VALUE))</span>
+        );
+<span class="nc" id="L90">        jPanel1Layout.setVerticalGroup(</span>
+<span class="nc" id="L91">            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L92">            .addGroup(jPanel1Layout.createSequentialGroup()</span>
+<span class="nc" id="L93">                .addContainerGap()</span>
+<span class="nc" id="L94">                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)</span>
+<span class="nc" id="L95">                    .addComponent(jLabel2)</span>
+<span class="nc" id="L96">                    .addComponent(jLabel1))</span>
+<span class="nc" id="L97">                .addGap(0, 0, Short.MAX_VALUE))</span>
+        );
+
+<span class="nc" id="L100">        jPanel3.setMaximumSize(new java.awt.Dimension(1024, 768));</span>
+<span class="nc" id="L101">        jPanel3.setMinimumSize(new java.awt.Dimension(1024, 768));</span>
+<span class="nc" id="L102">        jPanel3.setPreferredSize(new java.awt.Dimension(1024, 768));</span>
+
+<span class="nc" id="L104">        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource(&quot;/Images/CinemaBackground2.jpg&quot;))); // NOI18N</span>
+
+<span class="nc" id="L106">        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);</span>
+<span class="nc" id="L107">        jPanel3.setLayout(jPanel3Layout);</span>
+<span class="nc" id="L108">        jPanel3Layout.setHorizontalGroup(</span>
+<span class="nc" id="L109">            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L110">            .addGroup(jPanel3Layout.createSequentialGroup()</span>
+<span class="nc" id="L111">                .addComponent(jLabel3)</span>
+<span class="nc" id="L112">                .addGap(0, 0, Short.MAX_VALUE))</span>
+        );
+<span class="nc" id="L114">        jPanel3Layout.setVerticalGroup(</span>
+<span class="nc" id="L115">            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L116">            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)</span>
+        );
+
+<span class="nc" id="L119">        jPanel4.setMaximumSize(new java.awt.Dimension(311, 48));</span>
+<span class="nc" id="L120">        jPanel4.setMinimumSize(new java.awt.Dimension(311, 48));</span>
+<span class="nc" id="L121">        jPanel4.setOpaque(false);</span>
+
+<span class="nc" id="L123">        jLabel5.setFont(new java.awt.Font(&quot;sansserif&quot;, 0, 24)); // NOI18N</span>
+<span class="nc" id="L124">        jLabel5.setForeground(new java.awt.Color(255, 255, 255));</span>
+<span class="nc" id="L125">        jLabel5.setText(&quot;...Press Anywhere To Start&quot;);</span>
+
+<span class="nc" id="L127">        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);</span>
+<span class="nc" id="L128">        jPanel4.setLayout(jPanel4Layout);</span>
+<span class="nc" id="L129">        jPanel4Layout.setHorizontalGroup(</span>
+<span class="nc" id="L130">            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L131">            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()</span>
+<span class="nc" id="L132">                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)</span>
+<span class="nc" id="L133">                .addComponent(jLabel5)</span>
+<span class="nc" id="L134">                .addGap(18, 18, 18))</span>
+        );
+<span class="nc" id="L136">        jPanel4Layout.setVerticalGroup(</span>
+<span class="nc" id="L137">            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L138">            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()</span>
+<span class="nc" id="L139">                .addGap(0, 0, Short.MAX_VALUE)</span>
+<span class="nc" id="L140">                .addComponent(jLabel5)</span>
+<span class="nc" id="L141">                .addGap(0, 0, 0))</span>
+        );
+
+<span class="nc" id="L144">        jLayeredPane1.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);</span>
+<span class="nc" id="L145">        jLayeredPane1.setLayer(jPanel1, javax.swing.JLayeredPane.MODAL_LAYER);</span>
+<span class="nc" id="L146">        jLayeredPane1.setLayer(jPanel3, javax.swing.JLayeredPane.PALETTE_LAYER);</span>
+<span class="nc" id="L147">        jLayeredPane1.setLayer(jPanel4, javax.swing.JLayeredPane.POPUP_LAYER);</span>
+
+<span class="nc" id="L149">        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);</span>
+<span class="nc" id="L150">        jLayeredPane1.setLayout(jLayeredPane1Layout);</span>
+<span class="nc" id="L151">        jLayeredPane1Layout.setHorizontalGroup(</span>
+<span class="nc" id="L152">            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L153">            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)</span>
+<span class="nc" id="L154">            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L155">                .addGroup(jLayeredPane1Layout.createSequentialGroup()</span>
+<span class="nc" id="L156">                    .addGap(0, 0, 0)</span>
+<span class="nc" id="L157">                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="nc" id="L158">                    .addGap(0, 0, Short.MAX_VALUE)))</span>
+<span class="nc" id="L159">            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L160">                .addGroup(jLayeredPane1Layout.createSequentialGroup()</span>
+<span class="nc" id="L161">                    .addGap(0, 0, 0)</span>
+<span class="nc" id="L162">                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="nc" id="L163">                    .addGap(0, 0, Short.MAX_VALUE)))</span>
+<span class="nc" id="L164">            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L165">                .addGroup(jLayeredPane1Layout.createSequentialGroup()</span>
+<span class="nc" id="L166">                    .addGap(520, 520, 520)</span>
+<span class="nc" id="L167">                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="nc" id="L168">                    .addGap(0, 0, Short.MAX_VALUE)))</span>
+        );
+<span class="nc" id="L170">        jLayeredPane1Layout.setVerticalGroup(</span>
+<span class="nc" id="L171">            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L172">            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)</span>
+<span class="nc" id="L173">            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L174">                .addGroup(jLayeredPane1Layout.createSequentialGroup()</span>
+<span class="nc" id="L175">                    .addGap(250, 250, 250)</span>
+<span class="nc" id="L176">                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)</span>
+<span class="nc" id="L177">                    .addGap(392, 392, 392)))</span>
+<span class="nc" id="L178">            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L179">                .addGroup(jLayeredPane1Layout.createSequentialGroup()</span>
+<span class="nc" id="L180">                    .addGap(0, 0, 0)</span>
+<span class="nc" id="L181">                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="nc" id="L182">                    .addGap(0, 0, Short.MAX_VALUE)))</span>
+<span class="nc" id="L183">            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L184">                .addGroup(jLayeredPane1Layout.createSequentialGroup()</span>
+<span class="nc" id="L185">                    .addGap(480, 480, 480)</span>
+<span class="nc" id="L186">                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="nc" id="L187">                    .addContainerGap(240, Short.MAX_VALUE)))</span>
+        );
+
+<span class="nc" id="L190">        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());</span>
+<span class="nc" id="L191">        getContentPane().setLayout(layout);</span>
+<span class="nc" id="L192">        layout.setHorizontalGroup(</span>
+<span class="nc" id="L193">            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L194">            .addComponent(jLayeredPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)</span>
+        );
+<span class="nc" id="L196">        layout.setVerticalGroup(</span>
+<span class="nc" id="L197">            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L198">            .addGroup(layout.createSequentialGroup()</span>
+<span class="nc" id="L199">                .addGap(0, 0, 0)</span>
+<span class="nc" id="L200">                .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)</span>
+<span class="nc" id="L201">                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))</span>
+        );
+
+<span class="nc" id="L204">        pack();</span>
+<span class="nc" id="L205">        setLocationRelativeTo(null);</span>
+<span class="nc" id="L206">    }// &lt;/editor-fold&gt;//GEN-END:initComponents</span>
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        try {
+<span class="nc" id="L210">            MainScreen ms = new MainScreen(this);</span>
+<span class="nc" id="L211">            this.setEnabled(false);</span>
+<span class="nc" id="L212">            ms.setVisible(true);</span>
+<span class="nc" id="L213">        } catch (FontFormatException | IOException ex) {</span>
+<span class="nc" id="L214">            Logger.getLogger(StartScreen.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L215">        }</span>
+<span class="nc" id="L216">    }//GEN-LAST:event_formMouseClicked</span>
+
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //&lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot; Look and feel setting code (optional) &quot;&gt;
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+<span class="nc bnc" id="L225" title="All 2 branches missed.">            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">                if (&quot;Nimbus&quot;.equals(info.getName())) {</span>
+<span class="nc" id="L227">                    javax.swing.UIManager.setLookAndFeel(info.getClassName());</span>
+<span class="nc" id="L228">                    break;</span>
+                }
+            }
+<span class="nc" id="L231">        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {</span>
+<span class="nc" id="L232">            java.util.logging.Logger.getLogger(StartScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L233">        }</span>
+
+        /* Create and display the form */
+<span class="nc" id="L236">        java.awt.EventQueue.invokeLater(() -&gt; {</span>
+<span class="nc" id="L237">            new StartScreen().setVisible(true);</span>
+<span class="nc" id="L238">        });</span>
+<span class="nc" id="L239">    }</span>
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    // End of variables declaration//GEN-END:variables
+    
+    //&lt;/editor-fold&gt;
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

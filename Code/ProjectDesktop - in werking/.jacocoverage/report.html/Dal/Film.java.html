@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Film.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;ProjectDesktop&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Dal</a> &gt; <span class="el_source">Film.java</span></div><h1>Film.java</h1><pre class="source lang-java linenums">package Dal;
+
+// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Imports&quot;&gt;
+
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+// &lt;/editor-fold&gt;
+
+@Entity
+public class Film implements Serializable {
+    
+    // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Private Member Variables&quot;&gt;
+    
+    private String naam;
+    private String speelUren;
+    private String speelDagen;
+    private double prijs;
+    private String genre;
+    private boolean active;
+    private String description;
+    private String image;
+    private String infoBG;
+    private int imgCorr;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    
+    // &lt;/editor-fold&gt;
+    
+    // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Constructors&quot;&gt;
+    
+    public Film(Long id, String naam, String speelUren, String speelDagen, 
+            double prijs, String genre, boolean active,
+<span class="nc" id="L39">            String description, String foto, String infoBG, int imgCorr) {</span>
+<span class="nc" id="L40">        this.id = id;</span>
+<span class="nc" id="L41">        this.naam = naam;</span>
+<span class="nc" id="L42">        this.speelUren = speelUren;</span>
+<span class="nc" id="L43">        this.speelDagen = speelDagen;</span>
+<span class="nc" id="L44">        this.prijs = prijs;</span>
+<span class="nc" id="L45">        this.genre = genre;</span>
+<span class="nc" id="L46">        this.active = active;</span>
+<span class="nc" id="L47">        this.description = description;</span>
+<span class="nc" id="L48">        this.image = foto;</span>
+<span class="nc" id="L49">        this.infoBG = infoBG;</span>
+<span class="nc" id="L50">        this.imgCorr = imgCorr;</span>
+<span class="nc" id="L51">    }</span>
+
+<span class="nc" id="L53">    public Film() {}</span>
+    
+    // &lt;/editor-fold&gt;
+    
+    // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Public Properties&quot;&gt;
+    
+    public Long getId() {
+<span class="nc" id="L60">        return id;</span>
+    }
+
+    public void setId(Long id) {
+<span class="nc" id="L64">        this.id = id;</span>
+<span class="nc" id="L65">    }</span>
+
+    public String getNaam() {
+<span class="nc" id="L68">        return naam;</span>
+    }
+
+    public void setNaam(String naam) {
+<span class="nc" id="L72">        this.naam = naam;</span>
+<span class="nc" id="L73">    }</span>
+
+    public String getSpeelUren() {
+<span class="nc" id="L76">        return speelUren;</span>
+    }
+
+    public void setSpeelUren(String speelUren) {
+<span class="nc" id="L80">        this.speelUren = speelUren;</span>
+<span class="nc" id="L81">    }</span>
+
+    public String getSpeelDagen() {
+<span class="nc" id="L84">        return speelDagen;</span>
+    }
+
+    public void setSpeelDagen(String speelDagen) {
+<span class="nc" id="L88">        this.speelDagen = speelDagen;</span>
+<span class="nc" id="L89">    }</span>
+
+    public double getPrijs() {
+<span class="nc" id="L92">        return prijs;</span>
+    }
+
+    public void setPrijs(double prijs) {
+<span class="nc" id="L96">        this.prijs = prijs;</span>
+<span class="nc" id="L97">    }</span>
+
+    public String getGenre() {
+<span class="nc" id="L100">        return genre;</span>
+    }
+
+    public void setGenre(String genre) {
+<span class="nc" id="L104">        this.genre = genre;</span>
+<span class="nc" id="L105">    }</span>
+    
+    public String getDescription() {
+<span class="nc" id="L108">        return description;</span>
+    }
+
+    public void setDescription(String description) {
+<span class="nc" id="L112">        this.description = description;</span>
+<span class="nc" id="L113">    }</span>
+
+    public String getImage() {
+<span class="nc" id="L116">        return image;</span>
+    }
+
+    public void setImage(String image) {
+<span class="nc" id="L120">        this.image = image;</span>
+<span class="nc" id="L121">    }</span>
+
+    public boolean isActive() {
+<span class="nc" id="L124">        return active;</span>
+    }
+
+    public void setActive(boolean active) {
+<span class="nc" id="L128">        this.active = active;</span>
+<span class="nc" id="L129">    }</span>
+    
+    public String getInfoBG() {
+<span class="nc" id="L132">        return infoBG;</span>
+    }
+
+    public void setInfoBG(String infoBG) {
+<span class="nc" id="L136">        this.infoBG = infoBG;</span>
+<span class="nc" id="L137">    }</span>
+
+    public int getImgCorr() {
+<span class="nc" id="L140">        return imgCorr;</span>
+    }
+
+    public void setImgCorr(int imgCorr) {
+<span class="nc" id="L144">        this.imgCorr = imgCorr;</span>
+<span class="nc" id="L145">    }</span>
+    
+    // &lt;/editor-fold&gt;
+
+    // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Public Methods&quot;&gt;
+    
+    @Override
+    public String toString() {
+<span class="nc" id="L153">        return naam;</span>
+    }
+    
+    // &lt;/editor-fold&gt; 
+
+    
+      
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>FetchFilmData.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;ProjectDesktop&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Dal.Helpers</a> &gt; <span class="el_source">FetchFilmData.java</span></div><h1>FetchFilmData.java</h1><pre class="source lang-java linenums">package Dal.Helpers;
+
+// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Imports&quot;&gt;
+
+import Interfaces.IGetData;
+import CONSTANTS.IntConstants;
+import CONSTANTS.StringConstants;
+import Dal.Film;
+import Dal.Vertoning;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+// &lt;/editor-fold&gt;
+
+public class FetchFilmData implements IGetData {
+
+    // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Private Member Variables&quot;&gt;
+    
+    private ResultSet _rs;
+    
+    // &lt;/editor-fold&gt;
+    
+    // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Private Methods&quot;&gt;
+   
+    private Statement createAStatement() throws SQLException {
+<span class="nc" id="L31">        Statement stmnt = CreateConnection.INSTANCE.getConnection().createStatement();</span>
+<span class="nc" id="L32">        return stmnt;</span>
+    }
+    
+    private void closeStatement(Statement stmnt) throws SQLException {
+<span class="nc" id="L36">        Connection conn = stmnt.getConnection();</span>
+<span class="nc" id="L37">        stmnt.close();</span>
+<span class="nc" id="L38">        conn.close();</span>
+<span class="nc" id="L39">    }</span>
+    
+    // &lt;/editor-fold&gt;
+    
+    // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Constructors&quot;&gt;
+
+<span class="nc" id="L45">    public FetchFilmData() {}</span>
+
+    // &lt;/editor-fold&gt;
+    
+    // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Public Methods&quot;&gt;
+
+    @Override
+    public ArrayList&lt;Film&gt; getAllFilms() {
+<span class="nc" id="L53">        ArrayList&lt;Film&gt; lst = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L54">        Statement stmnt = null;</span>
+        try {
+<span class="nc" id="L56">            stmnt = createAStatement();</span>
+<span class="nc" id="L57">            _rs = stmnt.executeQuery(StringConstants.QRY_GET_ALL_FILMS.getValue());</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">            while(_rs.next())</span>
+            {
+<span class="nc" id="L60">                long id = _rs.getLong(&quot;ID&quot;);</span>
+<span class="nc" id="L61">                String naam = _rs.getString(StringConstants.NAAM_COLUMN.getValue());</span>
+<span class="nc" id="L62">                String speelUren = _rs.getString(StringConstants.SPEELUREN_COLUMN.getValue());</span>
+<span class="nc" id="L63">                String speelDagen = _rs.getString(StringConstants.SPEELDAGEN_COLUMN.getValue());</span>
+<span class="nc" id="L64">                double prijs = _rs.getDouble(StringConstants.PRIJS_COLUMN.getValue());</span>
+<span class="nc" id="L65">                String genre = _rs.getString(StringConstants.GENRE_COLUMN.getValue());</span>
+<span class="nc" id="L66">                boolean actief = _rs.getBoolean(StringConstants.ACTIEF_COLUMN.getValue());</span>
+<span class="nc" id="L67">                String description = _rs.getString(StringConstants.DESCRIPTION_COLUMN.getValue());</span>
+<span class="nc" id="L68">                String image = _rs.getString(StringConstants.IMAGE_COLUMN.getValue());</span>
+<span class="nc" id="L69">                String showBG = _rs.getString(StringConstants.SHOWINFOBACKGROUNDIMAGE_COLUMN.getValue());</span>
+<span class="nc" id="L70">                int imgCorr = _rs.getInt(StringConstants.BGIMAGECORRECTION_COLUMN.getValue());</span>
+<span class="nc" id="L71">                Film film = new Film(id, naam, speelUren, speelDagen, prijs,</span>
+                            genre, actief, description, image, showBG, imgCorr);
+<span class="nc" id="L73">                lst.add(film);</span>
+<span class="nc" id="L74">            }</span>
+<span class="nc" id="L75">        } catch (SQLException ex) {</span>
+<span class="nc" id="L76">            Logger.getLogger(FetchFilmData.class.getName()).log(Level.SEVERE, null, ex);</span>
+        } finally {
+<span class="nc" id="L78">            try {</span>
+<span class="nc" id="L79">                closeStatement(stmnt);</span>
+<span class="nc" id="L80">            } catch (SQLException ex) {</span>
+<span class="nc" id="L81">                Logger.getLogger(FetchFilmData.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L82">            }</span>
+<span class="nc" id="L83">        }</span>
+<span class="nc" id="L84">        return lst;</span>
+    }
+    
+    @Override
+    public ArrayList&lt;Integer&gt; getTicketsPerVertoning(Vertoning vertoning) {
+<span class="nc" id="L89">        ArrayList&lt;Integer&gt; lst = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L90">        Statement stmnt = null;</span>
+        try {
+<span class="nc" id="L92">            long id = vertoning.getId();</span>
+<span class="nc" id="L93">            stmnt = createAStatement();</span>
+<span class="nc" id="L94">            _rs = stmnt.executeQuery(&quot;SELECT `Aantal` FROM `tbl_klant` WHERE  (`Vertoning_ID` IN ('&quot; + id + &quot;'))&quot;);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">            while(_rs.next())</span>
+            {
+<span class="nc" id="L97">                lst.add(_rs.getInt(IntConstants.ONE.getValue()));</span>
+            }
+<span class="nc" id="L99">            _rs = stmnt.executeQuery(&quot;SELECT aantal FROM tbl_gekendeklant WHERE voorstelling_id = &quot; + id);  </span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">            while(_rs.next())</span>
+            {
+<span class="nc" id="L102">                lst.add(_rs.getInt(IntConstants.ONE.getValue()));</span>
+            }
+<span class="nc" id="L104">        } catch (SQLException ex) {</span>
+<span class="nc" id="L105">            Logger.getLogger(FetchFilmData.class.getName()).log(Level.SEVERE, null, ex);</span>
+        } finally {
+<span class="nc" id="L107">            try {</span>
+<span class="nc" id="L108">                closeStatement(stmnt);</span>
+<span class="nc" id="L109">            } catch (SQLException ex) {</span>
+<span class="nc" id="L110">                Logger.getLogger(FetchFilmData.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L111">            }</span>
+<span class="nc" id="L112">        }</span>
+<span class="nc" id="L113">        return lst;</span>
+    }
+    
+    @Override
+    public ArrayList&lt;String&gt; getAllGenres() {
+<span class="nc" id="L118">        ArrayList&lt;String&gt; lst = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L119">        Statement stmnt = null;</span>
+        try {
+<span class="nc" id="L121">            stmnt = createAStatement();</span>
+<span class="nc" id="L122">            _rs = stmnt.executeQuery(StringConstants.QRY_GET_ALL_GENRES.getValue());</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">            while(_rs.next())</span>
+            {
+<span class="nc" id="L125">                lst.add(_rs.getString(IntConstants.ONE.getValue()));</span>
+            }
+<span class="nc" id="L127">        } catch (SQLException ex) {</span>
+<span class="nc" id="L128">            Logger.getLogger(FetchFilmData.class.getName()).log(Level.SEVERE, null, ex);</span>
+        } finally {
+<span class="nc" id="L130">            try {</span>
+<span class="nc" id="L131">                closeStatement(stmnt);</span>
+<span class="nc" id="L132">            } catch (SQLException ex) {</span>
+<span class="nc" id="L133">                Logger.getLogger(FetchFilmData.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L134">            }</span>
+<span class="nc" id="L135">        }</span>
+<span class="nc" id="L136">        return lst;</span>
+    }
+    
+    @Override
+    public ArrayList&lt;Vertoning&gt; getAllShows() {
+<span class="nc" id="L141">        ArrayList&lt;Vertoning&gt; lstVert = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L142">        ResultSet rs = null;</span>
+        try {
+            //rs = CreateConnection.INSTANCE.getConnection().createStatement().executeQuery(&quot;SELECT tbl_zaal.ID FROM `tbl_zaal` WHERE NOT EXISTS(Select 1 from tbl_vertoning WHERE (tbl_vertoning.Zaal_ID = tbl_zaal.ID) AND (tbl_vertoning.SpeelDag = '&quot; + dagTrim + &quot;') AND (tbl_vertoning.SpeelUur = '&quot; + urenTrim + &quot;'))&quot;);
+<span class="nc" id="L145">            rs = CreateConnection.INSTANCE.getConnection().createStatement().executeQuery(StringConstants.QRY_GET_ALL_SHOWS.getValue());</span>
+<span class="nc" id="L146">        } catch (SQLException e) {</span>
+<span class="nc" id="L147">            Logger.getLogger(FetchFilmData.class.getName()).log(Level.SEVERE, null, e);</span>
+<span class="nc" id="L148">        }</span>
+        try {
+<span class="nc bnc" id="L150" title="All 2 branches missed.">            if (rs != null) {</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">                while (rs.next()){</span>
+<span class="nc" id="L152">                    long id = rs.getLong(StringConstants.ID_COLUMN.getValue());</span>
+<span class="nc" id="L153">                    String naam = rs.getString(StringConstants.NAAM_COLUMN.getValue());</span>
+<span class="nc" id="L154">                    String speelDag = rs.getString(StringConstants.SPEELDAG_COLUMN.getValue()); </span>
+<span class="nc" id="L155">                    String speelUur = rs.getString(StringConstants.SPEELUUR_COLUMN.getValue());</span>
+<span class="nc" id="L156">                    double prijs = rs.getDouble(StringConstants.PRIJS_COLUMN.getValue());</span>
+<span class="nc" id="L157">                    int zaalNummer = rs.getInt(StringConstants.NUMMER_COLUMN.getValue());</span>
+<span class="nc" id="L158">                    int plaatsen = rs.getInt(StringConstants.PLAATSEN_COLUMN.getValue());</span>
+
+<span class="nc" id="L160">                    lstVert.add(new Vertoning(id, naam, speelDag, speelUur, prijs, zaalNummer, plaatsen));</span>
+<span class="nc" id="L161">                }</span>
+            }
+<span class="nc" id="L163">        } catch (SQLException ex) {</span>
+<span class="nc" id="L164">            Logger.getLogger(FetchFilmData.class.getName()).log(Level.SEVERE, null, ex);</span>
+        } finally {
+<span class="nc" id="L166">            try {</span>
+<span class="nc" id="L167">                Statement statement = rs.getStatement();</span>
+<span class="nc" id="L168">                Connection connection = statement.getConnection();</span>
+<span class="nc" id="L169">                rs.close();</span>
+<span class="nc" id="L170">                statement.close();</span>
+<span class="nc" id="L171">                connection.close();</span>
+<span class="nc" id="L172">            } catch (SQLException ex) {</span>
+<span class="nc" id="L173">                Logger.getLogger(FetchFilmData.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L174">            }</span>
+<span class="nc" id="L175">        }</span>
+        
+<span class="nc" id="L177">        return lstVert;</span>
+    }
+    
+    // &lt;/editor-fold&gt;
+  
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

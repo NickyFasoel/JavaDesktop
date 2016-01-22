@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CountTickets.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;ProjectDesktop&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">BLL</a> &gt; <span class="el_source">CountTickets.java</span></div><h1>CountTickets.java</h1><pre class="source lang-java linenums">package BLL;
+
+import Interfaces.ICountTickets;
+import CONSTANTS.IntConstants;
+import Interfaces.IGetData;
+import Dal.Helpers.FetchFilmData;
+import Dal.Vertoning;
+import java.util.ArrayList;
+
+<span class="nc" id="L10">public class CountTickets implements ICountTickets {</span>
+    
+    @Override
+    public int countTickets(Vertoning vertoning) {
+<span class="nc" id="L14">        int amountOfTickets = IntConstants.ZERO.getValue();</span>
+<span class="nc" id="L15">        IGetData iGD = new FetchFilmData();</span>
+<span class="nc" id="L16">        ArrayList&lt;Integer&gt; lst = iGD.getTicketsPerVertoning(vertoning);</span>
+<span class="nc bnc" id="L17" title="All 2 branches missed.">        for (Integer number : lst) {</span>
+<span class="nc" id="L18">            amountOfTickets += number;</span>
+<span class="nc" id="L19">        }</span>
+<span class="nc" id="L20">        return amountOfTickets;</span>
+    }
+    
+    @Override
+    public boolean isRoom(Vertoning vertoning) {
+        int amountOfTickets;
+<span class="nc" id="L26">        amountOfTickets = countTickets(vertoning);</span>
+<span class="nc bnc" id="L27" title="All 2 branches missed.">        return amountOfTickets &lt; IntConstants.EIGHTY_TWO.getValue();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

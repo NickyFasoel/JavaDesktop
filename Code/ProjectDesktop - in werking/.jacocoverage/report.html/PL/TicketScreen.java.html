@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>TicketScreen.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;ProjectDesktop&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">PL</a> &gt; <span class="el_source">TicketScreen.java</span></div><h1>TicketScreen.java</h1><pre class="source lang-java linenums">package PL;
+
+// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Imports&quot;&gt;
+
+import BLL.CountTickets;
+import BLL.CreateAKlant;
+import BLL.FetchFavicon;
+import Interfaces.ICreateAKlant;
+import CONSTANTS.IntConstants;
+import CONSTANTS.StringConstants;
+import Dal.Helpers.InsertKlant;
+import Dal.Klant;
+import Dal.Vertoning;
+import Interfaces.ICountTickets;
+import Interfaces.IInsertKlant;
+import Interfaces.ISetFavicon;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.Timer;
+
+// &lt;/editor-fold&gt;
+
+public class TicketScreen extends javax.swing.JFrame {
+
+    // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Private Member Variables&quot;&gt;
+
+    private final JFrame _jframeMainScreen;
+    private final JFrame _jframeShowInfoScreen;
+    private final Vertoning _vertoning;
+    private final ImageIcon _icon;
+    private final ISetFavicon _iF;
+    private int _aantalTickets;
+    private final JFrame _jframeStartScreen;
+    private DecimalFormat _df;
+    
+    // &lt;/editor-fold&gt;
+    
+    // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Private Methods&quot;&gt;
+    
+    /**
+     *  Om de ctor wat kleiner te houden
+     */
+    private void prepareTicketScreen() {
+<span class="nc" id="L48">        this.setIconImage(_icon.getImage());</span>
+<span class="nc" id="L49">        this._aantalTickets = IntConstants.ONE.getValue();</span>
+<span class="nc" id="L50">        ui_lblDatum.setText(_vertoning.getSpeelDag());</span>
+<span class="nc" id="L51">        ui_lblFilmNaam.setText(_vertoning.getFilmNaam());</span>
+<span class="nc" id="L52">        this._df = new DecimalFormat(StringConstants.DECIMAL_FORMAT.getValue());</span>
+<span class="nc" id="L53">        ui_lblPrijs.setText(StringConstants.EURO_SYMBOL.getValue() + String.valueOf(_df.format(_vertoning.getPrijs())));</span>
+<span class="nc" id="L54">        ui_lblStartingTime.setText(_vertoning.getSpeelUur());</span>
+<span class="nc" id="L55">        ui_lblZaal.setText(String.valueOf(_vertoning.getZaalNummer()));</span>
+<span class="nc" id="L56">    }</span>
+
+    /**
+     * Berekent de prijs de prijs en format dit met een currency symbol ervoor
+     * @param aantalTickets
+     * @return 
+     */
+    private String calculatePrijs(int aantalTickets) {
+<span class="nc" id="L64">        double totaal = aantalTickets * _vertoning.getPrijs();</span>
+<span class="nc" id="L65">        String euroPrijs = StringConstants.EURO_SYMBOL.getValue() + String.valueOf(_df.format(totaal));</span>
+<span class="nc" id="L66">        return euroPrijs;</span>
+    }
+    
+    /**
+     *  Update +- elke second de remaining tickets en toont dit in een txtBox
+     */
+    private void checkFreeTickets() {
+<span class="nc" id="L73">        ui_txtRemainingTickets.setText(String.valueOf(_vertoning.getPlaatsen()));</span>
+<span class="nc" id="L74">        ICountTickets iCT = new CountTickets();</span>
+<span class="nc" id="L75">        Timer timeClock = new Timer(IntConstants.ONE_THOUSAND.getValue(), new ActionListener() {</span>
+            @Override
+            public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L78">                ui_txtRemainingTickets.setText(String.valueOf(_vertoning.getPlaatsen() - iCT.countTickets(_vertoning)));</span>
+<span class="nc" id="L79">            }</span>
+        });
+<span class="nc" id="L81">        timeClock.start();</span>
+<span class="nc" id="L82">    }</span>
+    
+    // &lt;/editor-fold&gt;
+    
+    // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Constructors&quot;&gt;
+    
+<span class="nc" id="L88">    public TicketScreen(Vertoning vertoning, JFrame ms, JFrame is, JFrame ss) {</span>
+<span class="nc" id="L89">        initComponents();</span>
+        /* Gebruikt de instantie van jframes om deze te beheren (zoals te tonen, disposen wanneer ik wil etc) */
+<span class="nc" id="L91">        this._jframeMainScreen = ms;</span>
+<span class="nc" id="L92">        this._jframeShowInfoScreen = is;</span>
+<span class="nc" id="L93">        this._jframeStartScreen = ss;</span>
+<span class="nc" id="L94">        this._vertoning = vertoning;</span>
+<span class="nc" id="L95">        this._iF = new FetchFavicon();</span>
+<span class="nc" id="L96">        this._icon = _iF.setFavicon();</span>
+<span class="nc" id="L97">        prepareTicketScreen();</span>
+<span class="nc" id="L98">        ui_txtRemainingTickets.setText(String.valueOf(_vertoning.getPlaatsen()));</span>
+<span class="nc" id="L99">        checkFreeTickets();</span>
+<span class="nc" id="L100">    }</span>
+
+    // &lt;/editor-fold&gt;
+    
+@SuppressWarnings(&quot;unchecked&quot;)
+    // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+<span class="nc" id="L108">        jLayeredPane1 = new javax.swing.JLayeredPane();</span>
+<span class="nc" id="L109">        jPanel1 = new javax.swing.JPanel();</span>
+<span class="nc" id="L110">        jLabel1 = new javax.swing.JLabel();</span>
+<span class="nc" id="L111">        jPanel2 = new javax.swing.JPanel();</span>
+<span class="nc" id="L112">        ui_lblFilmNaam = new javax.swing.JLabel();</span>
+<span class="nc" id="L113">        ui_lblZaal = new javax.swing.JLabel();</span>
+<span class="nc" id="L114">        jLabel2 = new javax.swing.JLabel();</span>
+<span class="nc" id="L115">        jLabel3 = new javax.swing.JLabel();</span>
+<span class="nc" id="L116">        ui_lblDatum = new javax.swing.JLabel();</span>
+<span class="nc" id="L117">        jLabel5 = new javax.swing.JLabel();</span>
+<span class="nc" id="L118">        ui_txtAantalTickets = new javax.swing.JTextField();</span>
+<span class="nc" id="L119">        jLabel6 = new javax.swing.JLabel();</span>
+<span class="nc" id="L120">        ui_btnSubtract = new javax.swing.JButton();</span>
+<span class="nc" id="L121">        ui_btnAdd = new javax.swing.JButton();</span>
+<span class="nc" id="L122">        jLabel7 = new javax.swing.JLabel();</span>
+<span class="nc" id="L123">        ui_lblPrijs = new javax.swing.JLabel();</span>
+<span class="nc" id="L124">        jLabel4 = new javax.swing.JLabel();</span>
+<span class="nc" id="L125">        ui_lblStartingTime = new javax.swing.JLabel();</span>
+<span class="nc" id="L126">        jLabel8 = new javax.swing.JLabel();</span>
+<span class="nc" id="L127">        ui_btnCancel = new javax.swing.JButton();</span>
+<span class="nc" id="L128">        ui_btnProceed = new javax.swing.JButton();</span>
+<span class="nc" id="L129">        ui_txtRemainingTickets = new javax.swing.JTextField();</span>
+<span class="nc" id="L130">        jLabel9 = new javax.swing.JLabel();</span>
+
+<span class="nc" id="L132">        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);</span>
+<span class="nc" id="L133">        setBackground(new java.awt.Color(0, 0, 0));</span>
+<span class="nc" id="L134">        setUndecorated(true);</span>
+<span class="nc" id="L135">        setSize(new java.awt.Dimension(600, 294));</span>
+
+<span class="nc" id="L137">        jLayeredPane1.setBackground(new java.awt.Color(0, 0, 0));</span>
+<span class="nc" id="L138">        jLayeredPane1.setMaximumSize(new java.awt.Dimension(600, 294));</span>
+<span class="nc" id="L139">        jLayeredPane1.setMinimumSize(new java.awt.Dimension(600, 294));</span>
+<span class="nc" id="L140">        jLayeredPane1.setOpaque(true);</span>
+
+<span class="nc" id="L142">        jPanel1.setBackground(new java.awt.Color(0, 0, 0));</span>
+<span class="nc" id="L143">        jPanel1.setBorder(null);</span>
+<span class="nc" id="L144">        jPanel1.setMaximumSize(new java.awt.Dimension(600, 294));</span>
+<span class="nc" id="L145">        jPanel1.setMinimumSize(new java.awt.Dimension(600, 294));</span>
+<span class="nc" id="L146">        jPanel1.setPreferredSize(new java.awt.Dimension(600, 294));</span>
+
+<span class="nc" id="L148">        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource(&quot;/Images/ticketScaled.png&quot;))); // NOI18N</span>
+
+<span class="nc" id="L150">        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);</span>
+<span class="nc" id="L151">        jPanel1.setLayout(jPanel1Layout);</span>
+<span class="nc" id="L152">        jPanel1Layout.setHorizontalGroup(</span>
+<span class="nc" id="L153">            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L154">            .addGroup(jPanel1Layout.createSequentialGroup()</span>
+<span class="nc" id="L155">                .addComponent(jLabel1)</span>
+<span class="nc" id="L156">                .addGap(0, 0, Short.MAX_VALUE))</span>
+        );
+<span class="nc" id="L158">        jPanel1Layout.setVerticalGroup(</span>
+<span class="nc" id="L159">            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L160">            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()</span>
+<span class="nc" id="L161">                .addGap(0, 0, Short.MAX_VALUE)</span>
+<span class="nc" id="L162">                .addComponent(jLabel1)</span>
+<span class="nc" id="L163">                .addGap(15, 15, 15))</span>
+        );
+
+<span class="nc" id="L166">        jPanel2.setMaximumSize(new java.awt.Dimension(600, 294));</span>
+<span class="nc" id="L167">        jPanel2.setMinimumSize(new java.awt.Dimension(600, 294));</span>
+<span class="nc" id="L168">        jPanel2.setOpaque(false);</span>
+
+<span class="nc" id="L170">        ui_lblFilmNaam.setFont(new java.awt.Font(&quot;sansserif&quot;, 0, 36)); // NOI18N</span>
+<span class="nc" id="L171">        ui_lblFilmNaam.setForeground(new java.awt.Color(255, 255, 255));</span>
+<span class="nc" id="L172">        ui_lblFilmNaam.setText(&quot;Star Wars: Episode VII&quot;);</span>
+<span class="nc" id="L173">        ui_lblFilmNaam.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);</span>
+
+<span class="nc" id="L175">        ui_lblZaal.setFont(new java.awt.Font(&quot;sansserif&quot;, 0, 24)); // NOI18N</span>
+<span class="nc" id="L176">        ui_lblZaal.setForeground(new java.awt.Color(255, 255, 255));</span>
+<span class="nc" id="L177">        ui_lblZaal.setText(&quot;10&quot;);</span>
+
+<span class="nc" id="L179">        jLabel2.setFont(new java.awt.Font(&quot;sansserif&quot;, 0, 24)); // NOI18N</span>
+<span class="nc" id="L180">        jLabel2.setForeground(new java.awt.Color(255, 255, 255));</span>
+<span class="nc" id="L181">        jLabel2.setText(&quot;Screen:&quot;);</span>
+
+<span class="nc" id="L183">        jLabel3.setFont(new java.awt.Font(&quot;sansserif&quot;, 0, 24)); // NOI18N</span>
+<span class="nc" id="L184">        jLabel3.setForeground(new java.awt.Color(255, 255, 255));</span>
+<span class="nc" id="L185">        jLabel3.setText(&quot;Day:&quot;);</span>
+
+<span class="nc" id="L187">        ui_lblDatum.setFont(new java.awt.Font(&quot;sansserif&quot;, 0, 24)); // NOI18N</span>
+<span class="nc" id="L188">        ui_lblDatum.setForeground(new java.awt.Color(255, 255, 255));</span>
+<span class="nc" id="L189">        ui_lblDatum.setText(&quot;Monday&quot;);</span>
+
+<span class="nc" id="L191">        jLabel5.setBackground(new java.awt.Color(230, 229, 234));</span>
+<span class="nc" id="L192">        jLabel5.setFont(new java.awt.Font(&quot;sansserif&quot;, 1, 17)); // NOI18N</span>
+<span class="nc" id="L193">        jLabel5.setForeground(new java.awt.Color(255, 255, 255));</span>
+<span class="nc" id="L194">        jLabel5.setText(&quot;__________________________________________________________&quot;);</span>
+<span class="nc" id="L195">        jLabel5.setToolTipText(&quot;&quot;);</span>
+<span class="nc" id="L196">        jLabel5.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);</span>
+
+<span class="nc" id="L198">        ui_txtAantalTickets.setFont(new java.awt.Font(&quot;sansserif&quot;, 0, 20)); // NOI18N</span>
+<span class="nc" id="L199">        ui_txtAantalTickets.setHorizontalAlignment(javax.swing.JTextField.CENTER);</span>
+<span class="nc" id="L200">        ui_txtAantalTickets.setText(&quot;1&quot;);</span>
+<span class="nc" id="L201">        ui_txtAantalTickets.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));</span>
+<span class="nc" id="L202">        ui_txtAantalTickets.setFocusable(false);</span>
+<span class="nc" id="L203">        ui_txtAantalTickets.setMaximumSize(new java.awt.Dimension(47, 47));</span>
+<span class="nc" id="L204">        ui_txtAantalTickets.setMinimumSize(new java.awt.Dimension(47, 47));</span>
+<span class="nc" id="L205">        ui_txtAantalTickets.setPreferredSize(new java.awt.Dimension(47, 47));</span>
+
+<span class="nc" id="L207">        jLabel6.setFont(new java.awt.Font(&quot;sansserif&quot;, 0, 22)); // NOI18N</span>
+<span class="nc" id="L208">        jLabel6.setForeground(new java.awt.Color(255, 255, 255));</span>
+<span class="nc" id="L209">        jLabel6.setText(&quot;How many tickets would you like?&quot;);</span>
+
+<span class="nc" id="L211">        ui_btnSubtract.setIcon(new javax.swing.ImageIcon(getClass().getResource(&quot;/Images/-.png&quot;))); // NOI18N</span>
+<span class="nc" id="L212">        ui_btnSubtract.setContentAreaFilled(false);</span>
+<span class="nc" id="L213">        ui_btnSubtract.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));</span>
+<span class="nc" id="L214">        ui_btnSubtract.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L216">                ui_btnSubtractActionPerformed(evt);</span>
+<span class="nc" id="L217">            }</span>
+        });
+
+<span class="nc" id="L220">        ui_btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource(&quot;/Images/+.png&quot;))); // NOI18N</span>
+<span class="nc" id="L221">        ui_btnAdd.setContentAreaFilled(false);</span>
+<span class="nc" id="L222">        ui_btnAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));</span>
+<span class="nc" id="L223">        ui_btnAdd.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L225">                ui_btnAddActionPerformed(evt);</span>
+<span class="nc" id="L226">            }</span>
+        });
+
+<span class="nc" id="L229">        jLabel7.setBackground(new java.awt.Color(230, 229, 234));</span>
+<span class="nc" id="L230">        jLabel7.setFont(new java.awt.Font(&quot;sansserif&quot;, 1, 17)); // NOI18N</span>
+<span class="nc" id="L231">        jLabel7.setForeground(new java.awt.Color(255, 255, 255));</span>
+<span class="nc" id="L232">        jLabel7.setText(&quot;_______________________________________&quot;);</span>
+<span class="nc" id="L233">        jLabel7.setToolTipText(&quot;&quot;);</span>
+<span class="nc" id="L234">        jLabel7.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);</span>
+<span class="nc" id="L235">        jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);</span>
+<span class="nc" id="L236">        jLabel7.setVerticalTextPosition(javax.swing.SwingConstants.TOP);</span>
+
+<span class="nc" id="L238">        ui_lblPrijs.setFont(new java.awt.Font(&quot;sansserif&quot;, 0, 28)); // NOI18N</span>
+<span class="nc" id="L239">        ui_lblPrijs.setForeground(new java.awt.Color(255, 255, 255));</span>
+<span class="nc" id="L240">        ui_lblPrijs.setText(&quot;€120,46&quot;);</span>
+<span class="nc" id="L241">        ui_lblPrijs.setVerticalAlignment(javax.swing.SwingConstants.TOP);</span>
+
+<span class="nc" id="L243">        jLabel4.setFont(new java.awt.Font(&quot;sansserif&quot;, 0, 28)); // NOI18N</span>
+<span class="nc" id="L244">        jLabel4.setForeground(new java.awt.Color(255, 255, 255));</span>
+<span class="nc" id="L245">        jLabel4.setText(&quot;Total:&quot;);</span>
+
+<span class="nc" id="L247">        ui_lblStartingTime.setFont(new java.awt.Font(&quot;sansserif&quot;, 0, 24)); // NOI18N</span>
+<span class="nc" id="L248">        ui_lblStartingTime.setForeground(new java.awt.Color(255, 255, 255));</span>
+<span class="nc" id="L249">        ui_lblStartingTime.setText(&quot;21.30&quot;);</span>
+
+<span class="nc" id="L251">        jLabel8.setFont(new java.awt.Font(&quot;sansserif&quot;, 0, 24)); // NOI18N</span>
+<span class="nc" id="L252">        jLabel8.setForeground(new java.awt.Color(255, 255, 255));</span>
+<span class="nc" id="L253">        jLabel8.setText(&quot;at&quot;);</span>
+
+<span class="nc" id="L255">        ui_btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource(&quot;/Images/x.png&quot;))); // NOI18N</span>
+<span class="nc" id="L256">        ui_btnCancel.setContentAreaFilled(false);</span>
+<span class="nc" id="L257">        ui_btnCancel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));</span>
+<span class="nc" id="L258">        ui_btnCancel.setMaximumSize(new java.awt.Dimension(47, 47));</span>
+<span class="nc" id="L259">        ui_btnCancel.setMinimumSize(new java.awt.Dimension(47, 47));</span>
+<span class="nc" id="L260">        ui_btnCancel.setPreferredSize(new java.awt.Dimension(47, 47));</span>
+<span class="nc" id="L261">        ui_btnCancel.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L263">                ui_btnCancelActionPerformed(evt);</span>
+<span class="nc" id="L264">            }</span>
+        });
+
+<span class="nc" id="L267">        ui_btnProceed.setIcon(new javax.swing.ImageIcon(getClass().getResource(&quot;/Images/v.png&quot;))); // NOI18N</span>
+<span class="nc" id="L268">        ui_btnProceed.setContentAreaFilled(false);</span>
+<span class="nc" id="L269">        ui_btnProceed.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));</span>
+<span class="nc" id="L270">        ui_btnProceed.setMaximumSize(new java.awt.Dimension(47, 47));</span>
+<span class="nc" id="L271">        ui_btnProceed.setMinimumSize(new java.awt.Dimension(47, 47));</span>
+<span class="nc" id="L272">        ui_btnProceed.setPreferredSize(new java.awt.Dimension(47, 47));</span>
+<span class="nc" id="L273">        ui_btnProceed.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L275">                ui_btnProceedActionPerformed(evt);</span>
+<span class="nc" id="L276">            }</span>
+        });
+
+<span class="nc" id="L279">        ui_txtRemainingTickets.setFont(new java.awt.Font(&quot;sansserif&quot;, 0, 20)); // NOI18N</span>
+<span class="nc" id="L280">        ui_txtRemainingTickets.setHorizontalAlignment(javax.swing.JTextField.CENTER);</span>
+<span class="nc" id="L281">        ui_txtRemainingTickets.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));</span>
+<span class="nc" id="L282">        ui_txtRemainingTickets.setFocusable(false);</span>
+<span class="nc" id="L283">        ui_txtRemainingTickets.setMaximumSize(new java.awt.Dimension(55, 47));</span>
+<span class="nc" id="L284">        ui_txtRemainingTickets.setMinimumSize(new java.awt.Dimension(55, 47));</span>
+<span class="nc" id="L285">        ui_txtRemainingTickets.setPreferredSize(new java.awt.Dimension(55, 47));</span>
+
+<span class="nc" id="L287">        jLabel9.setFont(new java.awt.Font(&quot;sansserif&quot;, 0, 22)); // NOI18N</span>
+<span class="nc" id="L288">        jLabel9.setForeground(new java.awt.Color(255, 255, 255));</span>
+<span class="nc" id="L289">        jLabel9.setText(&quot;out of&quot;);</span>
+
+<span class="nc" id="L291">        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);</span>
+<span class="nc" id="L292">        jPanel2.setLayout(jPanel2Layout);</span>
+<span class="nc" id="L293">        jPanel2Layout.setHorizontalGroup(</span>
+<span class="nc" id="L294">            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L295">            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()</span>
+<span class="nc" id="L296">                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)</span>
+<span class="nc" id="L297">                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()</span>
+<span class="nc" id="L298">                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)</span>
+<span class="nc" id="L299">                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()</span>
+<span class="nc" id="L300">                                .addGap(15, 15, 15)</span>
+<span class="nc" id="L301">                                .addComponent(ui_btnSubtract, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="nc" id="L302">                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)</span>
+<span class="nc" id="L303">                                .addComponent(ui_txtAantalTickets, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="nc" id="L304">                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)</span>
+<span class="nc" id="L305">                                .addComponent(ui_btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="nc" id="L306">                                .addGap(5, 5, 5)</span>
+<span class="nc" id="L307">                                .addComponent(jLabel9)</span>
+<span class="nc" id="L308">                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 5, Short.MAX_VALUE)</span>
+<span class="nc" id="L309">                                .addComponent(jLabel4)</span>
+<span class="nc" id="L310">                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)</span>
+<span class="nc" id="L311">                                .addComponent(ui_lblPrijs)</span>
+<span class="nc" id="L312">                                .addGap(55, 55, 55))</span>
+<span class="nc" id="L313">                            .addGroup(jPanel2Layout.createSequentialGroup()</span>
+<span class="nc" id="L314">                                .addContainerGap()</span>
+<span class="nc" id="L315">                                .addComponent(jLabel7))</span>
+<span class="nc" id="L316">                            .addGroup(jPanel2Layout.createSequentialGroup()</span>
+<span class="nc" id="L317">                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L318">                                    .addGroup(jPanel2Layout.createSequentialGroup()</span>
+<span class="nc" id="L319">                                        .addContainerGap()</span>
+<span class="nc" id="L320">                                        .addComponent(jLabel5))</span>
+<span class="nc" id="L321">                                    .addGroup(jPanel2Layout.createSequentialGroup()</span>
+<span class="nc" id="L322">                                        .addGap(22, 22, 22)</span>
+<span class="nc" id="L323">                                        .addComponent(ui_lblFilmNaam)))</span>
+<span class="nc" id="L324">                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)</span>
+<span class="nc" id="L325">                                .addComponent(ui_btnProceed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))</span>
+<span class="nc" id="L326">                        .addGap(1, 1, 1))</span>
+<span class="nc" id="L327">                    .addGroup(jPanel2Layout.createSequentialGroup()</span>
+<span class="nc" id="L328">                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)</span>
+<span class="nc" id="L329">                            .addGroup(jPanel2Layout.createSequentialGroup()</span>
+<span class="nc" id="L330">                                .addGap(19, 19, 19)</span>
+<span class="nc" id="L331">                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L332">                                    .addGroup(jPanel2Layout.createSequentialGroup()</span>
+<span class="nc" id="L333">                                        .addComponent(jLabel3)</span>
+<span class="nc" id="L334">                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)</span>
+<span class="nc" id="L335">                                        .addComponent(ui_lblDatum))</span>
+<span class="nc" id="L336">                                    .addGroup(jPanel2Layout.createSequentialGroup()</span>
+<span class="nc" id="L337">                                        .addComponent(jLabel2)</span>
+<span class="nc" id="L338">                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)</span>
+<span class="nc" id="L339">                                        .addComponent(ui_lblZaal)</span>
+<span class="nc" id="L340">                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)</span>
+<span class="nc" id="L341">                                        .addComponent(jLabel8)</span>
+<span class="nc" id="L342">                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)</span>
+<span class="nc" id="L343">                                        .addComponent(ui_lblStartingTime))))</span>
+<span class="nc" id="L344">                            .addGroup(jPanel2Layout.createSequentialGroup()</span>
+<span class="nc" id="L345">                                .addGap(20, 20, 20)</span>
+<span class="nc" id="L346">                                .addComponent(jLabel6)))</span>
+<span class="nc" id="L347">                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)</span>
+<span class="nc" id="L348">                        .addComponent(ui_btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))</span>
+<span class="nc" id="L349">                .addGap(0, 0, 0))</span>
+<span class="nc" id="L350">            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L351">                .addGroup(jPanel2Layout.createSequentialGroup()</span>
+<span class="nc" id="L352">                    .addGap(245, 245, 245)</span>
+<span class="nc" id="L353">                    .addComponent(ui_txtRemainingTickets, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="nc" id="L354">                    .addGap(0, 0, 0)))</span>
+        );
+<span class="nc" id="L356">        jPanel2Layout.setVerticalGroup(</span>
+<span class="nc" id="L357">            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L358">            .addGroup(jPanel2Layout.createSequentialGroup()</span>
+<span class="nc" id="L359">                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L360">                    .addGroup(jPanel2Layout.createSequentialGroup()</span>
+<span class="nc" id="L361">                        .addGap(0, 4, Short.MAX_VALUE)</span>
+<span class="nc" id="L362">                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)</span>
+<span class="nc" id="L363">                            .addComponent(ui_lblDatum)</span>
+<span class="nc" id="L364">                            .addComponent(jLabel3))</span>
+<span class="nc" id="L365">                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)</span>
+<span class="nc" id="L366">                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)</span>
+<span class="nc" id="L367">                            .addComponent(ui_lblZaal)</span>
+<span class="nc" id="L368">                            .addComponent(jLabel2)</span>
+<span class="nc" id="L369">                            .addComponent(jLabel8)</span>
+<span class="nc" id="L370">                            .addComponent(ui_lblStartingTime))</span>
+<span class="nc" id="L371">                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))</span>
+<span class="nc" id="L372">                    .addGroup(jPanel2Layout.createSequentialGroup()</span>
+<span class="nc" id="L373">                        .addContainerGap()</span>
+<span class="nc" id="L374">                        .addComponent(ui_btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="nc" id="L375">                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))</span>
+<span class="nc" id="L376">                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="nc" id="L377">                .addGap(18, 18, 18)</span>
+<span class="nc" id="L378">                .addComponent(jLabel6)</span>
+<span class="nc" id="L379">                .addGap(18, 18, 18)</span>
+<span class="nc" id="L380">                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L381">                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L382">                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)</span>
+<span class="nc" id="L383">                            .addComponent(ui_lblPrijs)</span>
+<span class="nc" id="L384">                            .addComponent(jLabel4))</span>
+<span class="nc" id="L385">                        .addComponent(ui_txtAantalTickets, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="nc" id="L386">                        .addComponent(ui_btnSubtract, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="nc" id="L387">                        .addComponent(ui_btnAdd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))</span>
+<span class="nc" id="L388">                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()</span>
+<span class="nc" id="L389">                        .addComponent(jLabel9)</span>
+<span class="nc" id="L390">                        .addGap(10, 10, 10)))</span>
+<span class="nc" id="L391">                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L392">                    .addGroup(jPanel2Layout.createSequentialGroup()</span>
+<span class="nc" id="L393">                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="nc" id="L394">                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)</span>
+<span class="nc" id="L395">                        .addComponent(ui_lblFilmNaam, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="nc" id="L396">                        .addGap(0, 30, Short.MAX_VALUE))</span>
+<span class="nc" id="L397">                    .addComponent(ui_btnProceed, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))</span>
+<span class="nc" id="L398">            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L399">                .addGroup(jPanel2Layout.createSequentialGroup()</span>
+<span class="nc" id="L400">                    .addGap(147, 147, 147)</span>
+<span class="nc" id="L401">                    .addComponent(ui_txtRemainingTickets, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="nc" id="L402">                    .addGap(0, 0, 0)))</span>
+        );
+
+<span class="nc" id="L405">        jLayeredPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);</span>
+<span class="nc" id="L406">        jLayeredPane1.setLayer(jPanel2, javax.swing.JLayeredPane.MODAL_LAYER);</span>
+
+<span class="nc" id="L408">        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);</span>
+<span class="nc" id="L409">        jLayeredPane1.setLayout(jLayeredPane1Layout);</span>
+<span class="nc" id="L410">        jLayeredPane1Layout.setHorizontalGroup(</span>
+<span class="nc" id="L411">            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L412">            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)</span>
+<span class="nc" id="L413">            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L414">                .addGroup(jLayeredPane1Layout.createSequentialGroup()</span>
+<span class="nc" id="L415">                    .addContainerGap()</span>
+<span class="nc" id="L416">                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="nc" id="L417">                    .addContainerGap(12, Short.MAX_VALUE)))</span>
+        );
+<span class="nc" id="L419">        jLayeredPane1Layout.setVerticalGroup(</span>
+<span class="nc" id="L420">            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L421">            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)</span>
+<span class="nc" id="L422">            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L423">                .addGroup(jLayeredPane1Layout.createSequentialGroup()</span>
+<span class="nc" id="L424">                    .addGap(9, 9, 9)</span>
+<span class="nc" id="L425">                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="nc" id="L426">                    .addContainerGap(14, Short.MAX_VALUE)))</span>
+        );
+
+<span class="nc" id="L429">        jPanel2.getAccessibleContext().setAccessibleParent(jPanel1);</span>
+
+<span class="nc" id="L431">        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());</span>
+<span class="nc" id="L432">        getContentPane().setLayout(layout);</span>
+<span class="nc" id="L433">        layout.setHorizontalGroup(</span>
+<span class="nc" id="L434">            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L435">            .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+        );
+<span class="nc" id="L437">        layout.setVerticalGroup(</span>
+<span class="nc" id="L438">            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L439">            .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+        );
+
+<span class="nc" id="L442">        pack();</span>
+<span class="nc" id="L443">    }// &lt;/editor-fold&gt;//GEN-END:initComponents</span>
+
+    // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Events&quot;&gt;
+
+    /**
+     *  Code achter de plus knop voor ticketaantal
+     *  mits beperking van aantal tickets
+     */
+    private void ui_btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ui_btnAddActionPerformed
+<span class="nc bnc" id="L452" title="All 2 branches missed.">        if (_aantalTickets &lt; IntConstants.NINE.getValue()) {</span>
+<span class="nc" id="L453">            _aantalTickets++;</span>
+<span class="nc" id="L454">            ui_txtAantalTickets.setText(String.valueOf(_aantalTickets));</span>
+<span class="nc" id="L455">            ui_lblPrijs.setText(calculatePrijs(_aantalTickets));</span>
+        } else {
+<span class="nc" id="L457">            JOptionPane.showMessageDialog(null, StringConstants.MAX_TICKET_AMOUNTMSG.getValue(), StringConstants.ATTENTION.getValue(), JOptionPane.INFORMATION_MESSAGE, _icon);</span>
+        }
+<span class="nc" id="L459">    }//GEN-LAST:event_ui_btnAddActionPerformed</span>
+
+    /** 
+     *  Code achter de min knop voor ticketaantal
+     *  mits beperking kan niet minder dan 1 gaan
+     */
+    private void ui_btnSubtractActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ui_btnSubtractActionPerformed
+<span class="nc bnc" id="L466" title="All 2 branches missed.">        if (_aantalTickets &gt; IntConstants.ONE.getValue()) {</span>
+<span class="nc" id="L467">            _aantalTickets--;</span>
+<span class="nc" id="L468">            ui_txtAantalTickets.setText(String.valueOf(_aantalTickets));</span>
+<span class="nc" id="L469">            ui_lblPrijs.setText(calculatePrijs(_aantalTickets));</span>
+        }
+<span class="nc" id="L471">    }//GEN-LAST:event_ui_btnSubtractActionPerformed</span>
+
+    /**
+     *  Bepaalde jframes deblokkeren en tonen
+     */
+    private void ui_btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ui_btnCancelActionPerformed
+        /* Exit current TicketScreen instantie */
+<span class="nc" id="L478">        this.dispose();</span>
+<span class="nc" id="L479">        _jframeMainScreen.setVisible(true);</span>
+<span class="nc" id="L480">        _jframeShowInfoScreen.setEnabled(true);</span>
+<span class="nc" id="L481">        _jframeShowInfoScreen.setVisible(true);</span>
+<span class="nc" id="L482">    }//GEN-LAST:event_ui_btnCancelActionPerformed</span>
+
+    /**
+     *  Als er nog tickets genoeg zijn kan je ze kopen anders 
+     *  message dat het niet gaat
+     */
+    private void ui_btnProceedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ui_btnProceedActionPerformed
+<span class="nc" id="L489">        int remTickets = Integer.parseInt(ui_txtRemainingTickets.getText());</span>
+<span class="nc" id="L490">        boolean isPaid = true;</span>
+<span class="nc bnc" id="L491" title="All 2 branches missed.">        if (remTickets &gt;= _aantalTickets) {</span>
+<span class="nc bnc" id="L492" title="All 2 branches missed.">            if (isPaid) {</span>
+<span class="nc" id="L493">                ICreateAKlant iCAK = new CreateAKlant();</span>
+<span class="nc" id="L494">                Klant klant = iCAK.createKlant(_vertoning.getId(), _aantalTickets, _vertoning.getZaalNummer(), (_vertoning.getPrijs() * _aantalTickets));</span>
+<span class="nc" id="L495">                IInsertKlant iIK = new InsertKlant(klant);</span>
+<span class="nc" id="L496">                iIK.insertKlantStatement();</span>
+
+                /**
+                 *  Werken allebij
+                 *  IInsertKlant iiK = new InsertKlant();
+                 *  iiK.insertKlantPrepStatement(klant);
+                 */
+
+<span class="nc" id="L504">                JOptionPane.showMessageDialog(null, StringConstants.PAYMENTMSG.getValue(), StringConstants.PAYMENT_TITLE.getValue(), JOptionPane.INFORMATION_MESSAGE, _icon);</span>
+            }
+            /* reset app terug naar StartScreen */
+<span class="nc" id="L507">            this.dispose();</span>
+<span class="nc" id="L508">            _jframeMainScreen.dispose();</span>
+<span class="nc" id="L509">            _jframeShowInfoScreen.dispose();</span>
+<span class="nc" id="L510">            _jframeStartScreen.setVisible(true);</span>
+<span class="nc" id="L511">            _jframeStartScreen.setEnabled(true);</span>
+<span class="nc bnc" id="L512" title="All 2 branches missed.">        } else if ((remTickets &lt; _aantalTickets) </span>
+<span class="nc bnc" id="L513" title="All 2 branches missed.">            &amp;&amp; remTickets != IntConstants.ZERO.getValue() ){</span>
+<span class="nc" id="L514">            JOptionPane.showMessageDialog(null, StringConstants.NOT_ENOUGH_TICKETS.getValue(), StringConstants.ATTENTION.getValue(), JOptionPane.INFORMATION_MESSAGE, _icon);</span>
+        } else {
+<span class="nc" id="L516">            JOptionPane.showMessageDialog(null, StringConstants.NO_TICKETS_LEFT.getValue(), StringConstants.ATTENTION.getValue(), JOptionPane.INFORMATION_MESSAGE, _icon);</span>
+        }
+<span class="nc" id="L518">    }//GEN-LAST:event_ui_btnProceedActionPerformed</span>
+
+    // &lt;/editor-fold&gt;
+    
+    // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code 2&quot;&gt;
+
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //&lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot; Look and feel setting code (optional) &quot;&gt;
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+<span class="nc bnc" id="L531" title="All 2 branches missed.">            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {</span>
+<span class="nc bnc" id="L532" title="All 2 branches missed.">                if (&quot;Nimbus&quot;.equals(info.getName())) {</span>
+<span class="nc" id="L533">                    javax.swing.UIManager.setLookAndFeel(info.getClassName());</span>
+<span class="nc" id="L534">                    break;</span>
+                }
+            }
+<span class="nc" id="L537">        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {</span>
+<span class="nc" id="L538">            java.util.logging.Logger.getLogger(TicketScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L539">        }</span>
+        //&lt;/editor-fold&gt;
+        
+
+<span class="nc" id="L543">    }</span>
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton ui_btnAdd;
+    private javax.swing.JButton ui_btnCancel;
+    private javax.swing.JButton ui_btnProceed;
+    private javax.swing.JButton ui_btnSubtract;
+    private javax.swing.JLabel ui_lblDatum;
+    private javax.swing.JLabel ui_lblFilmNaam;
+    private javax.swing.JLabel ui_lblPrijs;
+    private javax.swing.JLabel ui_lblStartingTime;
+    private javax.swing.JLabel ui_lblZaal;
+    private javax.swing.JTextField ui_txtAantalTickets;
+    private javax.swing.JTextField ui_txtRemainingTickets;
+    // End of variables declaration//GEN-END:variables
+    
+    // &lt;/editor-fold&gt;
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
