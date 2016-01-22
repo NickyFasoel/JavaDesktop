@@ -89,8 +89,14 @@ public class FetchFilmData implements IGetData {
         ArrayList<Integer> lst = new ArrayList<>();
         Statement stmnt = null;
         try {
+            long id = vertoning.getId();
             stmnt = createAStatement();
-            _rs = stmnt.executeQuery("SELECT `Aantal` FROM `tbl_klant` WHERE  (`Vertoning_ID` IN ('" + vertoning.getId() + "'))");
+            _rs = stmnt.executeQuery("SELECT `Aantal` FROM `tbl_klant` WHERE  (`Vertoning_ID` IN ('" + id + "'))");
+            while(_rs.next())
+            {
+                lst.add(_rs.getInt(IntConstants.ONE.getValue()));
+            }
+            _rs = stmnt.executeQuery("SELECT aantal FROM tbl_gekendeklant WHERE voorstelling_id = " + id);  
             while(_rs.next())
             {
                 lst.add(_rs.getInt(IntConstants.ONE.getValue()));
