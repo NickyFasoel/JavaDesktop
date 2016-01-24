@@ -2,7 +2,6 @@ package BLL;
 
 import Interfaces.ICreateAKlant;
 import CONSTANTS.CharConstants;
-import CONSTANTS.IntConstants;
 import CONSTANTS.StringConstants;
 import Dal.Klant;
 import java.text.DecimalFormat;

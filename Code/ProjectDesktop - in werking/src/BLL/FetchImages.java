@@ -3,8 +3,6 @@ package BLL;
 import Interfaces.ISetFoto;
 import javax.swing.ImageIcon;
 
-// TODO: Tests
-
 public class FetchImages implements ISetFoto {
     
     @Override
