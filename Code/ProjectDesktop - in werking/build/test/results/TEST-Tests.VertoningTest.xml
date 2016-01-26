@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="1" failures="0" hostname="Mijn-PC" name="Dal.UseStatementsTest" skipped="0" tests="1" time="0.0" timestamp="2016-01-26T19:50:17">
+<testsuite errors="0" failures="0" hostname="Mijn-PC" name="Tests.VertoningTest" skipped="0" tests="15" time="0.098" timestamp="2016-01-26T19:56:17">
   <properties>
     <property name="libs.jsp-compiler.javadoc" value="" />
     <property name="netbeans.autoupdate.country" value="BE" />
@@ -62,7 +62,7 @@
     <property name="libs.j2me_common_ant.maven-pom" value="" />
     <property name="libs.spring-webmvc3.0.maven-pom" value="" />
     <property name="libs.swing-layout.maven-pom" value="" />
-    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner Dal.UseStatementsTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\Gebruiker\Desktop\Java GitHub desktop\JavaDesktop\Code\ProjectDesktop - in werking\build\test\results\TEST-Dal.UseStatementsTest.xml crashfile=C:\Users\Gebruiker\Desktop\Java GitHub desktop\JavaDesktop\Code\ProjectDesktop - in werking\build\junitvmwatcher4460238055446329537.properties propsfile=C:\Users\Gebruiker\Desktop\Java GitHub desktop\JavaDesktop\Code\ProjectDesktop - in werking\build\junit8673736604690011298.properties" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner Tests.VertoningTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\Gebruiker\Desktop\Java GitHub desktop\JavaDesktop\Code\ProjectDesktop - in werking\build\test\results\TEST-Tests.VertoningTest.xml crashfile=C:\Users\Gebruiker\Desktop\Java GitHub desktop\JavaDesktop\Code\ProjectDesktop - in werking\build\junitvmwatcher7456240583289832204.properties propsfile=C:\Users\Gebruiker\Desktop\Java GitHub desktop\JavaDesktop\Code\ProjectDesktop - in werking\build\junit730957311625415039.properties" />
     <property name="build.classes.dir" value="build/classes" />
     <property name="netbeans.accept_license_class" value="org.netbeans.license.AcceptLicense" />
     <property name="build.sysclasspath" value="ignore" />
@@ -71,7 +71,7 @@
     <property name="libs.javaee-endorsed-api-7.0.javadoc" value="E:\Java\NetBeans 8.1\enterprise\docs\javaee-doc-api.jar" />
     <property name="libs.jaxws21.javadoc" value="E:\Java\NetBeans 8.1\java\docs\jaxws-api-doc.zip" />
     <property name="libs.spring-webmvc4.0.javadoc" value="" />
-    <property name="includes" value="**" />
+    <property name="includes" value="Tests/**/*Test.java" />
     <property name="user.country" value="BE" />
     <property name="manifest.file" value="manifest.mf" />
     <property name="javadoc.encoding" value="UTF-8" />
@@ -421,14 +421,36 @@
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit" />
     <property name="libs.javaee-web-api-7.0.javadoc" value="E:\Java\NetBeans 8.1\enterprise\docs\javaee-doc-api.jar" />
   </properties>
-  <error message="Dal.UseStatementsTest" type="java.lang.ClassNotFoundException">java.lang.ClassNotFoundException: Dal.UseStatementsTest
-	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
-	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
-	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331)
-	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
-	at java.lang.Class.forName0(Native Method)
-	at java.lang.Class.forName(Class.java:264)
-</error>
-  <system-out><![CDATA[]]></system-out>
+  <testcase classname="Tests.VertoningTest" name="testGetPrijs" time="0.003" />
+  <testcase classname="Tests.VertoningTest" name="testGetId" time="0.0" />
+  <testcase classname="Tests.VertoningTest" name="testSetId" time="0.0" />
+  <testcase classname="Tests.VertoningTest" name="testSetPlaatsen" time="0.0" />
+  <testcase classname="Tests.VertoningTest" name="testToString" time="0.0" />
+  <testcase classname="Tests.VertoningTest" name="testGetPlaatsen" time="0.0" />
+  <testcase classname="Tests.VertoningTest" name="testSetSpeelDag" time="0.0" />
+  <testcase classname="Tests.VertoningTest" name="testSetSpeelUur" time="0.001" />
+  <testcase classname="Tests.VertoningTest" name="testGetSpeelDag" time="0.0" />
+  <testcase classname="Tests.VertoningTest" name="testGetSpeelUur" time="0.001" />
+  <testcase classname="Tests.VertoningTest" name="testSetFilmNaam" time="0.001" />
+  <testcase classname="Tests.VertoningTest" name="testGetFilmNaam" time="0.0" />
+  <testcase classname="Tests.VertoningTest" name="testGetZaalNummer" time="0.0" />
+  <testcase classname="Tests.VertoningTest" name="testSetZaalNummer" time="0.0" />
+  <testcase classname="Tests.VertoningTest" name="testSetPrijs" time="0.0" />
+  <system-out><![CDATA[getPrijs
+getId
+setId
+setPlaatsen
+toString
+getPlaatsen
+setSpeelDag
+setSpeelUur
+getSpeelDag
+getSpeelUur
+setFilmNaam
+getFilmNaam
+getZaalNummer
+setZaalNummer
+setPrijs
+]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -1,17 +1,15 @@
-package Dal;
+package Tests;
 
 import CONSTANTS.StringConstants;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class FormatDataTest {
     
-    public FormatDataTest() {
-    }
+    public FormatDataTest() {}
     
      @Test
      public void getFormattedDate() throws ParseException {

@@ -1,4 +1,4 @@
-package Dal;
+package Tests;
 
 import Dal.Helpers.CreateConnection;
 import java.sql.Connection;

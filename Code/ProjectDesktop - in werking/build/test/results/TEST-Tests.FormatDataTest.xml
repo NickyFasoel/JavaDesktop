@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="1" failures="0" hostname="Mijn-PC" name="Dal.KlantTest" skipped="0" tests="1" time="0.0" timestamp="2016-01-26T19:50:16">
+<testsuite errors="0" failures="0" hostname="Mijn-PC" name="Tests.FormatDataTest" skipped="0" tests="3" time="0.048" timestamp="2016-01-26T19:56:17">
   <properties>
     <property name="libs.jsp-compiler.javadoc" value="" />
     <property name="netbeans.autoupdate.country" value="BE" />
@@ -62,7 +62,7 @@
     <property name="libs.j2me_common_ant.maven-pom" value="" />
     <property name="libs.spring-webmvc3.0.maven-pom" value="" />
     <property name="libs.swing-layout.maven-pom" value="" />
-    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner Dal.KlantTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\Gebruiker\Desktop\Java GitHub desktop\JavaDesktop\Code\ProjectDesktop - in werking\build\test\results\TEST-Dal.KlantTest.xml crashfile=C:\Users\Gebruiker\Desktop\Java GitHub desktop\JavaDesktop\Code\ProjectDesktop - in werking\build\junitvmwatcher6656310299386203327.properties propsfile=C:\Users\Gebruiker\Desktop\Java GitHub desktop\JavaDesktop\Code\ProjectDesktop - in werking\build\junit1028619699697122561.properties" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner Tests.FormatDataTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\Gebruiker\Desktop\Java GitHub desktop\JavaDesktop\Code\ProjectDesktop - in werking\build\test\results\TEST-Tests.FormatDataTest.xml crashfile=C:\Users\Gebruiker\Desktop\Java GitHub desktop\JavaDesktop\Code\ProjectDesktop - in werking\build\junitvmwatcher8662149178676971936.properties propsfile=C:\Users\Gebruiker\Desktop\Java GitHub desktop\JavaDesktop\Code\ProjectDesktop - in werking\build\junit4194843813317974689.properties" />
     <property name="build.classes.dir" value="build/classes" />
     <property name="netbeans.accept_license_class" value="org.netbeans.license.AcceptLicense" />
     <property name="build.sysclasspath" value="ignore" />
@@ -71,7 +71,7 @@
     <property name="libs.javaee-endorsed-api-7.0.javadoc" value="E:\Java\NetBeans 8.1\enterprise\docs\javaee-doc-api.jar" />
     <property name="libs.jaxws21.javadoc" value="E:\Java\NetBeans 8.1\java\docs\jaxws-api-doc.zip" />
     <property name="libs.spring-webmvc4.0.javadoc" value="" />
-    <property name="includes" value="**" />
+    <property name="includes" value="Tests/**/*Test.java" />
     <property name="user.country" value="BE" />
     <property name="manifest.file" value="manifest.mf" />
     <property name="javadoc.encoding" value="UTF-8" />
@@ -421,14 +421,9 @@
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit" />
     <property name="libs.javaee-web-api-7.0.javadoc" value="E:\Java\NetBeans 8.1\enterprise\docs\javaee-doc-api.jar" />
   </properties>
-  <error message="Dal.KlantTest" type="java.lang.ClassNotFoundException">java.lang.ClassNotFoundException: Dal.KlantTest
-	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
-	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
-	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331)
-	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
-	at java.lang.Class.forName0(Native Method)
-	at java.lang.Class.forName(Class.java:264)
-</error>
+  <testcase classname="Tests.FormatDataTest" name="getFormattedTimeOfDayNoSeconds" time="0.002" />
+  <testcase classname="Tests.FormatDataTest" name="getFormattedTimeOfDay" time="0.0" />
+  <testcase classname="Tests.FormatDataTest" name="getFormattedDate" time="0.0" />
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

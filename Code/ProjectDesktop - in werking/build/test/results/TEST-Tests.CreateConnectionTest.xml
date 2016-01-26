@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="Mijn-PC" name="Dal.FormatDataTest" skipped="0" tests="3" time="0.057" timestamp="2016-01-26T19:50:16">
+<testsuite errors="1" failures="0" hostname="Mijn-PC" name="Tests.CreateConnectionTest" skipped="0" tests="2" time="7.156" timestamp="2016-01-26T19:56:09">
   <properties>
     <property name="libs.jsp-compiler.javadoc" value="" />
     <property name="netbeans.autoupdate.country" value="BE" />
@@ -62,7 +62,7 @@
     <property name="libs.j2me_common_ant.maven-pom" value="" />
     <property name="libs.spring-webmvc3.0.maven-pom" value="" />
     <property name="libs.swing-layout.maven-pom" value="" />
-    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner Dal.FormatDataTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\Gebruiker\Desktop\Java GitHub desktop\JavaDesktop\Code\ProjectDesktop - in werking\build\test\results\TEST-Dal.FormatDataTest.xml crashfile=C:\Users\Gebruiker\Desktop\Java GitHub desktop\JavaDesktop\Code\ProjectDesktop - in werking\build\junitvmwatcher1200928413607682165.properties propsfile=C:\Users\Gebruiker\Desktop\Java GitHub desktop\JavaDesktop\Code\ProjectDesktop - in werking\build\junit3063154327613691518.properties" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner Tests.CreateConnectionTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\Gebruiker\Desktop\Java GitHub desktop\JavaDesktop\Code\ProjectDesktop - in werking\build\test\results\TEST-Tests.CreateConnectionTest.xml crashfile=C:\Users\Gebruiker\Desktop\Java GitHub desktop\JavaDesktop\Code\ProjectDesktop - in werking\build\junitvmwatcher7251697033679856414.properties propsfile=C:\Users\Gebruiker\Desktop\Java GitHub desktop\JavaDesktop\Code\ProjectDesktop - in werking\build\junit3742164930685155187.properties" />
     <property name="build.classes.dir" value="build/classes" />
     <property name="netbeans.accept_license_class" value="org.netbeans.license.AcceptLicense" />
     <property name="build.sysclasspath" value="ignore" />
@@ -71,7 +71,7 @@
     <property name="libs.javaee-endorsed-api-7.0.javadoc" value="E:\Java\NetBeans 8.1\enterprise\docs\javaee-doc-api.jar" />
     <property name="libs.jaxws21.javadoc" value="E:\Java\NetBeans 8.1\java\docs\jaxws-api-doc.zip" />
     <property name="libs.spring-webmvc4.0.javadoc" value="" />
-    <property name="includes" value="**" />
+    <property name="includes" value="Tests/**/*Test.java" />
     <property name="user.country" value="BE" />
     <property name="manifest.file" value="manifest.mf" />
     <property name="javadoc.encoding" value="UTF-8" />
@@ -236,7 +236,6 @@
     <property name="org.openide.major.version" value="IDE/1" />
     <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM" />
     <property name="netbeans.user" value="D:\nbuserdir2" />
-    <property name="tests.failed" value="true" />
     <property name="javadoc.additionalparam" value="" />
     <property name="java.io.tmpdir" value="C:\Users\GEBRUI~1\AppData\Local\Temp\" />
     <property name="java.vendor.url" value="http://java.oracle.com/" />
@@ -325,9 +324,9 @@
     <property name="built-jar.properties" value="C:\Users\Gebruiker\Desktop\Java GitHub desktop\JavaDesktop\Code\ProjectDesktop - in werking\build\built-jar.properties" />
     <property name="build.test.classes.dir" value="build/test/classes" />
     <property name="src.dir" value="src" />
-    <property name="sun.awt.keepWorkingSetOnMinimize" value="true" />
     <property name="libs.jpa2-persistence.src" value="" />
     <property name="annotation.processing.enabled" value="true" />
+    <property name="sun.awt.keepWorkingSetOnMinimize" value="true" />
     <property name="libs.jsf20.src" value="" />
     <property name="libs.jpa20-persistence.src" value="" />
     <property name="libs.DataBindingME-SVG.maven-pom" value="" />
@@ -341,13 +340,13 @@
     <property name="dist.dir" value="dist" />
     <property name="libs.groovy-all.javadoc" value="" />
     <property name="testng.debug.mode" value="" />
-    <property name="libs.groovy-all.classpath" value="E:\Java\NetBeans 8.1\groovy\modules\ext\groovy-all.jar" />
     <property name="javac.fork" value="false" />
+    <property name="libs.groovy-all.classpath" value="E:\Java\NetBeans 8.1\groovy\modules\ext\groovy-all.jar" />
     <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob" />
     <property name="default.javac.source" value="1.8" />
     <property name="debug-transport-by-os" value="dt_shmem" />
-    <property name="sun.jnu.encoding" value="Cp1252" />
     <property name="libs.MySQLDriver.src" value="" />
+    <property name="sun.jnu.encoding" value="Cp1252" />
     <property name="build.test.results.dir" value="build/test/results" />
     <property name="java.runtime.version" value="1.8.0_60-b27" />
     <property name="default.javac.target" value="1.8" />
@@ -365,12 +364,12 @@
     <property name="endorsed.classpath" value="" />
     <property name="libs.absolutelayout.classpath" value="E:\Java\NetBeans 8.1\java\modules\ext\AbsoluteLayout.jar" />
     <property name="excludes" value="" />
-    <property name="libs.metro.classpath" value="E:\Java\NetBeans 8.1\ide\modules\ext\jaxb\activation.jar;E:\Java\NetBeans 8.1\enterprise\modules\ext\metro\webservices-api.jar;E:\Java\NetBeans 8.1\enterprise\modules\ext\metro\webservices-extra-api.jar;E:\Java\NetBeans 8.1\enterprise\modules\ext\metro\webservices-extra.jar;E:\Java\NetBeans 8.1\enterprise\modules\ext\metro\webservices-rt.jar;E:\Java\NetBeans 8.1\enterprise\modules\ext\metro\webservices-tools.jar" />
     <property name="libs.restlib.maven-pom" value="" />
+    <property name="libs.metro.classpath" value="E:\Java\NetBeans 8.1\ide\modules\ext\jaxb\activation.jar;E:\Java\NetBeans 8.1\enterprise\modules\ext\metro\webservices-api.jar;E:\Java\NetBeans 8.1\enterprise\modules\ext\metro\webservices-extra-api.jar;E:\Java\NetBeans 8.1\enterprise\modules\ext\metro\webservices-extra.jar;E:\Java\NetBeans 8.1\enterprise\modules\ext\metro\webservices-rt.jar;E:\Java\NetBeans 8.1\enterprise\modules\ext\metro\webservices-tools.jar" />
     <property name="libs.jpa2-persistence.javadoc" value="E:\Java\NetBeans 8.1\java\modules\ext\docs\javax.persistence-2.1.0-doc.zip" />
     <property name="libs.DataBindingME.javadoc" value="E:\Java\NetBeans 8.1\mobility\modules\docs\netbeans_databindingme-api.zip" />
-    <property name="apple.laf.useScreenMenuBar" value="true" />
     <property name="java.class.path" value="E:\Java\NetBeans 8.1\java\modules\ext\eclipselink\eclipselink.jar;E:\Java\NetBeans 8.1\java\modules\ext\eclipselink\javax.persistence_2.1.0.v201304241213.jar;E:\Java\NetBeans 8.1\java\modules\ext\eclipselink\org.eclipse.persistence.jpa.jpql_2.5.2.v20140319-9ad6abd.jar;E:\Java\NetBeans 8.1\ide\modules\ext\mysql-connector-java-5.1.23-bin.jar;E:\Java\NetBeans 8.1\java\modules\ext\AbsoluteLayout.jar;C:\Users\Gebruiker\Desktop\Java GitHub desktop\JavaDesktop\Code\ProjectDesktop - in werking\build\classes;E:\Java\NetBeans 8.1\platform\modules\ext\junit-4.12.jar;E:\Java\NetBeans 8.1\platform\modules\ext\hamcrest-core-1.3.jar;C:\Users\Gebruiker\Desktop\Java GitHub desktop\JavaDesktop\Code\ProjectDesktop - in werking\build\test\classes;E:\Java\NetBeans 8.1\extide\ant\lib\ant-launcher.jar;E:\Java\NetBeans 8.1\extide\ant\lib\ant.jar;E:\Java\NetBeans 8.1\extide\ant\lib\ant-junit.jar;E:\Java\NetBeans 8.1\extide\ant\lib\ant-junit4.jar" />
+    <property name="apple.laf.useScreenMenuBar" value="true" />
     <property name="do.mkdist" value="true" />
     <property name="libs.absolutelayout.src" value="" />
     <property name="libs.jpa20-persistence.classpath" value="E:\Java\NetBeans 8.1\java\modules\ext\eclipselink\javax.persistence_2.1.0.v201304241213.jar" />
@@ -387,8 +386,8 @@
     <property name="libs.restlib.javadoc" value="" />
     <property name="libs.JAXB-ENDORSED.classpath" value="E:\Java\NetBeans 8.1\ide\modules\ext\jaxb\api\jaxb-api.jar" />
     <property name="nb.internal.action.name" value="test" />
-    <property name="libs.javaee-api-7.0.javadoc" value="E:\Java\NetBeans 8.1\enterprise\docs\javaee-doc-api.jar" />
     <property name="libs.eclipselink.classpath" value="E:\Java\NetBeans 8.1\java\modules\ext\eclipselink\eclipselink.jar;E:\Java\NetBeans 8.1\java\modules\ext\eclipselink\javax.persistence_2.1.0.v201304241213.jar;E:\Java\NetBeans 8.1\java\modules\ext\eclipselink\org.eclipse.persistence.jpa.jpql_2.5.2.v20140319-9ad6abd.jar" />
+    <property name="libs.javaee-api-7.0.javadoc" value="E:\Java\NetBeans 8.1\enterprise\docs\javaee-doc-api.jar" />
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment" />
     <property name="libs.beans-binding.javadoc" value="E:\Java\NetBeans 8.1\java\docs\beansbinding-1.2.1-doc.zip" />
     <property name="java.vm.vendor" value="Oracle Corporation" />
@@ -402,14 +401,14 @@
     <property name="dist.archive.excludes" value="" />
     <property name="libs.testng.javadoc" value="E:\Java\NetBeans 8.1\platform\docs\testng-6.8.1-javadoc.zip" />
     <property name="libs.DataBindingME-PIM.src" value="E:\Java\NetBeans 8.1\mobility\sources\netbeans_databindingme_pim-src.zip" />
-    <property name="libs.PostgreSQLDriver.classpath" value="E:\Java\NetBeans 8.1\ide\modules\ext\postgresql-9.2-1002.jdbc4.jar" />
     <property name="user.script" value="" />
+    <property name="libs.PostgreSQLDriver.classpath" value="E:\Java\NetBeans 8.1\ide\modules\ext\postgresql-9.2-1002.jdbc4.jar" />
     <property name="libs.jsf12.maven-pom" value="" />
     <property name="libs.hibernate4-persistencemodelgen.classpath" value="E:\Java\NetBeans 8.1\java\modules\ext\hibernate4\hibernate-jpamodelgen-4.3.1.Final.jar" />
     <property name="annotation.processing.source.output" value="build/generated-sources/ap-source-output" />
     <property name="main.class" value="PL.StartScreen" />
-    <property name="libs.CopyLibs.src" value="" />
     <property name="build.dir" value="build" />
+    <property name="libs.CopyLibs.src" value="" />
     <property name="libs.jsp-compilation.classpath" value="E:\Java\NetBeans 8.1\extide\ant\lib\ant.jar;E:\Java\NetBeans 8.1\enterprise\modules\ext\servlet3.1-jsp2.3-api.jar;E:\Java\NetBeans 8.1\enterprise\modules\ext\glassfish-jspparser-4.0.jar;E:\Java\NetBeans 8.1\enterprise\modules\ext\jsf-2_2\javax.faces.jar;E:\Java\NetBeans 8.1\enterprise\modules\ext\jstl-api.jar;E:\Java\NetBeans 8.1\extide\ant\lib\ant-launcher.jar" />
     <property name="ant.version" value="Apache Ant(TM) version 1.9.4 compiled on April 29 2014" />
     <property name="file.encoding" value="Cp1252" />
@@ -421,9 +420,44 @@
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit" />
     <property name="libs.javaee-web-api-7.0.javadoc" value="E:\Java\NetBeans 8.1\enterprise\docs\javaee-doc-api.jar" />
   </properties>
-  <testcase classname="Dal.FormatDataTest" name="getFormattedTimeOfDayNoSeconds" time="0.002" />
-  <testcase classname="Dal.FormatDataTest" name="getFormattedTimeOfDay" time="0.001" />
-  <testcase classname="Dal.FormatDataTest" name="getFormattedDate" time="0.001" />
+  <testcase classname="Tests.CreateConnectionTest" name="testConnection" time="7.113">
+    <error message="Communications link failure&#xa;&#xa;The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server." type="com.mysql.jdbc.exceptions.jdbc4.CommunicationsException">com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:422)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:1117)
+	at com.mysql.jdbc.MysqlIO.&lt;init&gt;(MysqlIO.java:355)
+	at com.mysql.jdbc.ConnectionImpl.coreConnect(ConnectionImpl.java:2461)
+	at com.mysql.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:2498)
+	at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2283)
+	at com.mysql.jdbc.ConnectionImpl.&lt;init&gt;(ConnectionImpl.java:822)
+	at com.mysql.jdbc.JDBC4Connection.&lt;init&gt;(JDBC4Connection.java:47)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:422)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411)
+	at com.mysql.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:404)
+	at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:317)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at Dal.Helpers.CreateConnection.getConnection(CreateConnection.java:18)
+	at Tests.CreateConnectionTest.testConnection(CreateConnectionTest.java:23)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at java.net.Socket.&lt;init&gt;(Socket.java:434)
+	at java.net.Socket.&lt;init&gt;(Socket.java:244)
+	at com.mysql.jdbc.StandardSocketFactory.connect(StandardSocketFactory.java:259)
+	at com.mysql.jdbc.MysqlIO.&lt;init&gt;(MysqlIO.java:305)
+</error>
+  </testcase>
+  <testcase classname="Tests.CreateConnectionTest" name="testUnique" time="0.0" />
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
